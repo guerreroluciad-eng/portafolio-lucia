@@ -1,0 +1,10 @@
+{
+  "description": "This interactive web application features smooth animations for content display, enhancing user engagement and providing a visually appealing experience for creative professionals.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
