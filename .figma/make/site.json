@@ -1,5 +1,9 @@
 {
+  "title": "Lucia | UX/UI Designer",
   "description": "This interactive web application features smooth animations for content display, enhancing user engagement and providing a visually appealing experience for creative professionals.",
+  "icons": {
+    "icon": "/favicon.png"
+  },
   "robots": {
     "index": false
   },

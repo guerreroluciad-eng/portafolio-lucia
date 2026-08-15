@@ -144,7 +144,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick }: HomeProps
           I'm
         </p>
         <HomeLogo className="h-[129px] w-[372px] origin-bottom-left scale-[0.806] mb-[24px]" fill={titleHovered ? '#2f2e29' : '#ffffff'} />
-        <p className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[normal] not-italic text-[#302f2a] text-[36px] mb-[70px]">
+        <p className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[normal] not-italic text-[#302f2a] text-[16px] mb-[70px]">
           Senior Product Designer specializing in the creation of intuitive digital experiences, interaction design, and user-centered interfaces.
         </p>
       </div>
