@@ -423,17 +423,10 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
           onMouseLeave={onCarouselMouseLeave}
           onWheel={onCarouselWheel}
         >
-          <p className="[word-break:break-word] font-['Abhaya_Libre',serif] font-medium h-[30px] leading-[30px] not-italic shrink-0 text-[40px] text-black text-center w-[89px]">
-            Huge
+          <p className="[word-break:break-word] font-['Abhaya_Libre',serif] font-medium h-[60px] leading-[30px] not-italic shrink-0 text-[40px] text-black text-center w-[150px]">
+            Product Design
           </p>
           <div className="flex gap-[48px] items-center shrink-0">
-            <div onClick={onAndroidClick} style={{ cursor: 'pointer' }}>
-              <CoverAndroid
-                hovered={androidHovered}
-                onMouseEnter={() => setAndroidHovered(true)}
-                onMouseLeave={() => setAndroidHovered(false)}
-              />
-            </div>
             <div onClick={onGoogleClick} style={{ cursor: 'pointer' }}>
               <CoverAndroid1b
                 hovered={googleHovered}
@@ -441,11 +434,11 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
                 onMouseLeave={() => setGoogleHovered(false)}
               />
             </div>
-            <div onClick={onMaestroClick} style={{ cursor: 'pointer' }}>
-              <CoverMaestro
-                hovered={maestroHovered}
-                onMouseEnter={() => setMaestroHovered(true)}
-                onMouseLeave={() => setMaestroHovered(false)}
+            <div onClick={onElTiempoClick} style={{ cursor: 'pointer' }}>
+              <CoverElTiempoImg
+                hovered={elTiempoHovered}
+                onMouseEnter={() => setElTiempoHovered(true)}
+                onMouseLeave={() => setElTiempoHovered(false)}
               />
             </div>
             <div onClick={onYoutubeClick} style={{ cursor: 'pointer' }}>
@@ -455,21 +448,28 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
                 onMouseLeave={() => setYoutubeHovered(false)}
               />
             </div>
-            <p className="[word-break:break-word] font-['Abhaya_Libre',serif] font-medium h-[52px] leading-[30px] not-italic shrink-0 text-[40px] text-black text-center w-[139px]">
-              El Tiempo
-            </p>
-            <div onClick={onElTiempoClick} style={{ cursor: 'pointer' }}>
-              <CoverElTiempoImg
-                hovered={elTiempoHovered}
-                onMouseEnter={() => setElTiempoHovered(true)}
-                onMouseLeave={() => setElTiempoHovered(false)}
-              />
-            </div>
             <div onClick={onAppTiempoClick} style={{ cursor: 'pointer' }}>
               <CoverMaestro1
                 hovered={appTiempoHovered}
                 onMouseEnter={() => setAppTiempoHovered(true)}
                 onMouseLeave={() => setAppTiempoHovered(false)}
+              />
+            </div>
+            <div onClick={onAndroidClick} style={{ cursor: 'pointer' }}>
+              <CoverAndroid
+                hovered={androidHovered}
+                onMouseEnter={() => setAndroidHovered(true)}
+                onMouseLeave={() => setAndroidHovered(false)}
+              />
+            </div>
+            <p className="[word-break:break-word] font-['Abhaya_Libre',serif] font-medium h-[30px] leading-[30px] not-italic shrink-0 text-[40px] text-black text-center w-[170px]">
+              Branding
+            </p>
+            <div onClick={onMaestroClick} style={{ cursor: 'pointer' }}>
+              <CoverMaestro
+                hovered={maestroHovered}
+                onMouseEnter={() => setMaestroHovered(true)}
+                onMouseLeave={() => setMaestroHovered(false)}
               />
             </div>
             <div onClick={onFutbolredClick} style={{ cursor: 'pointer' }}>
