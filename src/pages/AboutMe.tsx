@@ -116,13 +116,16 @@ export default function AboutMe({ aboutReady, onWorkClick, onLuciaClick }: About
         style={{ animation: aboutReady ? 'slideUpFade 0.85s cubic-bezier(0.16,1,0.3,1) 0.3s both' : undefined, opacity: aboutReady ? undefined : 0 }}
       >
         <p className="mb-8">
-          <strong>Hi, I'm Lucia.</strong> I've worked as a <strong>Senior Product Designer</strong> and interactive experience creator for over nine years. I consider myself a strategic creative who approaches each project with a unique and fresh perspective, delivering visual solutions that stand out and adapt to each client's needs.
+          <strong>Hi, I'm Lucía.</strong> I design with craft, but I decide with evidence.
         </p>
         <p className="mb-8">
-          I've worked with numerous large companies along my journey, just as I will with you. I like to think I flourish differently at each company I've been a part of.
+          I'm a <strong>Senior Product Designer</strong> with a foundation in graphic design and a career built around one specific instinct: reading a product's context before deciding how to approach it. No two products need the same strategy, and I've learned to notice that early instead of forcing a familiar solution onto an unfamiliar problem.
         </p>
         <p className="mb-8">
-          I always bring a brand perspective and design thinking to my work because I believe a strong product experience goes beyond functionality and must also create a consistent and memorable brand experience.
+          That judgment is paired with a visual design background most product designers do not have: illustration, branding, photography, video, and motion. I bring genuine craft into my work, along with a natural pull toward consistency where a product genuinely needs to scale.
+        </p>
+        <p className="mb-8">
+          I have defended a research-backed decision under real outside pressure and been proven right. Accessibility, prototyping, and dev handoff are where I am strongest, shaped by years of direct client work, presentations, and workshops. I am also actively expanding my use of AI in prototyping and research to keep pace with how this role continues to change.
         </p>
         <p className="mb-10">
           We can start the conversation here about what you want for your brand, or leave me a message at <strong>gerreroluciad@gmail.com</strong>

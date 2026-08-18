@@ -53,3 +53,101 @@
     opacity: 0;
   }
 }
+
+/* Work page — compact vertical rhythm for the 1024–1440px desktop window
+   (the entire lg: range up to 1440px gets this same design; there is no
+   separate variant for 1024–1200px). Written as plain CSS (not chained
+   Tailwind arbitrary variants) because Tailwind v4 emits named-breakpoint
+   utilities (lg:) after arbitrary min-[]/max-[] utilities regardless of
+   source order, so an lg: utility on the same property always won the
+   cascade tie. Plain CSS placed after the Tailwind import is guaranteed to
+   win instead. Below 1024px (mobile, tablet) and at 1440px+ (large desktop)
+   none of this applies — those keep their own existing styles untouched. */
+@media (min-width: 1024px) and (max-width: 1439.98px) {
+  .work-compact-heading {
+    font-size: 170px;
+    height: 183px;
+    width: 850px;
+  }
+  .work-compact-hint {
+    margin-top: 10px;
+  }
+  .work-compact-arrows {
+    margin-top: 18px;
+  }
+  .work-compact-carousel {
+    padding-bottom: 153px;
+  }
+
+  /* Carousel covers shrink to 280px tall, swapping in the pre-cropped
+     compact artwork instead of reusing the old crop math (tuned for the
+     larger size). */
+  .work-cover-old {
+    display: none;
+  }
+  .work-cover-new {
+    display: block;
+  }
+  .work-cover-compact-android {
+    height: 280px;
+    width: auto;
+    aspect-ratio: 636 / 552;
+  }
+  .work-cover-compact-maestro {
+    height: 280px;
+    width: auto;
+    aspect-ratio: 468 / 560;
+  }
+  .work-cover-compact-youtube {
+    height: 280px;
+    width: auto;
+    aspect-ratio: 628 / 560;
+  }
+  .work-cover-compact-google {
+    height: 280px;
+    width: auto;
+    aspect-ratio: 314 / 280;
+  }
+  .work-cover-compact-eltiempo {
+    height: 280px;
+    width: auto;
+    aspect-ratio: 618 / 560;
+  }
+  .work-cover-compact-apptiempo {
+    height: 280px;
+    width: auto;
+    aspect-ratio: 386 / 560;
+  }
+  .work-cover-compact-futbolred {
+    height: 280px;
+    width: auto;
+    aspect-ratio: 488 / 560;
+  }
+}
+
+/* Home page — 1024–1440px desktop window. Plain CSS after the Tailwind
+   import for the same cascade-order reason as the Work page rules above. */
+@media (min-width: 1024px) and (max-width: 1439.98px) {
+  /* Gif flower shrinks to 377×436px. Position (top-141px, right-47px) and
+     animation are untouched — only the size changes here. At 1440px+ it
+     keeps its original 518×598px size. */
+  .home-gif-compact {
+    width: 377px;
+    height: 436px;
+  }
+
+  /* The "Senior Product Designer..." paragraph has a fixed lg:w-[1323px]
+     box tuned for the 1440px+ design, which is wider than the viewport at
+     1024–1439px — so instead of wrapping to a second line like it already
+     does on mobile, it overflows past the edge of the screen. Constraining
+     its width to the actual available viewport width (left offset 60px +
+     right margin 57px, matching the 1440px design's own margins) lets it
+     wrap the same way mobile does, without changing font size or style.
+     Height is freed to auto so a wrapped second line isn't clipped by the
+     fixed 90px box tuned for a single line. */
+  .home-paragraph-wrap {
+    width: calc(100vw - 117px);
+    max-width: 1323px;
+    height: auto;
+  }
+}

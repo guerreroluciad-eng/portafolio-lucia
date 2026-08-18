@@ -125,7 +125,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick }: HomeProps
 
       {/* Gif Flower */}
       <div
-        className="absolute right-4 top-[52px] w-[209px] h-[242px] md:right-[48px] md:top-[108px] md:w-[377px] md:h-[476px] lg:left-auto lg:right-[47px] lg:top-[141px] lg:w-[518px] lg:h-[598px] z-0"
+        className="absolute right-4 top-[52px] w-[209px] h-[242px] md:right-[48px] md:top-[108px] md:w-[377px] md:h-[476px] lg:left-auto lg:right-[47px] lg:top-[141px] lg:w-[518px] lg:h-[598px] home-gif-compact z-0"
         style={slideStyle(100)}
       >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -151,7 +151,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick }: HomeProps
 
       {/* Title — tablet/desktop: "I'm" + logo inline */}
       <div
-        className="hidden md:block absolute left-[30px] right-[97px] top-[599px] lg:left-[60px] lg:right-auto lg:w-[1334px] lg:top-[530px] lg:pb-[40px] z-0"
+        className="hidden md:block absolute left-[30px] right-[97px] top-[599px] lg:left-[60px] lg:right-auto lg:w-[1334px] lg:top-auto lg:bottom-[60px] lg:pb-[40px] z-0"
         style={slideStyle(200)}
       >
         <div className="content-stretch flex flex-col gap-[24px] items-start relative lg:size-full">
@@ -168,7 +168,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick }: HomeProps
             </p>
             <HomeLogo className="relative shrink-0 md:h-[135px] md:w-[380px] lg:h-[201px] lg:w-[1334px]" fill={titleHovered ? '#2f2e29' : '#ffffff'} />
           </div>
-          <p className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[normal] not-italic relative shrink-0 text-[#302f2a] text-[36px] px-[16px] lg:px-0 lg:h-[90px] lg:w-[1323px]">
+          <p className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[normal] not-italic relative shrink-0 text-[#302f2a] text-[36px] px-[16px] lg:px-0 lg:h-[90px] lg:w-[1323px] home-paragraph-wrap">
             Senior Product Designer specializing in the creation of intuitive digital experiences, interaction design, and user-centered interfaces.
           </p>
         </div>

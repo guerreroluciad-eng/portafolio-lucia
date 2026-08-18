@@ -10,18 +10,27 @@ import imgRectangle20 from '@/imports/DesktopWorkpage-3/b3555b52c90124b3b6dd67f9
 import imgRectangle21 from '@/imports/DesktopWorkpage-3/31aecbdfe14e4f31ffad56087c8b5d5d7999933d.png'
 import imgRectangle22 from '@/imports/DesktopWorkpage-3/be67dbc000bbf29c86f810521c646ba6bafbb018.png'
 import imgRedisenoEt081 from '@/imports/DesktopWorkpage/71494aec586ac7dcb19e6a7869db7c24c6699f71.png'
+import imgArrowLeft from '@/imports/WorkArrows/left-arrow.png'
+import imgArrowRight from '@/imports/WorkArrows/right-arrow.png'
+import imgCompactAndroid from '@/imports/WorkCoversCompact/CoverAndroid.png'
+import imgCompactGoogle from '@/imports/WorkCoversCompact/CoverGoogle.png'
+import imgCompactMaestro from '@/imports/WorkCoversCompact/CoverMaestro.png'
+import imgCompactYoutube from '@/imports/WorkCoversCompact/CoverYoutube.png'
+import imgCompactElTiempo from '@/imports/WorkCoversCompact/CoverEltiempo.png'
+import imgCompactAppTiempo from '@/imports/WorkCoversCompact/CoverApptiempo.png'
+import imgCompactFutbolred from '@/imports/WorkCoversCompact/CoverFutbolred.png'
 
 // ─── Workpage Covers ─────────────────────────────────────────────────────────
 
 function CoverAndroid({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolean; onMouseEnter: () => void; onMouseLeave: () => void }) {
   return (
     <div
-      className="h-[338px] w-[322px] overflow-clip relative shrink-0"
+      className="h-[338px] w-[322px] work-cover-compact-android overflow-clip relative shrink-0"
       style={{ isolation: 'isolate', cursor: 'default' }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px]">
+      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px] work-cover-old">
         <img
           alt=""
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
@@ -41,6 +50,26 @@ function CoverAndroid({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolea
           }}
         />
       </div>
+      {/* Compact cover — 1200–1439px width only */}
+      <div className="hidden work-cover-new absolute inset-0">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgCompactAndroid}
+          style={{ mixBlendMode: hovered ? 'multiply' : 'normal', transition: 'mix-blend-mode 0s' }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#302F2A',
+            mixBlendMode: 'screen',
+            opacity: hovered ? 1 : 0,
+            transition: 'opacity 0.35s ease',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
     </div>
   )
 }
@@ -48,12 +77,12 @@ function CoverAndroid({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolea
 function CoverMaestro({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolean; onMouseEnter: () => void; onMouseLeave: () => void }) {
   return (
     <div
-      className="h-[337px] w-[234px] overflow-clip relative shrink-0"
+      className="h-[337px] w-[234px] work-cover-compact-maestro overflow-clip relative shrink-0"
       style={{ isolation: 'isolate', cursor: 'default' }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="absolute h-[338px] left-0 top-[0.5px] w-[234px]">
+      <div className="absolute h-[338px] left-0 top-[0.5px] w-[234px] work-cover-old">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             alt=""
@@ -74,6 +103,26 @@ function CoverMaestro({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolea
           />
         </div>
       </div>
+      {/* Compact cover — 1200–1439px width only */}
+      <div className="hidden work-cover-new absolute inset-0">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgCompactMaestro}
+          style={{ mixBlendMode: hovered ? 'multiply' : 'normal' }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#302F2A',
+            mixBlendMode: 'screen',
+            opacity: hovered ? 1 : 0,
+            transition: 'opacity 0.35s ease',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
     </div>
   )
 }
@@ -81,12 +130,12 @@ function CoverMaestro({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolea
 function CoverYoutube({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolean; onMouseEnter: () => void; onMouseLeave: () => void }) {
   return (
     <div
-      className="h-[338px] w-[322px] overflow-clip relative shrink-0"
+      className="h-[338px] w-[322px] work-cover-compact-youtube overflow-clip relative shrink-0"
       style={{ isolation: 'isolate', cursor: 'default' }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px]">
+      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px] work-cover-old">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             alt=""
@@ -107,6 +156,26 @@ function CoverYoutube({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolea
           />
         </div>
       </div>
+      {/* Compact cover — 1200–1439px width only */}
+      <div className="hidden work-cover-new absolute inset-0">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgCompactYoutube}
+          style={{ mixBlendMode: hovered ? 'multiply' : 'normal' }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#302F2A',
+            mixBlendMode: 'screen',
+            opacity: hovered ? 1 : 0,
+            transition: 'opacity 0.35s ease',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
     </div>
   )
 }
@@ -114,12 +183,12 @@ function CoverYoutube({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolea
 function CoverAndroid1b({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolean; onMouseEnter: () => void; onMouseLeave: () => void }) {
   return (
     <div
-      className="h-[338px] w-[322px] overflow-clip relative shrink-0"
+      className="h-[338px] w-[322px] work-cover-compact-google overflow-clip relative shrink-0"
       style={{ isolation: 'isolate', cursor: 'default' }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px]">
+      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px] work-cover-old">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             alt=""
@@ -140,6 +209,26 @@ function CoverAndroid1b({ hovered, onMouseEnter, onMouseLeave }: { hovered: bool
           />
         </div>
       </div>
+      {/* Compact cover — 1200–1439px width only */}
+      <div className="hidden work-cover-new absolute inset-0">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgCompactGoogle}
+          style={{ mixBlendMode: hovered ? 'multiply' : 'normal' }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#302F2A',
+            mixBlendMode: 'screen',
+            opacity: hovered ? 1 : 0,
+            transition: 'opacity 0.35s ease',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
     </div>
   )
 }
@@ -147,16 +236,36 @@ function CoverAndroid1b({ hovered, onMouseEnter, onMouseLeave }: { hovered: bool
 function CoverElTiempoImg({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolean; onMouseEnter: () => void; onMouseLeave: () => void }) {
   return (
     <div
-      className="h-[338px] w-[322px] overflow-clip relative shrink-0"
+      className="h-[338px] w-[322px] work-cover-compact-eltiempo overflow-clip relative shrink-0"
       style={{ isolation: 'isolate', cursor: 'default' }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px]">
+      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px] work-cover-old">
         <img
           alt=""
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
           src={imgRectangle20}
+          style={{ mixBlendMode: hovered ? 'multiply' : 'normal' }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#302F2A',
+            mixBlendMode: 'screen',
+            opacity: hovered ? 1 : 0,
+            transition: 'opacity 0.35s ease',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
+      {/* Compact cover — 1200–1439px width only */}
+      <div className="hidden work-cover-new absolute inset-0">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgCompactElTiempo}
           style={{ mixBlendMode: hovered ? 'multiply' : 'normal' }}
         />
         <div
@@ -178,16 +287,36 @@ function CoverElTiempoImg({ hovered, onMouseEnter, onMouseLeave }: { hovered: bo
 function CoverMaestro1({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolean; onMouseEnter: () => void; onMouseLeave: () => void }) {
   return (
     <div
-      className="h-[337px] w-[234px] overflow-clip relative shrink-0"
+      className="h-[337px] w-[234px] work-cover-compact-apptiempo overflow-clip relative shrink-0"
       style={{ isolation: 'isolate', cursor: 'default' }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="absolute h-[338px] left-0 top-[0.5px] w-[234px]">
+      <div className="absolute h-[338px] left-0 top-[0.5px] w-[234px] work-cover-old">
         <img
           alt=""
           className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
           src={imgRectangle21}
+          style={{ mixBlendMode: hovered ? 'multiply' : 'normal' }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#302F2A',
+            mixBlendMode: 'screen',
+            opacity: hovered ? 1 : 0,
+            transition: 'opacity 0.35s ease',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
+      {/* Compact cover — 1200–1439px width only */}
+      <div className="hidden work-cover-new absolute inset-0">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgCompactAppTiempo}
           style={{ mixBlendMode: hovered ? 'multiply' : 'normal' }}
         />
         <div
@@ -209,12 +338,12 @@ function CoverMaestro1({ hovered, onMouseEnter, onMouseLeave }: { hovered: boole
 function CoverAndroid3({ hovered, onMouseEnter, onMouseLeave }: { hovered: boolean; onMouseEnter: () => void; onMouseLeave: () => void }) {
   return (
     <div
-      className="h-[338px] w-[322px] overflow-clip relative shrink-0"
+      className="h-[338px] w-[322px] work-cover-compact-futbolred overflow-clip relative shrink-0"
       style={{ isolation: 'isolate', cursor: 'default' }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px]">
+      <div className="-translate-x-1/2 absolute h-[338px] left-1/2 top-0 w-[324px] work-cover-old">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
             alt=""
@@ -234,6 +363,26 @@ function CoverAndroid3({ hovered, onMouseEnter, onMouseLeave }: { hovered: boole
             }}
           />
         </div>
+      </div>
+      {/* Compact cover — 1200–1439px width only */}
+      <div className="hidden work-cover-new absolute inset-0">
+        <img
+          alt=""
+          className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          src={imgCompactFutbolred}
+          style={{ mixBlendMode: hovered ? 'multiply' : 'normal' }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#302F2A',
+            mixBlendMode: 'screen',
+            opacity: hovered ? 1 : 0,
+            transition: 'opacity 0.35s ease',
+            pointerEvents: 'none',
+          }}
+        />
       </div>
     </div>
   )
@@ -328,7 +477,7 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
       : { opacity: 0 }
 
   return (
-    <div className="bg-[#e1dad0] relative w-full min-h-screen">
+    <div className="bg-[#e1dad0] relative w-full min-h-screen overflow-y-auto">
 
       {/* Black hinge rectangle behind work header — desktop hover only */}
       <div
@@ -385,30 +534,54 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
         </div>
       </div>
 
-      {/* "Work / Android" heading */}
-      <div
-        className="relative pt-[136px] md:pt-[204px] lg:pt-0 lg:absolute content-stretch flex items-center justify-center lg:left-1/2 lg:-translate-x-1/2 lg:top-[250px] lg:w-[1104px]"
-        style={workSlideStyle(120)}
-        onMouseEnter={() => setWorkHeadingHovered(true)}
-        onMouseLeave={() => setWorkHeadingHovered(false)}
-      >
-        <p
-          className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[normal] not-italic relative shrink-0 text-[80px] md:text-[128px] lg:text-[200px] lg:h-[215px] lg:w-[1000px] w-full text-center"
-          style={{
-            color: workHeadingHovered ? '#2f2e29' : '#ffffff',
-            transition: 'color 0.3s ease',
-            cursor: 'default',
-          }}
-        >
-          {androidHovered ? 'Android' : googleHovered ? 'Google' : maestroHovered ? 'Maestro' : youtubeHovered ? 'Youtube' : elTiempoHovered ? 'El Tiempo' : appTiempoHovered ? 'App Tiempo' : futbolredHovered ? 'Futbolred' : 'Work'}
-        </p>
-      </div>
+      {/* Desktop content flow: heading → hint → nav arrows → carousel, spaced per spec.
+          Mobile/tablet are untouched — each child keeps its own relative/pt-based
+          positioning at those breakpoints; this wrapper only takes effect at lg. */}
+      <div className="lg:flex lg:flex-col lg:items-center lg:pt-[202px]">
 
-      {/* Carousel — draggable + wheel scroll */}
-      <div
-        className="relative mt-[145px] md:mt-[212px] lg:mt-0 lg:absolute lg:left-0 lg:right-0 lg:top-[616px] overflow-hidden"
-        style={workSlideStyle(260)}
-      >
+        {/* "Work / Android" heading */}
+        <div
+          className="relative pt-[136px] md:pt-[204px] lg:pt-0 content-stretch flex items-center justify-center lg:w-[1104px]"
+          style={workSlideStyle(120)}
+          onMouseEnter={() => setWorkHeadingHovered(true)}
+          onMouseLeave={() => setWorkHeadingHovered(false)}
+        >
+          <p
+            className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[normal] not-italic relative shrink-0 text-[80px] md:text-[128px] lg:text-[200px] lg:h-[215px] lg:w-[1000px] work-compact-heading w-full text-center"
+            style={{
+              color: workHeadingHovered ? '#2f2e29' : '#ffffff',
+              transition: 'color 0.3s ease',
+              cursor: 'default',
+            }}
+          >
+            {androidHovered ? 'Android' : googleHovered ? 'Google' : maestroHovered ? 'Maestro' : youtubeHovered ? 'Youtube' : elTiempoHovered ? 'El Tiempo' : appTiempoHovered ? 'App Tiempo' : futbolredHovered ? 'Futbolred' : 'Work'}
+          </p>
+        </div>
+
+        {/* "Hold and drag to discover" hint */}
+        <p
+          className="block mt-[20px] md:mt-[10px] lg:mt-[48px] work-compact-hint font-['Abhaya_Libre',serif] font-normal not-italic uppercase text-[20px] text-[#302f2a] text-center"
+          style={workSlideStyle(180)}
+        >
+          Hold and drag to discover
+        </p>
+
+        {/* Carousel nav arrows — icons pinned 16px from the box's own edges,
+            the gap between them flexes with the box width (box spans the same
+            side margins as the header/carousel at every breakpoint). */}
+        <div
+          className="flex mx-auto mt-[63px] md:mt-[93px] lg:mt-[31px] work-compact-arrows w-[calc(100vw-32px)] md:w-[calc(100vw-60px)] lg:w-[calc(100vw-120px)] items-center justify-between px-[16px]"
+          style={workSlideStyle(220)}
+        >
+          <img src={imgArrowLeft} alt="" className="h-[32px] w-[32px] object-contain pointer-events-none" />
+          <img src={imgArrowRight} alt="" className="h-[32px] w-[32px] object-contain pointer-events-none" />
+        </div>
+
+        {/* Carousel — draggable + wheel scroll */}
+        <div
+          className="relative mt-[10px] md:mt-[10px] lg:mt-[15px] lg:pb-[157px] work-compact-carousel w-full overflow-hidden"
+          style={workSlideStyle(260)}
+        >
         <div
           ref={carouselRef}
           className="flex gap-[47px] items-center select-none px-4 md:px-[30px] lg:px-[60px]"
@@ -481,6 +654,7 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   )
