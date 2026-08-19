@@ -21,6 +21,7 @@ interface AppTiempoCaseProps {
   onWorkClick: () => void
   onAboutClick: () => void
   onLuciaClick: () => void
+  onNextClick: () => void
 }
 
 export default function AppTiempoCase({
@@ -30,6 +31,7 @@ export default function AppTiempoCase({
   onWorkClick,
   onAboutClick,
   onLuciaClick,
+  onNextClick,
 }: AppTiempoCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
 
@@ -134,7 +136,7 @@ export default function AppTiempoCase({
           <p>The result was a more timely, engaging, and user-centered experience, while creating new opportunities for El Tiempo to understand reader interests and encourage deeper interaction with its content.</p>
         </ProjectTextBlock>
 
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
+        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." onNextClick={onNextClick} />
       </div>
     </div>
   )

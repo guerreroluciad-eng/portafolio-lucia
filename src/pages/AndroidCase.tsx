@@ -23,6 +23,7 @@ interface AndroidCaseProps {
   onWorkClick: () => void
   onAboutClick: () => void
   onLuciaClick: () => void
+  onNextClick: () => void
 }
 
 export default function AndroidCase({
@@ -32,6 +33,7 @@ export default function AndroidCase({
   onWorkClick,
   onAboutClick,
   onLuciaClick,
+  onNextClick,
 }: AndroidCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
 
@@ -154,7 +156,7 @@ export default function AndroidCase({
           </ul>
         </ProjectTextBlock>
 
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
+        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." onNextClick={onNextClick} />
       </div>
     </div>
   )

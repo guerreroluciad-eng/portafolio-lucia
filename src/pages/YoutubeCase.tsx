@@ -23,6 +23,7 @@ interface YoutubeCaseProps {
   onWorkClick: () => void
   onAboutClick: () => void
   onLuciaClick: () => void
+  onNextClick: () => void
 }
 
 export default function YoutubeCase({
@@ -32,6 +33,7 @@ export default function YoutubeCase({
   onWorkClick,
   onAboutClick,
   onLuciaClick,
+  onNextClick,
 }: YoutubeCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
 
@@ -165,7 +167,7 @@ export default function YoutubeCase({
           <p>By combining a clear visual hierarchy, contextual assistance, and a flexible AI response system, the experience makes complex AI-generated information easier to understand and act on. The result is a faster, more intuitive, and more engaging way for creators to discover content opportunities and information relevant to their work.</p>
         </ProjectTextBlock>
 
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
+        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." onNextClick={onNextClick} />
       </div>
     </div>
   )

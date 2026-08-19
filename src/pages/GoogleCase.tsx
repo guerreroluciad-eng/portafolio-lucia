@@ -22,6 +22,7 @@ interface GoogleCaseProps {
   onWorkClick: () => void
   onAboutClick: () => void
   onLuciaClick: () => void
+  onNextClick: () => void
 }
 
 export default function GoogleCase({
@@ -31,6 +32,7 @@ export default function GoogleCase({
   onWorkClick,
   onAboutClick,
   onLuciaClick,
+  onNextClick,
 }: GoogleCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
 
@@ -143,7 +145,7 @@ export default function GoogleCase({
           <p>Overall, the project transformed a static information repository into a more guided and user-centered onboarding experience for new team members.</p>
         </ProjectTextBlock>
 
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
+        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." onNextClick={onNextClick} />
       </div>
     </div>
   )

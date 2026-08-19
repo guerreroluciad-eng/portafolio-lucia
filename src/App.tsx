@@ -38,6 +38,10 @@ export default function App() {
   const luciaOrigin = useRef<'work' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('work')
   const aboutOrigin = useRef<'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
   const workOrigin = useRef<'home' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
+  // Which page a project-to-project ("Next page") or work-to-project transition
+  // started from, so the transition overlay's "-in"/"-wipe" phases render the
+  // correct page underneath instead of always assuming it came from Work.
+  const projectNavOrigin = useRef<'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'>('work')
   const [androidPageReady, setAndroidPageReady] = useState(false)
   const [androidScrolled, setAndroidScrolled] = useState(false)
   const [googlePageReady, setGooglePageReady] = useState(false)
@@ -63,7 +67,8 @@ export default function App() {
   }, [])
 
   function handleAndroidClick() {
-    if (screen !== 'work') return
+    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
+    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
     setScreen('android-in')
     setTimeout(() => {
       setScreen('android-wipe')
@@ -71,6 +76,7 @@ export default function App() {
         setScreen('android-out')
         setTimeout(() => {
           setScreen('android')
+          window.scrollTo(0, 0)
           setAndroidPageReady(false)
           setAndroidScrolled(false)
           setTimeout(() => setAndroidPageReady(true), 60)
@@ -80,7 +86,8 @@ export default function App() {
   }
 
   function handleGoogleClick() {
-    if (screen !== 'work') return
+    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
+    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
     setScreen('google-in')
     setTimeout(() => {
       setScreen('google-wipe')
@@ -88,6 +95,7 @@ export default function App() {
         setScreen('google-out')
         setTimeout(() => {
           setScreen('google')
+          window.scrollTo(0, 0)
           setGooglePageReady(false)
           setGoogleScrolled(false)
           setTimeout(() => setGooglePageReady(true), 60)
@@ -97,7 +105,8 @@ export default function App() {
   }
 
   function handleYoutubeClick() {
-    if (screen !== 'work') return
+    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
+    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
     setScreen('youtube-in')
     setTimeout(() => {
       setScreen('youtube-wipe')
@@ -105,6 +114,7 @@ export default function App() {
         setScreen('youtube-out')
         setTimeout(() => {
           setScreen('youtube')
+          window.scrollTo(0, 0)
           setYoutubePageReady(false)
           setYoutubeScrolled(false)
           setTimeout(() => setYoutubePageReady(true), 60)
@@ -114,7 +124,8 @@ export default function App() {
   }
 
   function handleElTiempoClick() {
-    if (screen !== 'work') return
+    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
+    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
     setScreen('eltiempo-in')
     setTimeout(() => {
       setScreen('eltiempo-wipe')
@@ -122,6 +133,7 @@ export default function App() {
         setScreen('eltiempo-out')
         setTimeout(() => {
           setScreen('eltiempo')
+          window.scrollTo(0, 0)
           setElTiempoPageReady(false)
           setElTiempoScrolled(false)
           setTimeout(() => setElTiempoPageReady(true), 60)
@@ -131,7 +143,8 @@ export default function App() {
   }
 
   function handleAppTiempoClick() {
-    if (screen !== 'work') return
+    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
+    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
     setScreen('apptiempo-in')
     setTimeout(() => {
       setScreen('apptiempo-wipe')
@@ -139,6 +152,7 @@ export default function App() {
         setScreen('apptiempo-out')
         setTimeout(() => {
           setScreen('apptiempo')
+          window.scrollTo(0, 0)
           setAppTiempoPageReady(false)
           setAppTiempoScrolled(false)
           setTimeout(() => setAppTiempoPageReady(true), 60)
@@ -156,6 +170,7 @@ export default function App() {
         setScreen('maestro-out')
         setTimeout(() => {
           setScreen('maestro')
+          window.scrollTo(0, 0)
           setMaestroPageReady(false)
           setMaestroScrolled(false)
           setTimeout(() => setMaestroPageReady(true), 60)
@@ -173,6 +188,7 @@ export default function App() {
         setScreen('futbolred-out')
         setTimeout(() => {
           setScreen('futbolred')
+          window.scrollTo(0, 0)
           setFutbolredPageReady(false)
           setFutbolredScrolled(false)
           setTimeout(() => setFutbolredPageReady(true), 60)
@@ -237,6 +253,18 @@ export default function App() {
       }, 1400)
     }, 900)
   }
+
+  // True while any of the 5 cyclable project screens is mid-transition
+  // ("-in" or "-wipe"), regardless of which one. Combined with
+  // projectNavOrigin, this decides which page renders behind the transition
+  // overlay: Work (the old, only path) or another project page (new, for
+  // "Next page" project-to-project navigation).
+  const anyProjectTransitioning =
+    screen === 'android-in' || screen === 'android-wipe' ||
+    screen === 'google-in' || screen === 'google-wipe' ||
+    screen === 'youtube-in' || screen === 'youtube-wipe' ||
+    screen === 'eltiempo-in' || screen === 'eltiempo-wipe' ||
+    screen === 'apptiempo-in' || screen === 'apptiempo-wipe'
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden" style={{ fontFamily: "'Abhaya Libre', serif" }}>
@@ -577,9 +605,8 @@ export default function App() {
       )}
 
       {/* ── WORK PAGE ────────────────────────────────────────────────── */}
-      {(screen === 'work' || screen === 'transition-out' || screen === 'android-in' || screen === 'android-wipe' ||
-        screen === 'google-in' || screen === 'google-wipe' || screen === 'youtube-in' || screen === 'youtube-wipe' ||
-        screen === 'eltiempo-in' || screen === 'eltiempo-wipe' || screen === 'apptiempo-in' || screen === 'apptiempo-wipe' ||
+      {(screen === 'work' || screen === 'transition-out' ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'work') ||
         screen === 'maestro-in' || screen === 'maestro-wipe' || screen === 'futbolred-in' || screen === 'futbolred-wipe' ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'work') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'work') ||
@@ -622,7 +649,8 @@ export default function App() {
       {(screen === 'android' || screen === 'android-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'android') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'android') ||
-        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'android')) && (
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'android') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'android')) && (
         <AndroidCase
           androidPageReady={androidPageReady}
           androidScrolled={androidScrolled}
@@ -630,6 +658,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
+          onNextClick={handleAppTiempoClick}
         />
       )}
 
@@ -637,7 +666,8 @@ export default function App() {
       {(screen === 'google' || screen === 'google-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'google') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'google') ||
-        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'google')) && (
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'google') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'google')) && (
         <GoogleCase
           googlePageReady={googlePageReady}
           googleScrolled={googleScrolled}
@@ -645,6 +675,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
+          onNextClick={handleElTiempoClick}
         />
       )}
 
@@ -652,7 +683,8 @@ export default function App() {
       {(screen === 'youtube' || screen === 'youtube-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'youtube') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'youtube') ||
-        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'youtube')) && (
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'youtube') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'youtube')) && (
         <YoutubeCase
           youtubePageReady={youtubePageReady}
           youtubeScrolled={youtubeScrolled}
@@ -660,6 +692,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
+          onNextClick={handleAndroidClick}
         />
       )}
 
@@ -667,7 +700,8 @@ export default function App() {
       {(screen === 'eltiempo' || screen === 'eltiempo-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'eltiempo') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'eltiempo') ||
-        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'eltiempo')) && (
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'eltiempo') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'eltiempo')) && (
         <ElTiempoCase
           elTiempoPageReady={elTiempoPageReady}
           elTiempoScrolled={elTiempoScrolled}
@@ -675,6 +709,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
+          onNextClick={handleYoutubeClick}
         />
       )}
 
@@ -682,7 +717,8 @@ export default function App() {
       {(screen === 'apptiempo' || screen === 'apptiempo-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'apptiempo') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'apptiempo') ||
-        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'apptiempo')) && (
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'apptiempo') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'apptiempo')) && (
         <AppTiempoCase
           appTiempoPageReady={appTiempoPageReady}
           appTiempoScrolled={appTiempoScrolled}
@@ -690,6 +726,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
+          onNextClick={handleGoogleClick}
         />
       )}
 

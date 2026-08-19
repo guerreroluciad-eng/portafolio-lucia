@@ -23,6 +23,7 @@ interface ElTiempoCaseProps {
   onWorkClick: () => void
   onAboutClick: () => void
   onLuciaClick: () => void
+  onNextClick: () => void
 }
 
 export default function ElTiempoCase({
@@ -32,6 +33,7 @@ export default function ElTiempoCase({
   onWorkClick,
   onAboutClick,
   onLuciaClick,
+  onNextClick,
 }: ElTiempoCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
 
@@ -149,7 +151,7 @@ export default function ElTiempoCase({
           <p>The result was a more adaptable and engaging news experience that balanced editorial flexibility, user needs, and a cohesive digital identity.</p>
         </ProjectTextBlock>
 
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
+        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." onNextClick={onNextClick} />
       </div>
     </div>
   )

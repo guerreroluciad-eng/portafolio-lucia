@@ -1,5 +1,11 @@
 // ─── Project Title ──────────────────────────────────────────────────────────
-// Company label + giant hover-color case title. Shared across project pages.
+// Previously rendered the company label + giant hover-color case title above
+// ProjectMeta. Both were removed from every project page's visible content
+// (per request), but call sites (`<ProjectTitle company=... title=... />`)
+// were intentionally left in place across all case pages — this component is
+// kept as a no-op so existing and future pages built from the same template
+// don't need editing. The header-to-ProjectMeta spacing this used to provide
+// is now owned by ProjectMeta's own top margin.
 
 interface ProjectTitleProps {
   company: string
@@ -9,18 +15,6 @@ interface ProjectTitleProps {
   titleHoverColor?: string
 }
 
-export default function ProjectTitle({ company, title, companyColor = '#302f2a', titleColor = '#e1dad0', titleHoverColor = '#2f2e29' }: ProjectTitleProps) {
-  return (
-    <div className="flex flex-col items-center justify-center w-full mt-[58px] lg:mt-0 mb-[68px]">
-      <p className="font-['Abhaya_Libre',serif] font-medium text-[40px] leading-[30px] text-center mb-6" style={{ color: companyColor }}>{company}</p>
-      <p
-        className="font-['Abhaya_Libre',serif] leading-none cursor-default text-[90px] md:text-[150px] lg:text-[200px] px-[27px] md:px-[89px] lg:px-0 text-center"
-        style={{ color: titleColor, transition: 'color 0.25s ease' }}
-        onMouseEnter={e => (e.currentTarget.style.color = titleHoverColor)}
-        onMouseLeave={e => (e.currentTarget.style.color = titleColor)}
-      >
-        {title}
-      </p>
-    </div>
-  )
+export default function ProjectTitle(_props: ProjectTitleProps) {
+  return null
 }
