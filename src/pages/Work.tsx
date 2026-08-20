@@ -110,11 +110,15 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
     setActiveCardIndex(closestIndex)
   }
 
-  // Clicking a dot scrolls the carousel to center that card. The scroll
-  // itself (smooth, native) fires 'scroll' events along the way, so
-  // updateActiveCardIndex (already wired to onScroll) keeps the dots in
-  // sync without any extra state.
+  // Clicking a dot marks it active immediately (regardless of whether the
+  // carousel actually has room to scroll — on wide desktop widths all cards
+  // can already be fully visible, so there may be nothing to scroll to) and
+  // also scrolls the carousel to center that card when there is scroll room.
+  // If a scroll does happen, its native 'scroll' events keep re-confirming
+  // the active dot via updateActiveCardIndex (already wired to onScroll) as
+  // it settles into place.
   function goToCard(index: number) {
+    setActiveCardIndex(index)
     const scrollEl = carouselRef.current
     const card = cardRefs.current[index]
     if (!scrollEl || !card) return
