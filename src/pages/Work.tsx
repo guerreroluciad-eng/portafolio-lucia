@@ -7,22 +7,30 @@ import imgCoverElTiempo from '@/imports/WorkCoversNew/CoverElTiempo.png'
 import imgCoverYoutube from '@/imports/WorkCoversNew/CoverYoutube.png'
 import imgCoverAndroid from '@/imports/WorkCoversNew/CoverAndroid.png'
 import imgCoverAppTiempo from '@/imports/WorkCoversNew/CoverAppTiempo.png'
-import imgFloatingArrow from '@/imports/WorkArrows/floating-arrow.png'
 
 // ─── Workpage Cover Card ─────────────────────────────────────────────────────
 // All five remaining carousel covers share the same fixed 340×407px size, so
 // a single card renderer replaces the old per-project components (each of
 // which used to carry its own bespoke crop math for a different image size).
 
-function CarouselDot({ active }: { active: boolean }) {
-  return active ? (
-    <svg width="12" height="12" viewBox="0 0 12 12" className="shrink-0">
-      <circle cx="6" cy="6" r="6" fill="#302f2a" />
-    </svg>
-  ) : (
-    <svg width="8" height="8" viewBox="0 0 8 8" className="shrink-0">
-      <circle cx="4" cy="4" r="3.5" stroke="#302f2a" fill="none" />
-    </svg>
+function CarouselDot({ active, onClick }: { active: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label="Go to slide"
+      className="shrink-0 flex items-center justify-center p-0 bg-transparent border-none cursor-pointer"
+      style={{ width: '12px', height: '12px' }}
+    >
+      {active ? (
+        <svg width="12" height="12" viewBox="0 0 12 12">
+          <circle cx="6" cy="6" r="6" fill="#302f2a" />
+        </svg>
+      ) : (
+        <svg width="8" height="8" viewBox="0 0 8 8">
+          <circle cx="4" cy="4" r="3.5" stroke="#302f2a" fill="none" />
+        </svg>
+      )}
+    </button>
   )
 }
 
@@ -102,16 +110,22 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
     setActiveCardIndex(closestIndex)
   }
 
-  // Floating "drag to explore" arrow — shown once, over the carousel, only on
-  // desktop, until the user actually interacts with the carousel (drag/hold).
-  // Once dismissed it never comes back.
-  const [hasInteractedWithCarousel, setHasInteractedWithCarousel] = useState(false)
+  // Clicking a dot scrolls the carousel to center that card. The scroll
+  // itself (smooth, native) fires 'scroll' events along the way, so
+  // updateActiveCardIndex (already wired to onScroll) keeps the dots in
+  // sync without any extra state.
+  function goToCard(index: number) {
+    const scrollEl = carouselRef.current
+    const card = cardRefs.current[index]
+    if (!scrollEl || !card) return
+    const cardCenter = card.offsetLeft + card.offsetWidth / 2
+    scrollEl.scrollTo({ left: cardCenter - scrollEl.clientWidth / 2, behavior: 'smooth' })
+  }
 
   function onCarouselMouseDown(e: React.MouseEvent) {
     const el = carouselRef.current
     if (!el) return
     setIsDragging(true)
-    setHasInteractedWithCarousel(true)
     dragStart.current = { x: e.pageX, scrollLeft: el.scrollLeft }
   }
   function onCarouselMouseMove(e: React.MouseEvent) {
@@ -237,24 +251,9 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
           className="relative mt-[40px] md:mt-[70px] lg:mt-[50px] lg:pb-[157px] w-full overflow-hidden"
           style={workSlideStyle(260)}
         >
-        {/* Floating arrow — desktop only, shown until the user drags/holds the carousel */}
-        <img
-          src={imgFloatingArrow}
-          alt=""
-          className="hidden lg:block absolute z-10 pointer-events-none"
-          style={{
-            width: '74px',
-            height: '71px',
-            left: '16px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            opacity: hasInteractedWithCarousel ? 0 : 1,
-            transition: 'opacity 0.5s ease',
-          }}
-        />
         <div
           ref={carouselRef}
-          className="flex gap-[47px] items-center select-none px-4 md:px-[30px] lg:px-[60px]"
+          className="flex items-center select-none px-4 md:px-[30px] lg:px-[60px]"
           style={{
             overflowX: 'auto',
             scrollbarWidth: 'none',
@@ -267,9 +266,6 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
           onWheel={onCarouselWheel}
           onScroll={updateActiveCardIndex}
         >
-          <p className="[word-break:break-word] font-['Abhaya_Libre',serif] font-medium h-[60px] leading-[30px] not-italic shrink-0 text-[40px] text-black text-center w-[150px]">
-            Product Design
-          </p>
           <div className="flex gap-[48px] items-center shrink-0">
             {covers.map((cover, index) => (
               <div
@@ -296,7 +292,7 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
             the requested 30px below the actual card artwork, not the box. */}
         <div className="flex items-center justify-center gap-[10px]" style={{ marginTop: '-73px' }}>
           {covers.map((cover, index) => (
-            <CarouselDot key={cover.key} active={index === activeCardIndex} />
+            <CarouselDot key={cover.key} active={index === activeCardIndex} onClick={() => goToCard(index)} />
           ))}
         </div>
       </div>
