@@ -2,16 +2,14 @@ import ScrollHeader from '@/components/ScrollHeader'
 import ProjectHeader from '@/components/ProjectHeader'
 import ProjectTitle from '@/components/ProjectTitle'
 import ProjectMeta from '@/components/ProjectMeta'
-import { ProjectImageRow, ProjectImageBox } from '@/components/ProjectImageRow'
 import ProjectTextBlock, { ProjectTextHeading } from '@/components/ProjectTextBlock'
 import ProjectSectionImage from '@/components/ProjectSectionImage'
 import ProjectContact from '@/components/ProjectContact'
+import ProjectPageNav, { type ProjectNavCardData } from '@/components/ProjectPageNav'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
 import imgHero1 from '@/imports/Youtube/Hero-1.png'
-import gifHero2 from '@/imports/Youtube/Hero-2.gif'
-import imgHero3 from '@/imports/Youtube/Hero-3.png'
-import gifSection01 from '@/imports/Youtube/Image-01.gif'
-import imgSection02 from '@/imports/Youtube/Image-02.png'
+import imgSection01 from '@/imports/Youtube/Image-01.png'
+import gifSection02 from '@/imports/Youtube/Image-02.gif'
 import imgSection03 from '@/imports/Youtube/Image-03.png'
 import gifSection04 from '@/imports/Youtube/Image-04.gif'
 import imgSection05 from '@/imports/Youtube/Image-05.png'
@@ -23,7 +21,8 @@ interface YoutubeCaseProps {
   onWorkClick: () => void
   onAboutClick: () => void
   onLuciaClick: () => void
-  onNextClick: () => void
+  prevProject: ProjectNavCardData
+  nextProject: ProjectNavCardData
 }
 
 export default function YoutubeCase({
@@ -33,7 +32,8 @@ export default function YoutubeCase({
   onWorkClick,
   onAboutClick,
   onLuciaClick,
-  onNextClick,
+  prevProject,
+  nextProject,
 }: YoutubeCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
 
@@ -65,6 +65,9 @@ export default function YoutubeCase({
 
         <ProjectMeta
           subtitle="AI-Powered Search for YouTube Blog Creators"
+          subtitleSize={48}
+          subtitleMobileSize={32}
+          subtitleMobileLineHeight={34}
           metaLines={[
             { label: 'My role', value: 'Product Designer / UI Designer' },
             { label: 'Collaboration', value: 'UX Research, UX Design & Development' },
@@ -72,51 +75,45 @@ export default function YoutubeCase({
           ]}
         />
 
-        <ProjectImageRow>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={imgHero1} />
-          </ProjectImageBox>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={gifHero2} />
-          </ProjectImageBox>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={imgHero3} />
-          </ProjectImageBox>
-        </ProjectImageRow>
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/776' }}>
+          <img alt="" className="absolute inset-0 size-full object-cover" src={imgHero1} />
+        </ProjectSectionImage>
 
         <ProjectTextBlock>
+          <ProjectTextHeading>Impact & Content Strategy:</ProjectTextHeading>
+          <p className="mb-4">The impact of this project goes beyond improving the search experience—it aims to empower creators to create better content. By enhancing the search engine and giving users access to more sophisticated AI-powered tools, the platform becomes a stronger environment for content creation and discovery.</p>
+          <p className="mb-8">The strategy was to make YouTube Blog more than just a place to publish: a platform equipped with AI tools that help creators research, develop, and create content, offering capabilities that set it apart from traditional blogging platforms.</p>
           <ProjectTextHeading>Overview:</ProjectTextHeading>
           <p className="mb-4">This project explored a new AI-powered search experience designed to help YouTube creators discover relevant content opportunities, generate personalized recommendations, and improve the quality and performance of their blogs.</p>
-          <p className="mb-8">The goal was to make AI-powered search feel faster, more intuitive, and more useful, while creating an experience that seamlessly integrated into the existing product ecosystem.</p>
-          <ProjectTextHeading>The Challenge:</ProjectTextHeading>
-          <p className="mb-4">Creators often need to explore multiple sources of information before finding the right content opportunity. The challenge was to simplify this process by introducing AI as a more direct and conversational way to search, while keeping the experience clear and easy to navigate.</p>
-          <p>The solution was structured around three key touchpoints, creating a continuous journey from discovery to search and deeper exploration.</p>
+          <p>The goal was to make AI-powered search feel faster, more intuitive, and more useful, while creating an experience that seamlessly integrated into the existing product ecosystem.</p>
+        </ProjectTextBlock>
+
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/1040' }}>
+          <img alt="" className="absolute inset-0 size-full object-cover" src={imgSection01} />
+        </ProjectSectionImage>
+
+        <ProjectTextBlock>
+          <ProjectTextHeading>02 — UX Strategy</ProjectTextHeading>
+          <p className="mb-4">We explored multiple ways to structure and present AI-generated results through an iterative wireframing process. By testing different layouts, content groupings, and response types, we identified which information was most relevant and useful for creators.</p>
+          <p className="mb-4">We then used card sorting to validate how these results could be organized and prioritized within the AI experience. This helped us define clearer categories and a more intuitive navigation structure, ensuring that the final experience was driven by user needs rather than assumptions.</p>
+          <p>The result was a more focused AI search experience that made relevant content easier to discover and helped creators move from search to insight to action.</p>
         </ProjectTextBlock>
 
         <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '3000/1303' }}>
-          <img alt="" className="absolute inset-0 size-full object-cover" src={gifSection01} />
+          <img alt="" className="absolute inset-0 size-full object-cover" src={gifSection02} />
         </ProjectSectionImage>
 
         <ProjectTextBlock>
           <ProjectTextHeading>01 — Homepage</ProjectTextHeading>
           <p className="mb-4">The homepage was redesigned to make AI search the primary entry point of the experience.</p>
           <p className="mb-4">A prominent search bar and animated call-to-action encourage users to interact from the moment they enter the product. Subtle micro-interactions create a sense of responsiveness and reinforce the idea that AI can provide immediate results.</p>
-          <p className="mb-4"><strong>Designing for speed and discoverability</strong></p>
-          <p className="mb-4">To strengthen this perception, we combined: large, expressive typography, clear and bold labels, a prominent search CTA, subtle micro-interactions and a dedicated visual language for AI-powered features.</p>
-          <p className="mb-4">We introduced a custom gradient inspired by the brand's existing color palette to visually distinguish AI functionality from the rest of the interface.</p>
-          <p>This gradient became a reusable visual language across key elements such as the search bar, search button, and supporting UI components, helping create a cohesive AI experience throughout the product.</p>
-        </ProjectTextBlock>
-
-        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/776' }}>
-          <img alt="" className="absolute inset-0 size-full object-cover" src={imgSection02} />
-        </ProjectSectionImage>
-
-        <ProjectTextBlock>
+          <p className="mb-8"><strong>Designing for speed and discoverability</strong></p>
           <ProjectTextHeading>02 — Quick Search</ProjectTextHeading>
           <p className="mb-4"><strong>Helping users find the right direction faster</strong></p>
           <p className="mb-4">As users begin typing, the Quick Search panel provides contextual suggestions and relevant keywords in real time.</p>
           <p className="mb-4">Instead of requiring users to formulate a complete query, the experience helps them refine their intent while searching.</p>
-          <p className="mb-4">This interaction was designed to: reduce effort → provide context → accelerate discovery.</p>
+          <p className="mb-2">This interaction was designed to:</p>
+          <p className="mb-4"><strong>Reduce effort → Provide context → Accelerate discovery</strong></p>
           <p>Quick Search became an important bridge between the initial interaction and the full AI-powered results experience.</p>
         </ProjectTextBlock>
 
@@ -140,7 +137,8 @@ export default function YoutubeCase({
           <p className="mb-2"><strong>03 — Suggested Searches</strong></p>
           <p className="mb-8">Finally, suggested searches provide additional paths for exploration once the primary intent has been addressed.</p>
 
-          <p className="mb-4">This hierarchy creates a natural progression: answer → refine → explore.</p>
+          <p className="mb-2">This hierarchy creates a natural progression:</p>
+          <p className="mb-4"><strong>Answer → Refine → Explore</strong></p>
           <p>Rather than presenting all AI-generated information with equal weight, the interface guides users from the most relevant information toward deeper discovery.</p>
         </ProjectTextBlock>
 
@@ -163,11 +161,17 @@ export default function YoutubeCase({
         <ProjectTextBlock>
           <ProjectTextHeading>Results</ProjectTextHeading>
           <p className="mb-4">The final product transformed AI search from a single search interaction into a guided discovery experience.</p>
-          <p className="mb-4">Users can move naturally through the journey: discover → search → get an answer → refine → explore.</p>
-          <p>By combining a clear visual hierarchy, contextual assistance, and a flexible AI response system, the experience makes complex AI-generated information easier to understand and act on. The result is a faster, more intuitive, and more engaging way for creators to discover content opportunities and information relevant to their work.</p>
+          <p className="mb-2">Users can move naturally through the journey:</p>
+          <p className="mb-4"><strong>Discover → Search → Get an answer → Refine → Explore</strong></p>
+          <p className="mb-4">By combining a clear visual hierarchy, contextual assistance, and a flexible AI response system, the experience makes complex AI-generated information easier to understand and act on.</p>
+          <p>The result is a faster, more intuitive, and more engaging way for creators to discover content opportunities and information relevant to their work.</p>
         </ProjectTextBlock>
 
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." onNextClick={onNextClick} />
+        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
+
+        <div className="mt-[68px]">
+          <ProjectPageNav prev={prevProject} next={nextProject} />
+        </div>
       </div>
     </div>
   )

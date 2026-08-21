@@ -2,17 +2,15 @@ import ScrollHeader from '@/components/ScrollHeader'
 import ProjectHeader from '@/components/ProjectHeader'
 import ProjectTitle from '@/components/ProjectTitle'
 import ProjectMeta from '@/components/ProjectMeta'
-import { ProjectImageRow, ProjectImageBox } from '@/components/ProjectImageRow'
 import ProjectTextBlock, { ProjectTextHeading } from '@/components/ProjectTextBlock'
 import ProjectSectionImage from '@/components/ProjectSectionImage'
 import ProjectContact from '@/components/ProjectContact'
+import ProjectPageNav, { type ProjectNavCardData } from '@/components/ProjectPageNav'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
 import imgHero01 from '@/imports/Google/Hero-01.jpg'
-import imgHero02 from '@/imports/Google/Hero-02.jpg'
-import imgHero03 from '@/imports/Google/Hero-03.png'
 import imgSection01 from '@/imports/Google/Image-01.png'
-import gifSection02 from '@/imports/Google/Image-02.gif'
-import imgSection03 from '@/imports/Google/Image-03.png'
+import imgSection02 from '@/imports/Google/Image-02.png'
+import gifSection03 from '@/imports/Google/Image-03.gif'
 import gifSection04 from '@/imports/Google/Image-04.gif'
 
 interface GoogleCaseProps {
@@ -22,7 +20,8 @@ interface GoogleCaseProps {
   onWorkClick: () => void
   onAboutClick: () => void
   onLuciaClick: () => void
-  onNextClick: () => void
+  prevProject: ProjectNavCardData
+  nextProject: ProjectNavCardData
 }
 
 export default function GoogleCase({
@@ -32,7 +31,8 @@ export default function GoogleCase({
   onWorkClick,
   onAboutClick,
   onLuciaClick,
-  onNextClick,
+  prevProject,
+  nextProject,
 }: GoogleCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
 
@@ -64,38 +64,51 @@ export default function GoogleCase({
 
         <ProjectMeta
           subtitle="Reimagining Onboarding for Google Cloud"
+          subtitleSize={48}
+          subtitleMobileSize={32}
+          subtitleMobileLineHeight={34}
           metaLines={[
-            { label: 'My role', value: 'Product Designer / UI Designer, UX Research, UX Design & Development, Claude Code' },
-            { label: 'Focus', value: 'AI Search, Interaction Design, UI Design, Design Systems' },
+            { label: 'My role', value: 'Product Designer / UI Designer' },
+            { label: 'Collaboration', value: 'UX Research, UX Design & Development, Claude Code' },
+            { label: 'Focus', value: 'AI Claude, Interaction Design, UI Design, Design Systems' },
           ]}
         />
 
-        <ProjectImageRow>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover lg:object-contain lg:max-w-full size-full" src={imgHero01} />
-          </ProjectImageBox>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover lg:object-contain lg:max-w-full size-full" src={imgHero02} />
-          </ProjectImageBox>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover lg:object-contain lg:max-w-full size-full" src={imgHero03} />
-          </ProjectImageBox>
-        </ProjectImageRow>
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/820' }}>
+          <img alt="" className="absolute inset-0 size-full object-cover" src={imgHero01} />
+        </ProjectSectionImage>
 
         <ProjectTextBlock>
+          <ProjectTextHeading>Impact & Content Strategy:</ProjectTextHeading>
+          <p className="mb-4">The project's impact was a significantly improved internal onboarding experience, transforming the original Google Sites solution into a more structured, accessible, and engaging platform.</p>
+          <p className="mb-4">The new experience strengthened the Google Cloud brand identity while making onboarding information easier to navigate and act on.</p>
+          <p className="mb-4">The final solution achieved four key objectives:</p>
+          <ul className="list-disc pl-6 space-y-2 mb-4">
+            <li>Centralized essential onboarding information and resources in one place.</li>
+            <li>Improved accessibility across devices, particularly on mobile.</li>
+            <li>Streamlined the onboarding journey through profiles, activities, and structured content.</li>
+            <li>Created a stronger and more cohesive brand experience aligned with Google Cloud.</li>
+          </ul>
+          <p className="mb-8">Overall, the project transformed a static information repository into a more guided and user-centered onboarding experience for new team members.</p>
           <ProjectTextHeading>Overview:</ProjectTextHeading>
           <p className="mb-4">This project focused on creating a dedicated onboarding platform for new Google Cloud team members, bringing essential documentation, resources, and team information into one centralized experience.</p>
           <p className="mb-4">The project began as a response to the limitations of the existing Google Sites solution, particularly its mobile usability. Instead of simply migrating the content, we restructured the information and redesigned the experience to make onboarding more accessible, professional, and engaging.</p>
-          <p className="mb-8">The platform was built using Claude Code, combining a new content structure with a mobile-first interface aligned with the Google Cloud brand.</p>
-          <ProjectTextHeading>The Challenge:</ProjectTextHeading>
-          <p className="mb-4">The existing Google Sites solution contained the information needed for onboarding but was difficult to navigate and use, especially on mobile.</p>
-          <p className="mb-4">The challenge was to transform this collection of documentation into a clear and actionable onboarding experience.</p>
-          <p className="mb-4">We focused on simplifying the content structure and introducing features such as profiles, filters, forms, and dashboards to help new team members understand their progress, find relevant resources, and know what to do next.</p>
-          <p>The result was a centralized platform designed to make onboarding clearer, more structured, and easier to navigate.</p>
+          <p>The platform was built using Claude Code, combining a new content structure with a mobile-first interface aligned with the Google Cloud brand.</p>
         </ProjectTextBlock>
 
-        <ProjectSectionImage desktopStyle={{ width: '1098px', height: '475px' }}>
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/1228' }}>
           <img alt="" className="absolute inset-0 size-full object-cover" src={imgSection01} />
+        </ProjectSectionImage>
+
+        <ProjectTextBlock>
+          <ProjectTextHeading>UX Research</ProjectTextHeading>
+          <p className="mb-4">We started by auditing the existing onboarding experience to understand how new team members accessed information, what content they needed most, and where they encountered friction.</p>
+          <p className="mb-4">The research revealed that information was fragmented across different resources, making it difficult for users to understand where they were in the onboarding journey and what they should do next. Mobile usability was another key limitation of the existing Google Sites experience.</p>
+          <p>These insights helped us shift the approach from simply migrating content to restructuring the onboarding experience around user needs, creating clearer content hierarchy, actionable activities, and a more guided journey across devices.</p>
+        </ProjectTextBlock>
+
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/1064' }}>
+          <img alt="" className="absolute inset-0 size-full object-cover" src={imgSection02} />
         </ProjectSectionImage>
 
         <ProjectTextBlock>
@@ -105,8 +118,8 @@ export default function GoogleCase({
           <p>By bringing this information into one place, the experience transforms onboarding from a collection of tasks and documentation into a more guided and actionable journey.</p>
         </ProjectTextBlock>
 
-        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '1098/491' }}>
-          <img alt="" className="absolute inset-0 size-full object-cover" src={gifSection02} />
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2784/1288' }}>
+          <img alt="" className="absolute inset-0 size-full object-cover" src={gifSection03} />
         </ProjectSectionImage>
 
         <ProjectTextBlock>
@@ -115,8 +128,8 @@ export default function GoogleCase({
           <p>We simplified the content hierarchy and organized information around users' needs, helping new team members quickly find the resources and guidance relevant to each stage of their onboarding journey.</p>
         </ProjectTextBlock>
 
-        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '1098/678' }}>
-          <img alt="" className="absolute inset-0 size-full object-cover" src={imgSection03} />
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2784/1828' }}>
+          <img alt="" className="absolute inset-0 size-full object-cover" src={gifSection04} />
         </ProjectSectionImage>
 
         <ProjectTextBlock>
@@ -127,25 +140,11 @@ export default function GoogleCase({
           <p>The final platform brought the existing information into a unified experience while introducing a more modern interface and clearer navigation for new team members.</p>
         </ProjectTextBlock>
 
-        <ProjectSectionImage desktopStyle={{ width: '1098px', height: '581px' }}>
-          <img alt="" className="absolute inset-0 size-full object-cover" src={gifSection04} />
-        </ProjectSectionImage>
+        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
 
-        <ProjectTextBlock>
-          <ProjectTextHeading>Results</ProjectTextHeading>
-          <p className="mb-4">The project resulted in a significantly improved internal onboarding experience, transforming the original Google Sites solution into a more structured, accessible, and engaging platform.</p>
-          <p className="mb-4">The new experience strengthened the Google Cloud brand identity while making onboarding information easier to navigate and act on.</p>
-          <p className="mb-4">The final solution achieved four key objectives:</p>
-          <ul className="list-disc pl-6 space-y-2 mb-4">
-            <li>Centralized essential onboarding information and resources in one place.</li>
-            <li>Improved accessibility across devices, particularly on mobile.</li>
-            <li>Streamlined the onboarding journey through profiles, activities, and structured content.</li>
-            <li>Created a stronger and more cohesive brand experience aligned with Google Cloud.</li>
-          </ul>
-          <p>Overall, the project transformed a static information repository into a more guided and user-centered onboarding experience for new team members.</p>
-        </ProjectTextBlock>
-
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." onNextClick={onNextClick} />
+        <div className="mt-[68px]">
+          <ProjectPageNav prev={prevProject} next={nextProject} />
+        </div>
       </div>
     </div>
   )

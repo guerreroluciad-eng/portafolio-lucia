@@ -10,6 +10,11 @@ import ElTiempoCase from '@/pages/ElTiempoCase'
 import AppTiempoCase from '@/pages/AppTiempoCase'
 import MaestroCase from '@/pages/MaestroCase'
 import FutbolredCase from '@/pages/FutbolredCase'
+import imgNavGoogle from '@/imports/ProjectNav/Google.png'
+import imgNavYoutube from '@/imports/ProjectNav/Youtube.png'
+import imgNavElTiempo from '@/imports/ProjectNav/ElTiempo.png'
+import imgNavAndroid from '@/imports/ProjectNav/Android.png'
+import imgNavAppTiempo from '@/imports/ProjectNav/AppTiempo.png'
 
 type Screen =
   | 'home'
@@ -265,6 +270,24 @@ export default function App() {
     screen === 'youtube-in' || screen === 'youtube-wipe' ||
     screen === 'eltiempo-in' || screen === 'eltiempo-wipe' ||
     screen === 'apptiempo-in' || screen === 'apptiempo-wipe'
+
+  // "Back page" / "Next page" nav cards (ProjectPageNav) — same cyclic order
+  // as the Work carousel: Google → El Tiempo → Youtube → Android → App Tiempo
+  // → back to Google. Each entry pairs a project's display name + thumbnail
+  // with the handler that already drives its transition.
+  const projectCycle: { key: 'google' | 'eltiempo' | 'youtube' | 'android' | 'apptiempo'; name: React.ReactNode; thumbnail: string; onClick: () => void }[] = [
+    { key: 'google', name: <>Reimagining<br />Onboarding for<br />Google Cloud</>, thumbnail: imgNavGoogle, onClick: handleGoogleClick },
+    { key: 'eltiempo', name: 'Redesigning the El Tiempo Digital Experience', thumbnail: imgNavElTiempo, onClick: handleElTiempoClick },
+    { key: 'youtube', name: <>AI-Powered Search<br />for YouTube Blog<br />Creators</>, thumbnail: imgNavYoutube, onClick: handleYoutubeClick },
+    { key: 'android', name: 'Evolving the Android Enterprise Experience', thumbnail: imgNavAndroid, onClick: handleAndroidClick },
+    { key: 'apptiempo', name: 'Evolving the El Tiempo Mobile Experience', thumbnail: imgNavAppTiempo, onClick: handleAppTiempoClick },
+  ]
+  function getProjectNav(key: 'google' | 'eltiempo' | 'youtube' | 'android' | 'apptiempo') {
+    const i = projectCycle.findIndex(p => p.key === key)
+    const prev = projectCycle[(i - 1 + projectCycle.length) % projectCycle.length]
+    const next = projectCycle[(i + 1) % projectCycle.length]
+    return { prevProject: prev, nextProject: next }
+  }
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden" style={{ fontFamily: "'Abhaya Libre', serif" }}>
@@ -658,7 +681,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
-          onNextClick={handleAppTiempoClick}
+          {...getProjectNav('android')}
         />
       )}
 
@@ -675,7 +698,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
-          onNextClick={handleElTiempoClick}
+          {...getProjectNav('google')}
         />
       )}
 
@@ -692,7 +715,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
-          onNextClick={handleAndroidClick}
+          {...getProjectNav('youtube')}
         />
       )}
 
@@ -709,7 +732,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
-          onNextClick={handleYoutubeClick}
+          {...getProjectNav('eltiempo')}
         />
       )}
 
@@ -726,7 +749,7 @@ export default function App() {
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
           onLuciaClick={handleLuciaClick}
-          onNextClick={handleGoogleClick}
+          {...getProjectNav('apptiempo')}
         />
       )}
 

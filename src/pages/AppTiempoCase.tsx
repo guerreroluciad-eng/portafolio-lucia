@@ -6,6 +6,7 @@ import { ProjectImageRow, ProjectImageBox } from '@/components/ProjectImageRow'
 import ProjectTextBlock, { ProjectTextHeading } from '@/components/ProjectTextBlock'
 import ProjectSectionImage from '@/components/ProjectSectionImage'
 import ProjectContact from '@/components/ProjectContact'
+import ProjectPageNav, { type ProjectNavCardData } from '@/components/ProjectPageNav'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
 import imgHero1 from '@/imports/AppTiempo/Hero-1.png'
 import imgHero2 from '@/imports/AppTiempo/Hero-2.png'
@@ -21,7 +22,8 @@ interface AppTiempoCaseProps {
   onWorkClick: () => void
   onAboutClick: () => void
   onLuciaClick: () => void
-  onNextClick: () => void
+  prevProject: ProjectNavCardData
+  nextProject: ProjectNavCardData
 }
 
 export default function AppTiempoCase({
@@ -31,7 +33,8 @@ export default function AppTiempoCase({
   onWorkClick,
   onAboutClick,
   onLuciaClick,
-  onNextClick,
+  prevProject,
+  nextProject,
 }: AppTiempoCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
 
@@ -63,9 +66,12 @@ export default function AppTiempoCase({
 
         <ProjectMeta
           subtitle="Evolving the El Tiempo Mobile Experience"
+          subtitleSize={48}
+          subtitleMobileSize={32}
+          subtitleMobileLineHeight={34}
           metaLines={[
-            { label: 'My role', value: 'Product Designer / UI Designer, UX Research, UX Design' },
-            { label: 'Collaboration', value: 'Development' },
+            { label: 'My role', value: 'Product Designer / UI Designer' },
+            { label: 'Collaboration', value: 'UX Research, UX Design & Development' },
             { label: 'Focus', value: 'Interaction Design, UI Design, Design Systems' },
           ]}
         />
@@ -83,17 +89,22 @@ export default function AppTiempoCase({
         </ProjectImageRow>
 
         <ProjectTextBlock>
+          <ProjectTextHeading>Impact & Content Strategy:</ProjectTextHeading>
+          <p className="mb-4">The project evolved the El Tiempo mobile app from a primarily content-consumption experience into a more dynamic and interactive news platform.</p>
+          <p className="mb-4">The introduction of Stories, Minute by Minute, and Reactions created new ways for users to discover content, follow developing stories, and express their opinions.</p>
+          <p className="mb-4">These features also established a stronger foundation for user engagement and content interaction, while keeping the experience simple, intuitive, and consistent with the El Tiempo brand.</p>
+          <p className="mb-8">Overall, the project demonstrated how small, focused product innovations can create new opportunities for engagement without disrupting the core news experience.</p>
+
           <ProjectTextHeading>Overview:</ProjectTextHeading>
           <p className="mb-4">This project focused on evolving the El Tiempo mobile app by introducing new features designed to make news more accessible, timely, and interactive.</p>
           <p className="mb-4">The experience was built around three key user needs: having more content readily available, staying informed about the latest events, and having more opportunities to interact with and respond to content.</p>
           <p className="mb-8">The goal was to move beyond simply delivering news and create a more engaging and dynamic experience for readers.</p>
-          <ProjectTextHeading>The Challenge:</ProjectTextHeading>
-          <p className="mb-4">The challenge was to evolve the existing app experience while maintaining its core purpose as a news platform.</p>
-          <p className="mb-4">We identified opportunities to give users faster access to more content, better awareness of breaking or recent events, and new ways to interact with stories.</p>
-          <p>The goal was to translate these needs into meaningful features that could increase engagement while keeping the experience simple, intuitive, and aligned with the El Tiempo brand.</p>
-        </ProjectTextBlock>
 
-        <ProjectTextBlock>
+          <ProjectTextHeading>UX Strategy</ProjectTextHeading>
+          <p className="mb-4">The UX process focused on low-fidelity prototyping and iterative testing to validate the new features before moving into visual design.</p>
+          <p className="mb-4">We created lightweight prototypes to simulate the key interactions and evaluate the user effort, comprehension, and ease of use when interacting with Stories, Minute by Minute, and Reactions.</p>
+          <p className="mb-8">Testing allowed us to identify friction points early, refine the interactions, and ensure each feature felt simple, intuitive, and easy to discover before progressing to high-fidelity designs.</p>
+
           <ProjectTextHeading>01 — Introducing Stories</ProjectTextHeading>
           <p className="mb-4">The first evolution of the app focused on helping users discover more content directly from the homepage.</p>
           <p className="mb-4">Through early user research, we identified an opportunity to introduce a Stories experience, allowing readers to quickly browse trending and relevant news through a familiar, mobile-first interaction pattern.</p>
@@ -129,14 +140,11 @@ export default function AppTiempoCase({
           <img alt="" className="absolute inset-0 size-full object-cover" src={imgSection03} />
         </ProjectSectionImage>
 
-        <ProjectTextBlock>
-          <ProjectTextHeading>Results</ProjectTextHeading>
-          <p className="mb-4">The project transformed the El Tiempo app from a primarily content-driven experience into a more dynamic and interactive news platform.</p>
-          <p className="mb-4">We introduced three new experiences — Stories, Minute by Minute, and Reactions — giving users new ways to discover content, follow developing stories, and interact with the news.</p>
-          <p>The result was a more timely, engaging, and user-centered experience, while creating new opportunities for El Tiempo to understand reader interests and encourage deeper interaction with its content.</p>
-        </ProjectTextBlock>
+        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
 
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." onNextClick={onNextClick} />
+        <div className="mt-[68px]">
+          <ProjectPageNav prev={prevProject} next={nextProject} />
+        </div>
       </div>
     </div>
   )
