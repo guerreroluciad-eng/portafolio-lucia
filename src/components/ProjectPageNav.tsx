@@ -19,8 +19,8 @@ interface ProjectPageNavProps {
 function ProjectNavCard({ name, thumbnail, onClick, label }: ProjectNavCardData & { label: string }) {
   return (
     <div className="flex items-start gap-0 md:gap-[24px]">
-      <div className="flex flex-col justify-between" style={{ width: '299px', height: '175px' }}>
-        <p className="font-['Abhaya_Libre',serif] text-left text-[#2f2e29]" style={{ fontSize: '32px', lineHeight: '38px' }}>{name}</p>
+      <div className="flex flex-col justify-between flex-1 min-w-0 md:flex-none md:w-[299px]" style={{ height: '175px' }}>
+        <p className="font-['Abhaya_Libre',serif] text-left text-[#2f2e29] text-[24px] md:text-[32px] leading-[28px] md:leading-[38px]">{name}</p>
         <button
           onClick={onClick}
           className="h-[50px] rounded-[36px] px-[27px] font-['Abhaya_Libre',serif] text-[24px] bg-transparent cursor-pointer inline-flex items-center justify-center no-underline self-start"
@@ -40,7 +40,7 @@ function ProjectNavCard({ name, thumbnail, onClick, label }: ProjectNavCardData 
 
 export default function ProjectPageNav({ prev, next }: ProjectPageNavProps) {
   return (
-    <div className="flex flex-col gap-[40px] md:flex-row md:justify-between md:items-start w-full max-w-[1098px] px-[8px] md:px-[25px] lg:px-0">
+    <div className="flex flex-col gap-[40px] md:flex-row md:justify-between md:items-start w-full max-w-[1098px] px-[16px] md:px-[25px] lg:px-0">
       <ProjectNavCard {...prev} label="Back Page" />
       <ProjectNavCard {...next} label="Next Page" />
     </div>
