@@ -2,15 +2,13 @@ import ScrollHeader from '@/components/ScrollHeader'
 import ProjectHeader from '@/components/ProjectHeader'
 import ProjectTitle from '@/components/ProjectTitle'
 import ProjectMeta from '@/components/ProjectMeta'
-import { ProjectImageRow, ProjectImageBox } from '@/components/ProjectImageRow'
 import ProjectTextBlock, { ProjectTextHeading } from '@/components/ProjectTextBlock'
 import ProjectSectionImage from '@/components/ProjectSectionImage'
 import ProjectContact from '@/components/ProjectContact'
 import ProjectPageNav, { type ProjectNavCardData } from '@/components/ProjectPageNav'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
 import imgHero1 from '@/imports/AppTiempo/Hero-1.png'
-import imgHero2 from '@/imports/AppTiempo/Hero-2.png'
-import imgHero3 from '@/imports/AppTiempo/Hero-3.png'
+import imgUxStrategy from '@/imports/AppTiempo/Image-ux-strategy.png'
 import imgSection01 from '@/imports/AppTiempo/Image-1.png'
 import imgSection02 from '@/imports/AppTiempo/Image-2.png'
 import imgSection03 from '@/imports/AppTiempo/Image-3.png'
@@ -67,8 +65,6 @@ export default function AppTiempoCase({
         <ProjectMeta
           subtitle="Evolving the El Tiempo Mobile Experience"
           subtitleSize={48}
-          subtitleMobileSize={32}
-          subtitleMobileLineHeight={34}
           metaLines={[
             { label: 'My role', value: 'Product Designer / UI Designer' },
             { label: 'Collaboration', value: 'UX Research, UX Design & Development' },
@@ -76,17 +72,9 @@ export default function AppTiempoCase({
           ]}
         />
 
-        <ProjectImageRow>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={imgHero1} />
-          </ProjectImageBox>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={imgHero2} />
-          </ProjectImageBox>
-          <ProjectImageBox>
-            <img alt="" className="absolute inset-0 max-w-none object-cover size-full" src={imgHero3} />
-          </ProjectImageBox>
-        </ProjectImageRow>
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/804' }}>
+          <img alt="" className="absolute inset-0 size-full object-cover" src={imgHero1} />
+        </ProjectSectionImage>
 
         <ProjectTextBlock>
           <ProjectTextHeading>Impact & Content Strategy:</ProjectTextHeading>
@@ -99,7 +87,13 @@ export default function AppTiempoCase({
           <p className="mb-4">This project focused on evolving the El Tiempo mobile app by introducing new features designed to make news more accessible, timely, and interactive.</p>
           <p className="mb-4">The experience was built around three key user needs: having more content readily available, staying informed about the latest events, and having more opportunities to interact with and respond to content.</p>
           <p className="mb-8">The goal was to move beyond simply delivering news and create a more engaging and dynamic experience for readers.</p>
+        </ProjectTextBlock>
 
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/804' }}>
+          <img alt="" className="absolute inset-0 size-full object-cover" src={imgUxStrategy} />
+        </ProjectSectionImage>
+
+        <ProjectTextBlock>
           <ProjectTextHeading>UX Strategy</ProjectTextHeading>
           <p className="mb-4">The UX process focused on low-fidelity prototyping and iterative testing to validate the new features before moving into visual design.</p>
           <p className="mb-4">We created lightweight prototypes to simulate the key interactions and evaluate the user effort, comprehension, and ease of use when interacting with Stories, Minute by Minute, and Reactions.</p>

@@ -66,8 +66,6 @@ export default function ElTiempoCase({
         <ProjectMeta
           subtitle="Redesigning the El Tiempo Digital Experience"
           subtitleSize={48}
-          subtitleMobileSize={32}
-          subtitleMobileLineHeight={34}
           metaLines={[
             { label: 'My role', value: 'Product Designer / UI Designer / UX Research' },
             { label: 'Collaboration', value: 'UX Design & Development' },
@@ -75,7 +73,7 @@ export default function ElTiempoCase({
           ]}
         />
 
-        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/924' }}>
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/944' }}>
           <img alt="" className="absolute inset-0 size-full object-cover" src={imgHero1} />
         </ProjectSectionImage>
 
@@ -128,7 +126,7 @@ export default function ElTiempoCase({
           <p>These changes brought together editorial strategy and visual design, creating an experience that made content easier to scan, discover, and engage with.</p>
         </ProjectTextBlock>
 
-        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/1118' }}>
+        <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/1106' }}>
           <img alt="" className="absolute inset-0 size-full object-cover" src={imgSection04} />
         </ProjectSectionImage>
 

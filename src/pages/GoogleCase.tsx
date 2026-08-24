@@ -65,8 +65,6 @@ export default function GoogleCase({
         <ProjectMeta
           subtitle="Reimagining Onboarding for Google Cloud"
           subtitleSize={48}
-          subtitleMobileSize={32}
-          subtitleMobileLineHeight={34}
           metaLines={[
             { label: 'My role', value: 'Product Designer / UI Designer' },
             { label: 'Collaboration', value: 'UX Research, UX Design & Development, Claude Code' },

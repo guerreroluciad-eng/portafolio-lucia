@@ -65,8 +65,6 @@ export default function AndroidCase({
         <ProjectMeta
           subtitle="Evolving the Android Enterprise Experience"
           subtitleSize={48}
-          subtitleMobileSize={32}
-          subtitleMobileLineHeight={34}
           metaLines={[
             { label: 'My role', value: 'Product Designer / UI Designer' },
             { label: 'Collaboration', value: 'UX Research, UX Design & Development' },

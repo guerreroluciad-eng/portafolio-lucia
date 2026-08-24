@@ -66,8 +66,6 @@ export default function YoutubeCase({
         <ProjectMeta
           subtitle="AI-Powered Search for YouTube Blog Creators"
           subtitleSize={48}
-          subtitleMobileSize={32}
-          subtitleMobileLineHeight={34}
           metaLines={[
             { label: 'My role', value: 'Product Designer / UI Designer' },
             { label: 'Collaboration', value: 'UX Research, UX Design & Development' },
