@@ -19,6 +19,7 @@ interface FutbolredCaseProps {
   onScrolledChange: (scrolled: boolean) => void
   onWorkClick: () => void
   onAboutClick: () => void
+  onCvClick: () => void
   onLuciaClick: () => void
 }
 
@@ -28,6 +29,7 @@ export default function FutbolredCase({
   onScrolledChange,
   onWorkClick,
   onAboutClick,
+  onCvClick,
   onLuciaClick,
 }: FutbolredCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
@@ -42,12 +44,13 @@ export default function FutbolredCase({
         scrolled={futbolredScrolled}
         onWorkClick={onWorkClick}
         onAboutClick={onAboutClick}
+        onCvClick={onCvClick}
         onLuciaClick={onLuciaClick}
         dark
       />
 
       {/* ── Scroll header (slides down when scrolled) — same on every viewport ── */}
-      <ScrollHeader scrolled={futbolredScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onAboutClick={onAboutClick} background="#302F2A" dark />
+      <ScrollHeader scrolled={futbolredScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onAboutClick={onAboutClick} onCvClick={onCvClick} background="#302F2A" dark />
 
       {/* Page content */}
       <div

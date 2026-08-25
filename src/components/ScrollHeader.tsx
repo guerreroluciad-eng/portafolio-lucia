@@ -18,12 +18,14 @@ interface ScrollHeaderProps {
   onWorkClick: () => void
   /** Omit when "About me" is the current page — renders as static bold text instead of a button. */
   onAboutClick?: () => void
+  /** Omit when "CV / HV" is the current page — renders as static bold text instead of a button. */
+  onCvClick?: () => void
   background?: string
   /** Dark-background pages (e.g. Maestro) need the logo/text to stay light instead of the default dark-on-light treatment. */
   dark?: boolean
 }
 
-export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAboutClick, background = '#F8F8F8', dark = false }: ScrollHeaderProps) {
+export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAboutClick, onCvClick, background = '#F8F8F8', dark = false }: ScrollHeaderProps) {
   const [hovered, setHovered] = useState(false)
   const isDesktop = useMinWidth(1024)
   const active = isDesktop && hovered
@@ -82,6 +84,24 @@ export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAb
           >
             <p className="leading-[normal] mb-0">02.</p>
             <p className="leading-[normal]">About me</p>
+          </div>
+        )}
+        {onCvClick ? (
+          <button
+            onClick={onCvClick}
+            className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap bg-transparent border-none cursor-pointer text-left p-0"
+            style={{ color: dark ? 'white' : (active ? 'white' : '#302f2a'), transition: 'color 0.35s ease' }}
+          >
+            <p className="leading-[normal] mb-0">03.</p>
+            <p className="leading-[normal]">CV / HV</p>
+          </button>
+        ) : (
+          <div
+            className="[word-break:break-word] font-['Abhaya_Libre',serif] font-bold leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap"
+            style={{ color: dark ? 'white' : (active ? 'white' : '#302f2a'), transition: 'color 0.35s ease' }}
+          >
+            <p className="leading-[normal] mb-0">03.</p>
+            <p className="leading-[normal]">CV / HV</p>
           </div>
         )}
       </div>

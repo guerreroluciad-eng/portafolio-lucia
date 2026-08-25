@@ -61,6 +61,7 @@ function WorkCoverCard({ src, alt, hovered, onMouseEnter, onMouseLeave }: { src:
 interface WorkProps {
   workReady: boolean
   onAboutClick: () => void
+  onCvClick: () => void
   onLuciaClick: () => void
   onAndroidClick: () => void
   onGoogleClick: () => void
@@ -71,7 +72,7 @@ interface WorkProps {
   onFutbolredClick: () => void
 }
 
-export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidClick, onGoogleClick, onYoutubeClick, onElTiempoClick, onAppTiempoClick }: WorkProps) {
+export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick, onAndroidClick, onGoogleClick, onYoutubeClick, onElTiempoClick, onAppTiempoClick }: WorkProps) {
   const [workHeaderHovered, setWorkHeaderHovered] = useState(false)
   const [workHeadingHovered, setWorkHeadingHovered] = useState(false)
   const isDesktop = useMinWidth(1024)
@@ -214,6 +215,14 @@ export default function Work({ workReady, onAboutClick, onLuciaClick, onAndroidC
           >
             <p className="leading-[normal] mb-0">02.</p>
             <p className="leading-[normal]">About me</p>
+          </div>
+          <div
+            className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap cursor-pointer"
+            style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
+            onClick={onCvClick}
+          >
+            <p className="leading-[normal] mb-0">03.</p>
+            <p className="leading-[normal]">CV / HV</p>
           </div>
         </div>
       </div>

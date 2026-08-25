@@ -12,10 +12,11 @@ import imgLinkedin from '@/imports/DesktopAboutme/1ffea485ff3654e8e559fa09d1da86
 interface AboutMeProps {
   aboutReady: boolean
   onWorkClick: () => void
+  onCvClick: () => void
   onLuciaClick: () => void
 }
 
-export default function AboutMe({ aboutReady, onWorkClick, onLuciaClick }: AboutMeProps) {
+export default function AboutMe({ aboutReady, onWorkClick, onCvClick, onLuciaClick }: AboutMeProps) {
   const [aboutHeaderHovered, setAboutHeaderHovered] = useState(false)
   const [aboutScrolled, setAboutScrolled] = useState(false)
   const scrollRef = useScrollThreshold(40, setAboutScrolled)
@@ -88,11 +89,19 @@ export default function AboutMe({ aboutReady, onWorkClick, onLuciaClick }: About
             <p className="leading-[normal] mb-0">02.</p>
             <p className="leading-[normal]">About me</p>
           </div>
+          <button
+            onClick={onCvClick}
+            className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap self-start bg-transparent border-none cursor-pointer text-left p-0"
+            style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
+          >
+            <p className="leading-[normal] mb-0">03.</p>
+            <p className="leading-[normal]">CV / HV</p>
+          </button>
         </div>
       </div>
 
       {/* Scroll header (slides down when scrolled) */}
-      <ScrollHeader scrolled={aboutScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} background="#E1DAD0" />
+      <ScrollHeader scrolled={aboutScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onCvClick={onCvClick} background="#E1DAD0" />
 
       {/* "About me" large heading */}
       <p

@@ -19,6 +19,7 @@ interface AndroidCaseProps {
   onScrolledChange: (scrolled: boolean) => void
   onWorkClick: () => void
   onAboutClick: () => void
+  onCvClick: () => void
   onLuciaClick: () => void
   prevProject: ProjectNavCardData
   nextProject: ProjectNavCardData
@@ -30,6 +31,7 @@ export default function AndroidCase({
   onScrolledChange,
   onWorkClick,
   onAboutClick,
+  onCvClick,
   onLuciaClick,
   prevProject,
   nextProject,
@@ -46,11 +48,12 @@ export default function AndroidCase({
         scrolled={androidScrolled}
         onWorkClick={onWorkClick}
         onAboutClick={onAboutClick}
+        onCvClick={onCvClick}
         onLuciaClick={onLuciaClick}
       />
 
       {/* ── Scroll header (slides down when scrolled) — same on every viewport ── */}
-      <ScrollHeader scrolled={androidScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onAboutClick={onAboutClick} />
+      <ScrollHeader scrolled={androidScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onAboutClick={onAboutClick} onCvClick={onCvClick} />
 
       {/* Page content */}
       <div

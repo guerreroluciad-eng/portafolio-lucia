@@ -3,6 +3,7 @@ import imgFrame241Hover from '@/imports/DesktopHover-3/aab7bd2528fca558339289f04
 import Home from '@/pages/Home'
 import Work from '@/pages/Work'
 import AboutMe from '@/pages/AboutMe'
+import CVCase from '@/pages/CVCase'
 import AndroidCase from '@/pages/AndroidCase'
 import GoogleCase from '@/pages/GoogleCase'
 import YoutubeCase from '@/pages/YoutubeCase'
@@ -22,6 +23,8 @@ type Screen =
   | 'work'
   | 'about-in' | 'about-wipe' | 'about-out'
   | 'aboutme'
+  | 'cv-in' | 'cv-wipe' | 'cv-out'
+  | 'cv'
   | 'lucia-in' | 'lucia-wipe' | 'lucia-out'
   | 'android-in' | 'android-wipe' | 'android-out'
   | 'android'
@@ -40,9 +43,10 @@ type Screen =
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home')
-  const luciaOrigin = useRef<'work' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('work')
-  const aboutOrigin = useRef<'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
-  const workOrigin = useRef<'home' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
+  const luciaOrigin = useRef<'work' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('work')
+  const aboutOrigin = useRef<'home' | 'work' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
+  const workOrigin = useRef<'home' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
+  const cvOrigin = useRef<'home' | 'work' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
   // Which page a project-to-project ("Next page") or work-to-project transition
   // started from, so the transition overlay's "-in"/"-wipe" phases render the
   // correct page underneath instead of always assuming it came from Work.
@@ -64,6 +68,7 @@ export default function App() {
   const [homeReady, setHomeReady] = useState(false)
   const [workReady, setWorkReady] = useState(false)
   const [aboutReady, setAboutReady] = useState(false)
+  const [cvReady, setCvReady] = useState(false)
 
   // Home intro: trigger animations after mount
   useEffect(() => {
@@ -203,8 +208,8 @@ export default function App() {
   }
 
   function handleWorkClick() {
-    if (screen !== 'home' && screen !== 'aboutme' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
-    workOrigin.current = screen as 'home' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
+    if (screen !== 'home' && screen !== 'aboutme' && screen !== 'cv' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
+    workOrigin.current = screen as 'home' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
     setScreen('transition-in')
 
     // "Work" slides up and is visible for ~900ms, then gradient wipe starts
@@ -226,8 +231,8 @@ export default function App() {
   }
 
   function handleAboutClick() {
-    if (screen !== 'home' && screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
-    aboutOrigin.current = screen as 'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
+    if (screen !== 'home' && screen !== 'work' && screen !== 'cv' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
+    aboutOrigin.current = screen as 'home' | 'work' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
     setScreen('about-in')
     setTimeout(() => {
       setScreen('about-wipe')
@@ -242,9 +247,26 @@ export default function App() {
     }, 900)
   }
 
+  function handleCvClick() {
+    if (screen !== 'home' && screen !== 'work' && screen !== 'aboutme' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
+    cvOrigin.current = screen as 'home' | 'work' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
+    setScreen('cv-in')
+    setTimeout(() => {
+      setScreen('cv-wipe')
+      setTimeout(() => {
+        setScreen('cv-out')
+        setTimeout(() => {
+          setScreen('cv')
+          setCvReady(false)
+          setTimeout(() => setCvReady(true), 60)
+        }, 900)
+      }, 1400)
+    }, 900)
+  }
+
   function handleLuciaClick() {
-    if (screen !== 'work' && screen !== 'aboutme' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
-    luciaOrigin.current = screen as 'work' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
+    if (screen !== 'work' && screen !== 'aboutme' && screen !== 'cv' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
+    luciaOrigin.current = screen as 'work' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
     setScreen('lucia-in')
     setTimeout(() => {
       setScreen('lucia-wipe')
@@ -295,8 +317,9 @@ export default function App() {
       {/* ── HOME PAGE ────────────────────────────────────────────────── */}
       {(screen === 'home' || screen === 'lucia-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'home') ||
-        ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'home')) && (
-        <Home homeReady={homeReady} onWorkClick={handleWorkClick} onAboutClick={handleAboutClick} />
+        ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'home') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'home')) && (
+        <Home homeReady={homeReady} onWorkClick={handleWorkClick} onAboutClick={handleAboutClick} onCvClick={handleCvClick} />
       )}
 
       {/* ── WORK TRANSITION OVERLAY ──────────────────────────────────── */}
@@ -359,6 +382,37 @@ export default function App() {
             About me
           </p>
           {(screen === 'about-wipe' || screen === 'about-out') && (
+            <div style={{
+              position: 'absolute', top: 0, left: 0, bottom: 0, width: '200%',
+              background: 'linear-gradient(to right, #2f2e29 0%, #2f2e29 45%, transparent 65%)',
+              animation: 'wipeRight 1.4s cubic-bezier(0.4,0,0.2,1) forwards',
+              pointerEvents: 'none',
+            }} />
+          )}
+        </div>
+      )}
+
+      {/* ── CV TRANSITION OVERLAY ─────────────────────────────────────── */}
+      {(screen === 'cv-in' || screen === 'cv-wipe' || screen === 'cv-out') && (
+        <div
+          className="fixed inset-0 bg-[#2f2e29] z-50 flex items-center justify-center overflow-hidden"
+          style={
+            screen === 'cv-out'
+              ? { animation: 'slideOutUp 0.9s cubic-bezier(0.76,0,0.24,1) both' }
+              : { animation: 'fadeIn 0.35s ease both' }
+          }
+        >
+          <p
+            className="font-['Abhaya_Libre',serif] text-[90px] md:text-[120px] text-white leading-none relative text-center"
+            style={
+              screen === 'cv-wipe' || screen === 'cv-out'
+                ? { animation: 'workTextExit 1.4s cubic-bezier(0.4,0,0.2,1) forwards' }
+                : { animation: 'slideUpFade 0.6s cubic-bezier(0.16,1,0.3,1) 0.15s both' }
+            }
+          >
+            CV / HV
+          </p>
+          {(screen === 'cv-wipe' || screen === 'cv-out') && (
             <div style={{
               position: 'absolute', top: 0, left: 0, bottom: 0, width: '200%',
               background: 'linear-gradient(to right, #2f2e29 0%, #2f2e29 45%, transparent 65%)',
@@ -639,10 +693,12 @@ export default function App() {
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'eltiempo') ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'apptiempo') ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'maestro') ||
-        ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'futbolred')) && (
+        ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'futbolred') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'work')) && (
         <Work
           workReady={workReady}
           onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
           onAndroidClick={handleAndroidClick}
           onGoogleClick={handleGoogleClick}
@@ -664,8 +720,24 @@ export default function App() {
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'eltiempo') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'apptiempo') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'maestro') ||
-        ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'futbolred')) && (
-        <AboutMe aboutReady={aboutReady} onWorkClick={handleWorkClick} onLuciaClick={handleLuciaClick} />
+        ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'futbolred') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'aboutme')) && (
+        <AboutMe aboutReady={aboutReady} onWorkClick={handleWorkClick} onCvClick={handleCvClick} onLuciaClick={handleLuciaClick} />
+      )}
+
+      {/* ── CV PAGE ───────────────────────────────────────────────────── */}
+      {(screen === 'cv' || screen === 'cv-out' ||
+        ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'cv') ||
+        ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'cv') ||
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'cv') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'android') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'google') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'youtube') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'eltiempo') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'apptiempo') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'maestro') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'futbolred')) && (
+        <CVCase cvReady={cvReady} onWorkClick={handleWorkClick} onAboutClick={handleAboutClick} onLuciaClick={handleLuciaClick} />
       )}
 
       {/* ── ANDROID DETAIL PAGE ──────────────────────────────────────── */}
@@ -673,6 +745,7 @@ export default function App() {
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'android') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'android') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'android') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'android') ||
         (anyProjectTransitioning && projectNavOrigin.current === 'android')) && (
         <AndroidCase
           androidPageReady={androidPageReady}
@@ -680,6 +753,7 @@ export default function App() {
           onScrolledChange={setAndroidScrolled}
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
           {...getProjectNav('android')}
         />
@@ -690,6 +764,7 @@ export default function App() {
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'google') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'google') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'google') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'google') ||
         (anyProjectTransitioning && projectNavOrigin.current === 'google')) && (
         <GoogleCase
           googlePageReady={googlePageReady}
@@ -697,6 +772,7 @@ export default function App() {
           onScrolledChange={setGoogleScrolled}
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
           {...getProjectNav('google')}
         />
@@ -707,6 +783,7 @@ export default function App() {
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'youtube') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'youtube') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'youtube') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'youtube') ||
         (anyProjectTransitioning && projectNavOrigin.current === 'youtube')) && (
         <YoutubeCase
           youtubePageReady={youtubePageReady}
@@ -714,6 +791,7 @@ export default function App() {
           onScrolledChange={setYoutubeScrolled}
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
           {...getProjectNav('youtube')}
         />
@@ -724,6 +802,7 @@ export default function App() {
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'eltiempo') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'eltiempo') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'eltiempo') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'eltiempo') ||
         (anyProjectTransitioning && projectNavOrigin.current === 'eltiempo')) && (
         <ElTiempoCase
           elTiempoPageReady={elTiempoPageReady}
@@ -731,6 +810,7 @@ export default function App() {
           onScrolledChange={setElTiempoScrolled}
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
           {...getProjectNav('eltiempo')}
         />
@@ -741,6 +821,7 @@ export default function App() {
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'apptiempo') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'apptiempo') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'apptiempo') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'apptiempo') ||
         (anyProjectTransitioning && projectNavOrigin.current === 'apptiempo')) && (
         <AppTiempoCase
           appTiempoPageReady={appTiempoPageReady}
@@ -748,6 +829,7 @@ export default function App() {
           onScrolledChange={setAppTiempoScrolled}
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
           {...getProjectNav('apptiempo')}
         />
@@ -757,13 +839,15 @@ export default function App() {
       {(screen === 'maestro' || screen === 'maestro-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'maestro') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'maestro') ||
-        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'maestro')) && (
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'maestro') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'maestro')) && (
         <MaestroCase
           maestroPageReady={maestroPageReady}
           maestroScrolled={maestroScrolled}
           onScrolledChange={setMaestroScrolled}
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
         />
       )}
@@ -772,13 +856,15 @@ export default function App() {
       {(screen === 'futbolred' || screen === 'futbolred-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'futbolred') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'futbolred') ||
-        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'futbolred')) && (
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'futbolred') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'futbolred')) && (
         <FutbolredCase
           futbolredPageReady={futbolredPageReady}
           futbolredScrolled={futbolredScrolled}
           onScrolledChange={setFutbolredScrolled}
           onWorkClick={handleWorkClick}
           onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
         />
       )}

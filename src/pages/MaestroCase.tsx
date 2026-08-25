@@ -20,6 +20,7 @@ interface MaestroCaseProps {
   onScrolledChange: (scrolled: boolean) => void
   onWorkClick: () => void
   onAboutClick: () => void
+  onCvClick: () => void
   onLuciaClick: () => void
 }
 
@@ -29,6 +30,7 @@ export default function MaestroCase({
   onScrolledChange,
   onWorkClick,
   onAboutClick,
+  onCvClick,
   onLuciaClick,
 }: MaestroCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
@@ -43,12 +45,13 @@ export default function MaestroCase({
         scrolled={maestroScrolled}
         onWorkClick={onWorkClick}
         onAboutClick={onAboutClick}
+        onCvClick={onCvClick}
         onLuciaClick={onLuciaClick}
         dark
       />
 
       {/* ── Scroll header (slides down when scrolled) — same on every viewport ── */}
-      <ScrollHeader scrolled={maestroScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onAboutClick={onAboutClick} background="#302F2A" dark />
+      <ScrollHeader scrolled={maestroScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onAboutClick={onAboutClick} onCvClick={onCvClick} background="#302F2A" dark />
 
       {/* Page content */}
       <div

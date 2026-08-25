@@ -20,6 +20,7 @@ interface ElTiempoCaseProps {
   onScrolledChange: (scrolled: boolean) => void
   onWorkClick: () => void
   onAboutClick: () => void
+  onCvClick: () => void
   onLuciaClick: () => void
   prevProject: ProjectNavCardData
   nextProject: ProjectNavCardData
@@ -31,6 +32,7 @@ export default function ElTiempoCase({
   onScrolledChange,
   onWorkClick,
   onAboutClick,
+  onCvClick,
   onLuciaClick,
   prevProject,
   nextProject,
@@ -47,11 +49,12 @@ export default function ElTiempoCase({
         scrolled={elTiempoScrolled}
         onWorkClick={onWorkClick}
         onAboutClick={onAboutClick}
+        onCvClick={onCvClick}
         onLuciaClick={onLuciaClick}
       />
 
       {/* ── Scroll header (slides down when scrolled) — same on every viewport ── */}
-      <ScrollHeader scrolled={elTiempoScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onAboutClick={onAboutClick} />
+      <ScrollHeader scrolled={elTiempoScrolled} onLuciaClick={onLuciaClick} onWorkClick={onWorkClick} onAboutClick={onAboutClick} onCvClick={onCvClick} />
 
       {/* Page content */}
       <div

@@ -8,7 +8,7 @@ import { useMinWidth } from '@/hooks/useMinWidth'
 
 // ─── Home Logo ───────────────────────────────────────────────────────────────
 
-function HomeLogo({ className, fill = '#302f2a' }: { className?: string; fill?: string }) {
+export function HomeLogo({ className, fill = '#302f2a' }: { className?: string; fill?: string }) {
   return (
     <div className={className || 'h-[201px] relative w-[1334px]'}>
       <div className="flex flex-row items-end size-full">
@@ -50,9 +50,10 @@ interface HomeProps {
   homeReady: boolean
   onWorkClick: () => void
   onAboutClick: () => void
+  onCvClick: () => void
 }
 
-export default function Home({ homeReady, onWorkClick, onAboutClick }: HomeProps) {
+export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick }: HomeProps) {
   const [headerHovered, setHeaderHovered] = useState(false)
   const [titleHovered, setTitleHovered] = useState(false)
   const isDesktop = useMinWidth(1024)
@@ -119,6 +120,14 @@ export default function Home({ homeReady, onWorkClick, onAboutClick }: HomeProps
           >
             <p className="leading-[normal] mb-0">02.</p>
             <p className="leading-[normal]">About me</p>
+          </button>
+          <button
+            onClick={onCvClick}
+            className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap bg-transparent border-none cursor-pointer text-left p-0 self-start"
+            style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.3s' }}
+          >
+            <p className="leading-[normal] mb-0">03.</p>
+            <p className="leading-[normal]">CV / HV</p>
           </button>
         </div>
       </div>
