@@ -63,7 +63,7 @@ const TESTIMONIALS = [
     role: 'Senior Visual Designer',
   },
   {
-    quote: 'An excellent Digital Art Director and UX/UI Designer with exceptional skills, a strong eye for visual design, and a deep understanding of user experience. A talented, collaborative, and wonderful person to work with.',
+    quote: 'An excellent Digital Art Director and UX/UI Designer with exceptional skills, a strong eye for visual design, and a deep understanding of user experience. A talented and collaborative.',
     author: 'Lourdes Valencia',
     role: 'Directora Creativa',
   },
@@ -162,9 +162,6 @@ function ProjectBlockMobile({ project, isLast, topGap = 100 }: { project: Projec
           block renders its own opening line — kept as an invisible spacer
           so spacing doesn't shift. */}
       <div className="h-px mx-[16px]" style={{ ...revealStyle(inView, 0), marginTop: topGap, backgroundColor: 'transparent' }} />
-      <p className="font-['Abhaya_Libre',serif] text-[24px] text-[#2f2e29] text-left px-[16px] mt-[11px]" style={revealStyle(inView, 0)}>
-        {project.sideLabel}
-      </p>
       <div className="px-[16px]" style={revealStyle(inView, 100)}>
         <a
           onClick={project.onClick}
@@ -412,10 +409,10 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
 
         {/* "See work" + divider, right after the hero — scroll-triggered */}
         <div ref={seeWorkRef}>
-          <div className="px-[60px] mt-[48px]" style={revealStyle(seeWorkInView, 0)}>
+          <div className="px-[60px]" style={{ ...revealStyle(seeWorkInView, 0), marginTop: '-50px' }}>
             <button
               onClick={onWorkClick}
-              className="font-['Abhaya_Libre',serif] text-[16px] text-[#2f2e29] bg-transparent border-none cursor-pointer p-0"
+              className="font-['Abhaya_Libre',serif] text-[30px] text-[#2f2e29] bg-transparent border-none cursor-pointer p-0"
             >
               See work
             </button>
@@ -573,7 +570,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
         {/* "See work" + divider, right after the hero — scroll-triggered.
             Its own divider is the line above Onboarding. */}
         <div ref={seeWorkRefMobile}>
-          <div className="px-[16px] mt-[48px]" style={revealStyle(seeWorkInViewMobile, 0)}>
+          <div className="px-[16px] mt-[30px]" style={revealStyle(seeWorkInViewMobile, 0)}>
             <button
               onClick={onWorkClick}
               className="font-['Abhaya_Libre',serif] text-[16px] text-[#2f2e29] bg-transparent border-none cursor-pointer p-0"
