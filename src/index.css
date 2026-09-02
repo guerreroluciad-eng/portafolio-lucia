@@ -26,6 +26,11 @@
   to { opacity: 1; }
 }
 
+@keyframes colorFadeToActive {
+  from { color: #f1f1f1; }
+  to { color: #2f2e29; }
+}
+
 .animate-slide-up {
   animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

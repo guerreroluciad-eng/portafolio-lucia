@@ -7,11 +7,13 @@ import imgCoverElTiempo from '@/imports/WorkCoversNew/CoverElTiempo.png'
 import imgCoverYoutube from '@/imports/WorkCoversNew/CoverYoutube.png'
 import imgCoverAndroid from '@/imports/WorkCoversNew/CoverAndroid.png'
 import imgCoverAppTiempo from '@/imports/WorkCoversNew/CoverAppTiempo.png'
+import imgCoverMaestro from '@/imports/WorkCoversNew/CoverMaestro.png'
+import imgCoverFutbolred from '@/imports/WorkCoversNew/CoverFutbolred.png'
 
 // ─── Workpage Cover Card ─────────────────────────────────────────────────────
-// All five remaining carousel covers share the same fixed 340×407px size, so
-// a single card renderer replaces the old per-project components (each of
-// which used to carry its own bespoke crop math for a different image size).
+// All seven carousel covers share the same fixed 340×407px size, so a single
+// card renderer replaces the old per-project components (each of which used
+// to carry its own bespoke crop math for a different image size).
 
 function CarouselDot({ active, onClick }: { active: boolean; onClick: () => void }) {
   return (
@@ -72,7 +74,7 @@ interface WorkProps {
   onFutbolredClick: () => void
 }
 
-export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick, onAndroidClick, onGoogleClick, onYoutubeClick, onElTiempoClick, onAppTiempoClick }: WorkProps) {
+export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick, onAndroidClick, onGoogleClick, onYoutubeClick, onElTiempoClick, onAppTiempoClick, onMaestroClick, onFutbolredClick }: WorkProps) {
   const [workHeaderHovered, setWorkHeaderHovered] = useState(false)
   const [workHeadingHovered, setWorkHeadingHovered] = useState(false)
   const isDesktop = useMinWidth(1024)
@@ -82,6 +84,8 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
   const [elTiempoHovered, setElTiempoHovered] = useState(false)
   const [appTiempoHovered, setAppTiempoHovered] = useState(false)
   const [youtubeHovered, setYoutubeHovered] = useState(false)
+  const [maestroHovered, setMaestroHovered] = useState(false)
+  const [futbolredHovered, setFutbolredHovered] = useState(false)
 
   // Carousel drag
   const carouselRef = useRef<HTMLDivElement>(null)
@@ -159,6 +163,8 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
     { key: 'youtube', src: imgCoverYoutube, alt: 'Youtube', onClick: onYoutubeClick, hovered: youtubeHovered, onEnter: () => setYoutubeHovered(true), onLeave: () => setYoutubeHovered(false) },
     { key: 'android', src: imgCoverAndroid, alt: 'Android', onClick: onAndroidClick, hovered: androidHovered, onEnter: () => setAndroidHovered(true), onLeave: () => setAndroidHovered(false) },
     { key: 'apptiempo', src: imgCoverAppTiempo, alt: 'App Tiempo', onClick: onAppTiempoClick, hovered: appTiempoHovered, onEnter: () => setAppTiempoHovered(true), onLeave: () => setAppTiempoHovered(false) },
+    { key: 'maestro', src: imgCoverMaestro, alt: 'Maestro', onClick: onMaestroClick, hovered: maestroHovered, onEnter: () => setMaestroHovered(true), onLeave: () => setMaestroHovered(false) },
+    { key: 'futbolred', src: imgCoverFutbolred, alt: 'Futbolred', onClick: onFutbolredClick, hovered: futbolredHovered, onEnter: () => setFutbolredHovered(true), onLeave: () => setFutbolredHovered(false) },
   ]
 
   return (
@@ -247,7 +253,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
               cursor: 'default',
             }}
           >
-            {androidHovered ? 'Android' : googleHovered ? 'Google' : youtubeHovered ? 'Youtube' : elTiempoHovered ? 'El Tiempo' : appTiempoHovered ? 'App Tiempo' : 'Work'}
+            {androidHovered ? 'Android' : googleHovered ? 'Google' : youtubeHovered ? 'Youtube' : elTiempoHovered ? 'El Tiempo' : appTiempoHovered ? 'App Tiempo' : maestroHovered ? 'Maestro' : futbolredHovered ? 'Futbolred' : 'Work'}
           </p>
         </div>
 

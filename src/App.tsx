@@ -50,7 +50,7 @@ export default function App() {
   // Which page a project-to-project ("Next page") or work-to-project transition
   // started from, so the transition overlay's "-in"/"-wipe" phases render the
   // correct page underneath instead of always assuming it came from Work.
-  const projectNavOrigin = useRef<'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'>('work')
+  const projectNavOrigin = useRef<'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'>('work')
   const [androidPageReady, setAndroidPageReady] = useState(false)
   const [androidScrolled, setAndroidScrolled] = useState(false)
   const [googlePageReady, setGooglePageReady] = useState(false)
@@ -96,8 +96,8 @@ export default function App() {
   }
 
   function handleGoogleClick() {
-    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
-    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
+    if (screen !== 'home' && screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
+    projectNavOrigin.current = screen as 'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
     setScreen('google-in')
     setTimeout(() => {
       setScreen('google-wipe')
@@ -115,8 +115,8 @@ export default function App() {
   }
 
   function handleYoutubeClick() {
-    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
-    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
+    if (screen !== 'home' && screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
+    projectNavOrigin.current = screen as 'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
     setScreen('youtube-in')
     setTimeout(() => {
       setScreen('youtube-wipe')
@@ -134,8 +134,8 @@ export default function App() {
   }
 
   function handleElTiempoClick() {
-    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
-    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
+    if (screen !== 'home' && screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
+    projectNavOrigin.current = screen as 'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
     setScreen('eltiempo-in')
     setTimeout(() => {
       setScreen('eltiempo-wipe')
@@ -318,8 +318,17 @@ export default function App() {
       {(screen === 'home' || screen === 'lucia-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'home') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'home') ||
-        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'home')) && (
-        <Home homeReady={homeReady} onWorkClick={handleWorkClick} onAboutClick={handleAboutClick} onCvClick={handleCvClick} />
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'home') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'home')) && (
+        <Home
+          homeReady={homeReady}
+          onWorkClick={handleWorkClick}
+          onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
+          onGoogleClick={handleGoogleClick}
+          onElTiempoClick={handleElTiempoClick}
+          onYoutubeClick={handleYoutubeClick}
+        />
       )}
 
       {/* ── WORK TRANSITION OVERLAY ──────────────────────────────────── */}
