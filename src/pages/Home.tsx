@@ -606,7 +606,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
                 &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
               </p>
               <p
-                className="font-['Abhaya_Libre',serif] text-[24px] text-right"
+                className="font-['Abhaya_Libre',serif] text-[18px] text-right"
                 style={{ ...revealStyle(testimonialInViewMobile, 100), animation: 'colorFadeToActive 1s ease both' }}
               >
                 {TESTIMONIALS[activeTestimonial].author} - {TESTIMONIALS[activeTestimonial].role}
