@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import { useMinWidth } from '@/hooks/useMinWidth'
+import { useLanguage } from '@/i18n/LanguageContext'
+import LanguageSwitch from '@/components/LanguageSwitch'
 import imgFrame241Work from '@/imports/DesktopHover-4/c06761a7de8a442cd6a45db796d69e4fa8bd0961.png'
 import imgFrame241Hover from '@/imports/DesktopHover-3/aab7bd2528fca558339289f043abd5043daa8e13.png'
 import imgCoverGoogle from '@/imports/WorkCoversNew/CoverGoogle.png'
@@ -9,6 +11,13 @@ import imgCoverAndroid from '@/imports/WorkCoversNew/CoverAndroid.png'
 import imgCoverAppTiempo from '@/imports/WorkCoversNew/CoverAppTiempo.png'
 import imgCoverMaestro from '@/imports/WorkCoversNew/CoverMaestro.png'
 import imgCoverFutbolred from '@/imports/WorkCoversNew/CoverFutbolred.png'
+import imgCoverGoogleEs from '@/imports/WorkCoversEs/CoverGoogle.png'
+import imgCoverElTiempoEs from '@/imports/WorkCoversEs/CoverElTiempo.png'
+import imgCoverYoutubeEs from '@/imports/WorkCoversEs/CoverYoutube.png'
+import imgCoverAndroidEs from '@/imports/WorkCoversEs/CoverAndroid.png'
+import imgCoverAppTiempoEs from '@/imports/WorkCoversEs/CoverAppTiempo.png'
+import imgCoverMaestroEs from '@/imports/WorkCoversEs/CoverMaestro.png'
+import imgCoverFutbolredEs from '@/imports/WorkCoversEs/CoverFutbolred.png'
 
 // ─── Workpage Cover Card ─────────────────────────────────────────────────────
 // All seven carousel covers share the same fixed 340×407px size, so a single
@@ -79,6 +88,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
   const [workHeadingHovered, setWorkHeadingHovered] = useState(false)
   const isDesktop = useMinWidth(1024)
   const headerActive = isDesktop && workHeaderHovered
+  const { t, lang } = useLanguage()
   const [androidHovered, setAndroidHovered] = useState(false)
   const [googleHovered, setGoogleHovered] = useState(false)
   const [elTiempoHovered, setElTiempoHovered] = useState(false)
@@ -157,14 +167,18 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
         }
       : { opacity: 0 }
 
+  // Cover art is baked-in image text, so the Spanish covers are a separate
+  // image set (src/imports/WorkCoversEs) rather than something translations.ts
+  // can express — swap the whole set based on the current language.
+  const isEs = lang === 'es'
   const covers = [
-    { key: 'google', src: imgCoverGoogle, alt: 'Google', onClick: onGoogleClick, hovered: googleHovered, onEnter: () => setGoogleHovered(true), onLeave: () => setGoogleHovered(false) },
-    { key: 'eltiempo', src: imgCoverElTiempo, alt: 'El Tiempo', onClick: onElTiempoClick, hovered: elTiempoHovered, onEnter: () => setElTiempoHovered(true), onLeave: () => setElTiempoHovered(false) },
-    { key: 'youtube', src: imgCoverYoutube, alt: 'Youtube', onClick: onYoutubeClick, hovered: youtubeHovered, onEnter: () => setYoutubeHovered(true), onLeave: () => setYoutubeHovered(false) },
-    { key: 'android', src: imgCoverAndroid, alt: 'Android', onClick: onAndroidClick, hovered: androidHovered, onEnter: () => setAndroidHovered(true), onLeave: () => setAndroidHovered(false) },
-    { key: 'apptiempo', src: imgCoverAppTiempo, alt: 'App Tiempo', onClick: onAppTiempoClick, hovered: appTiempoHovered, onEnter: () => setAppTiempoHovered(true), onLeave: () => setAppTiempoHovered(false) },
-    { key: 'maestro', src: imgCoverMaestro, alt: 'Maestro', onClick: onMaestroClick, hovered: maestroHovered, onEnter: () => setMaestroHovered(true), onLeave: () => setMaestroHovered(false) },
-    { key: 'futbolred', src: imgCoverFutbolred, alt: 'Futbolred', onClick: onFutbolredClick, hovered: futbolredHovered, onEnter: () => setFutbolredHovered(true), onLeave: () => setFutbolredHovered(false) },
+    { key: 'google', src: isEs ? imgCoverGoogleEs : imgCoverGoogle, alt: 'Google', onClick: onGoogleClick, hovered: googleHovered, onEnter: () => setGoogleHovered(true), onLeave: () => setGoogleHovered(false) },
+    { key: 'eltiempo', src: isEs ? imgCoverElTiempoEs : imgCoverElTiempo, alt: 'El Tiempo', onClick: onElTiempoClick, hovered: elTiempoHovered, onEnter: () => setElTiempoHovered(true), onLeave: () => setElTiempoHovered(false) },
+    { key: 'youtube', src: isEs ? imgCoverYoutubeEs : imgCoverYoutube, alt: 'Youtube', onClick: onYoutubeClick, hovered: youtubeHovered, onEnter: () => setYoutubeHovered(true), onLeave: () => setYoutubeHovered(false) },
+    { key: 'android', src: isEs ? imgCoverAndroidEs : imgCoverAndroid, alt: 'Android', onClick: onAndroidClick, hovered: androidHovered, onEnter: () => setAndroidHovered(true), onLeave: () => setAndroidHovered(false) },
+    { key: 'apptiempo', src: isEs ? imgCoverAppTiempoEs : imgCoverAppTiempo, alt: 'App Tiempo', onClick: onAppTiempoClick, hovered: appTiempoHovered, onEnter: () => setAppTiempoHovered(true), onLeave: () => setAppTiempoHovered(false) },
+    { key: 'maestro', src: isEs ? imgCoverMaestroEs : imgCoverMaestro, alt: 'Maestro', onClick: onMaestroClick, hovered: maestroHovered, onEnter: () => setMaestroHovered(true), onLeave: () => setMaestroHovered(false) },
+    { key: 'futbolred', src: isEs ? imgCoverFutbolredEs : imgCoverFutbolred, alt: 'Futbolred', onClick: onFutbolredClick, hovered: futbolredHovered, onEnter: () => setFutbolredHovered(true), onLeave: () => setFutbolredHovered(false) },
   ]
 
   return (
@@ -212,7 +226,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
             style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">01.</p>
-            <p className="leading-[normal]">Work</p>
+            <p className="leading-[normal]">{t.nav.work}</p>
           </div>
           <div
             className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap"
@@ -220,7 +234,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
             onClick={onAboutClick}
           >
             <p className="leading-[normal] mb-0">02.</p>
-            <p className="leading-[normal]">About me</p>
+            <p className="leading-[normal]">{t.nav.aboutMe}</p>
           </div>
           <div
             className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap cursor-pointer"
@@ -228,8 +242,9 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
             onClick={onCvClick}
           >
             <p className="leading-[normal] mb-0">03.</p>
-            <p className="leading-[normal]">CV / HV</p>
+            <p className="leading-[normal]">{t.nav.cv}</p>
           </div>
+          <LanguageSwitch active={headerActive} />
         </div>
       </div>
 
@@ -253,7 +268,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
               cursor: 'default',
             }}
           >
-            {androidHovered ? 'Android' : googleHovered ? 'Google' : youtubeHovered ? 'Youtube' : elTiempoHovered ? 'El Tiempo' : appTiempoHovered ? 'App Tiempo' : maestroHovered ? 'Maestro' : futbolredHovered ? 'Futbolred' : 'Work'}
+            {androidHovered ? 'Android' : googleHovered ? 'Google' : youtubeHovered ? 'Youtube' : elTiempoHovered ? 'El Tiempo' : appTiempoHovered ? 'App Tiempo' : maestroHovered ? 'Maestro' : futbolredHovered ? 'Futbolred' : t.work.heading}
           </p>
         </div>
 
@@ -262,7 +277,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
           className="block mt-[24px] lg:mt-0 font-['Abhaya_Libre',serif] font-normal not-italic uppercase text-[16px] text-[#302f2a] text-center"
           style={workSlideStyle(180)}
         >
-          Drag to explore. Click to discover.
+          {t.work.dragHint}
         </p>
 
         {/* Carousel — draggable + wheel scroll */}

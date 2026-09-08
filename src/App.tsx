@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useLanguage } from '@/i18n/LanguageContext'
 import imgFrame241Hover from '@/imports/DesktopHover-3/aab7bd2528fca558339289f043abd5043daa8e13.png'
 import Home from '@/pages/Home'
 import Work from '@/pages/Work'
@@ -42,6 +43,7 @@ type Screen =
   | 'futbolred'
 
 export default function App() {
+  const { t } = useLanguage()
   const [screen, setScreen] = useState<Screen>('home')
   const luciaOrigin = useRef<'work' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('work')
   const aboutOrigin = useRef<'home' | 'work' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
@@ -298,11 +300,11 @@ export default function App() {
   // → back to Google. Each entry pairs a project's display name + thumbnail
   // with the handler that already drives its transition.
   const projectCycle: { key: 'google' | 'eltiempo' | 'youtube' | 'android' | 'apptiempo'; name: React.ReactNode; thumbnail: string; onClick: () => void }[] = [
-    { key: 'google', name: <>Reimagining<br />Onboarding for<br />Google Cloud</>, thumbnail: imgNavGoogle, onClick: handleGoogleClick },
-    { key: 'eltiempo', name: 'Redesigning the El Tiempo Digital Experience', thumbnail: imgNavElTiempo, onClick: handleElTiempoClick },
-    { key: 'youtube', name: <>AI-Powered Search<br />for YouTube Blog<br />Creators</>, thumbnail: imgNavYoutube, onClick: handleYoutubeClick },
-    { key: 'android', name: 'Evolving the Android Enterprise Experience', thumbnail: imgNavAndroid, onClick: handleAndroidClick },
-    { key: 'apptiempo', name: 'Evolving the El Tiempo Mobile Experience', thumbnail: imgNavAppTiempo, onClick: handleAppTiempoClick },
+    { key: 'google', name: t.navNames.google, thumbnail: imgNavGoogle, onClick: handleGoogleClick },
+    { key: 'eltiempo', name: t.navNames.eltiempo, thumbnail: imgNavElTiempo, onClick: handleElTiempoClick },
+    { key: 'youtube', name: t.navNames.youtube, thumbnail: imgNavYoutube, onClick: handleYoutubeClick },
+    { key: 'android', name: t.navNames.android, thumbnail: imgNavAndroid, onClick: handleAndroidClick },
+    { key: 'apptiempo', name: t.navNames.apptiempo, thumbnail: imgNavAppTiempo, onClick: handleAppTiempoClick },
   ]
   function getProjectNav(key: 'google' | 'eltiempo' | 'youtube' | 'android' | 'apptiempo') {
     const i = projectCycle.findIndex(p => p.key === key)

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import ScrollHeader from '@/components/ScrollHeader'
+import LanguageSwitch from '@/components/LanguageSwitch'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
 import { useMinWidth } from '@/hooks/useMinWidth'
+import { useLanguage } from '@/i18n/LanguageContext'
 import imgFrame241Work from '@/imports/DesktopHover-4/c06761a7de8a442cd6a45db796d69e4fa8bd0961.png'
 import imgFrame241Hover from '@/imports/DesktopHover-3/aab7bd2528fca558339289f043abd5043daa8e13.png'
 import imgAboutPhoto from '@/imports/DesktopAboutme/2374a50b71e04a0e2460af209bb50ed51f4da98c.png'
@@ -22,6 +24,7 @@ export default function AboutMe({ aboutReady, onWorkClick, onCvClick, onLuciaCli
   const scrollRef = useScrollThreshold(40, setAboutScrolled)
   const isDesktop = useMinWidth(1024)
   const headerActive = isDesktop && aboutHeaderHovered
+  const { t } = useLanguage()
 
   // Once the entrance animation finishes, drop it so it stops pinning
   // opacity:1 and the scroll-based fade can actually take effect.
@@ -80,14 +83,14 @@ export default function AboutMe({ aboutReady, onWorkClick, onCvClick, onLuciaCli
             style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">01.</p>
-            <p className="leading-[normal]">Work</p>
+            <p className="leading-[normal]">{t.nav.work}</p>
           </button>
           <div
             className="[word-break:break-word] font-['Abhaya_Libre',serif] font-bold leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap self-start"
             style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">02.</p>
-            <p className="leading-[normal]">About me</p>
+            <p className="leading-[normal]">{t.nav.aboutMe}</p>
           </div>
           <button
             onClick={onCvClick}
@@ -95,8 +98,9 @@ export default function AboutMe({ aboutReady, onWorkClick, onCvClick, onLuciaCli
             style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">03.</p>
-            <p className="leading-[normal]">CV / HV</p>
+            <p className="leading-[normal]">{t.nav.cv}</p>
           </button>
+          <LanguageSwitch active={headerActive} className="self-start" />
         </div>
       </div>
 
@@ -108,7 +112,7 @@ export default function AboutMe({ aboutReady, onWorkClick, onCvClick, onLuciaCli
         className="font-['Abhaya_Libre',serif] text-[64px] md:text-[100px] lg:text-[200px] text-white leading-normal pt-[76px] md:pt-[153px] lg:pt-[160px] pb-[20px] md:pb-[30px] lg:pb-0 px-4 md:px-[30px] lg:px-[60px] pointer-events-none text-center w-full"
         style={{ animation: aboutReady ? 'slideUpFade 0.85s cubic-bezier(0.16,1,0.3,1) 0.1s both' : undefined, opacity: aboutReady ? undefined : 0 }}
       >
-        About me
+        {t.aboutMe.heading}
       </p>
 
       {/* Photo */}
@@ -125,19 +129,19 @@ export default function AboutMe({ aboutReady, onWorkClick, onCvClick, onLuciaCli
         style={{ animation: aboutReady ? 'slideUpFade 0.85s cubic-bezier(0.16,1,0.3,1) 0.3s both' : undefined, opacity: aboutReady ? undefined : 0 }}
       >
         <p className="mb-8">
-          <strong>Hi, I'm Lucía.</strong> I design with craft, but I decide with evidence.
+          <strong>{t.aboutMe.greeting}</strong>{t.aboutMe.greetingRest}
         </p>
         <p className="mb-8">
-          I'm a <strong>Senior Product Designer</strong> with a foundation in graphic design and a career built around one specific instinct: reading a product's context before deciding how to approach it. No two products need the same strategy, and I've learned to notice that early instead of forcing a familiar solution onto an unfamiliar problem.
+          {t.aboutMe.p1Prefix}<strong>{t.aboutMe.p1Bold}</strong>{t.aboutMe.p1Rest}
         </p>
         <p className="mb-8">
-          That judgment is paired with a visual design background most product designers do not have: illustration, branding, photography, video, and motion. I bring genuine craft into my work, along with a natural pull toward consistency where a product genuinely needs to scale.
+          {t.aboutMe.p2}
         </p>
         <p className="mb-8">
-          I have defended a research-backed decision under real outside pressure and been proven right. Accessibility, prototyping, and dev handoff are where I am strongest, shaped by years of direct client work, presentations, and workshops. I am also actively expanding my use of AI in prototyping and research to keep pace with how this role continues to change.
+          {t.aboutMe.p3}
         </p>
         <p className="mb-10">
-          We can start the conversation here about what you want for your brand, or leave me a message at <strong>gerreroluciad@gmail.com</strong>
+          {t.aboutMe.p4Prefix}<strong>{t.aboutMe.p4Email}</strong>
         </p>
 
         {/* Social links */}

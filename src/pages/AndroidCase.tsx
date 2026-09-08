@@ -7,6 +7,7 @@ import ProjectSectionImage from '@/components/ProjectSectionImage'
 import ProjectContact from '@/components/ProjectContact'
 import ProjectPageNav, { type ProjectNavCardData } from '@/components/ProjectPageNav'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
+import { useLanguage } from '@/i18n/LanguageContext'
 import gifHero1 from '@/imports/DesktopAndroid/Hero1.gif'
 import imgSection01 from '@/imports/DesktopAndroid/Image-1-new.jpg'
 import gifSection02 from '@/imports/DesktopAndroid/Image-2-new.gif'
@@ -37,6 +38,8 @@ export default function AndroidCase({
   nextProject,
 }: AndroidCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
+  const { t } = useLanguage()
+  const c = t.cases.android
 
   return (
     <div
@@ -66,12 +69,12 @@ export default function AndroidCase({
         <ProjectTitle company="Huge-Company" title="Android" />
 
         <ProjectMeta
-          subtitle="Evolving the Android Enterprise Experience"
+          subtitle={c.subtitle}
           subtitleSize={48}
           metaLines={[
-            { label: 'My role', value: 'Product Designer / UI Designer' },
-            { label: 'Collaboration', value: 'UX Research, UX Design & Development' },
-            { label: 'Focus', value: 'Interaction Design, UI Design, Design Systems' },
+            { label: t.common.metaLabels.role, value: c.meta.role },
+            { label: t.common.metaLabels.collaboration, value: c.meta.collaboration },
+            { label: t.common.metaLabels.focus, value: c.meta.focus },
           ]}
         />
 
@@ -80,15 +83,15 @@ export default function AndroidCase({
         </ProjectSectionImage>
 
         <ProjectTextBlock>
-          <ProjectTextHeading>Impact & Content Strategy:</ProjectTextHeading>
-          <p className="mb-4">The refreshed Design System created a more cohesive and scalable visual foundation for the Android Enterprise experience.</p>
-          <p className="mb-4">By building on the existing system rather than redesigning it from scratch, we were able to modernize the interface while preserving established patterns and reducing unnecessary implementation effort.</p>
-          <p className="mb-4">The work resulted in 20+ adapted components and 15 modified patterns, giving the development team reusable building blocks that could be applied consistently across the platform.</p>
-          <p className="mb-8">The updated system also created a stronger connection between the Android Enterprise brand and its digital experience, making the product feel more modern, consistent, and easier to evolve over time.</p>
-          <ProjectTextHeading>Overview:</ProjectTextHeading>
-          <p className="mb-4">This project focused on evolving the Android Enterprise digital experience through a subtle brand refresh and the evolution of its existing Design System.</p>
-          <p className="mb-4">Rather than redesigning the platform from scratch, the goal was to translate the updated brand identity into a scalable UI system. Small changes in typography, color, spacing, visual treatments, and component styling became the foundation for a more cohesive and modern experience across the platform.</p>
-          <p>The work resulted in an updated Design System with 20+ adapted components and 15 modified patterns, creating a more consistent visual language while preserving the structure and efficiency of the existing product.</p>
+          <ProjectTextHeading>{c.impactHeading}</ProjectTextHeading>
+          <p className="mb-4">{c.impactP1}</p>
+          <p className="mb-4">{c.impactP2}</p>
+          <p className="mb-4">{c.impactP3}</p>
+          <p className="mb-8">{c.impactP4}</p>
+          <ProjectTextHeading>{c.overviewHeading}</ProjectTextHeading>
+          <p className="mb-4">{c.overviewP1}</p>
+          <p className="mb-4">{c.overviewP2}</p>
+          <p>{c.overviewP3}</p>
         </ProjectTextBlock>
 
         <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '4200/1548' }}>
@@ -96,13 +99,13 @@ export default function AndroidCase({
         </ProjectSectionImage>
 
         <ProjectTextBlock>
-          <ProjectTextHeading>01 — The Approach</ProjectTextHeading>
-          <p className="mb-4">We audited the existing Design System and identified opportunities to evolve its core foundations—from typography and color to component states, spacing, and visual treatments.</p>
-          <p className="mb-8">These updates were then translated into reusable components and patterns, allowing the refreshed brand to scale consistently across the platform. This approach created a bridge between the existing experience and the new visual direction, making the brand refresh more systematic, efficient, and sustainable.</p>
-          <ProjectTextHeading>02 — Restructuring Information</ProjectTextHeading>
-          <p className="mb-4">The second phase focused on restructuring the information architecture to make content easier to discover and support product education.</p>
-          <p className="mb-4">We introduced a modular approach that allowed sections to be customized, reordered, or replaced as content needs evolved.</p>
-          <p>This created a more flexible and scalable experience while making it easier for users to navigate and understand the product.</p>
+          <ProjectTextHeading>{c.phase1Heading}</ProjectTextHeading>
+          <p className="mb-4">{c.phase1P1}</p>
+          <p className="mb-8">{c.phase1P2}</p>
+          <ProjectTextHeading>{c.phase2Heading}</ProjectTextHeading>
+          <p className="mb-4">{c.phase2P1}</p>
+          <p className="mb-4">{c.phase2P2}</p>
+          <p>{c.phase2P3}</p>
         </ProjectTextBlock>
 
         <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '4200/2739' }}>
@@ -110,11 +113,11 @@ export default function AndroidCase({
         </ProjectSectionImage>
 
         <ProjectTextBlock>
-          <ProjectTextHeading>Phase 03 — Design System & Reuse Strategy</ProjectTextHeading>
-          <p className="mb-4">A Design System is more than a collection of UI components. It is a shared framework of reusable components, patterns, rules, and behaviors that creates a common language between Design and Engineering.</p>
-          <p className="mb-4">Research on UI reuse has shown that reusing existing components can reduce development effort and improve productivity, particularly when components are structured, documented, and shared across projects.</p>
-          <p className="mb-4">Based on this principle, our strategy was to reuse before rebuilding. We evaluated the existing components and identified which elements could be adapted to support the refreshed brand, rather than creating new solutions unnecessarily.</p>
-          <p>This approach allowed Design and Engineering to work from a shared set of proven building blocks, reducing duplication and making implementation more predictable. At the same time, it preserved the value of the existing system and avoided introducing unnecessary complexity.</p>
+          <ProjectTextHeading>{c.phase3Heading}</ProjectTextHeading>
+          <p className="mb-4">{c.phase3P1}</p>
+          <p className="mb-4">{c.phase3P2}</p>
+          <p className="mb-4">{c.phase3P3}</p>
+          <p>{c.phase3P4}</p>
         </ProjectTextBlock>
 
         <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '1098/581' }}>
@@ -122,18 +125,18 @@ export default function AndroidCase({
         </ProjectSectionImage>
 
         <ProjectTextBlock>
-          <ProjectTextHeading>Design System</ProjectTextHeading>
-          <p className="mb-4">We evolved the existing Android Enterprise Design System into a more flexible and scalable system, reusing established components while modernizing their visual language and functionality.</p>
-          <p className="mb-4">A key part of the work was introducing tokens and variables across components, allowing each component to adapt to different content and use cases without creating unnecessary variations. This created a more flexible foundation while maintaining consistency across the experience. For example, Hero components retained core elements such as headlines, but were expanded to support more descriptive content and subtext. We also introduced more versatile geometric shapes and visual treatments, moving beyond conventional forms to give the system a more modern and distinctive expression.</p>
-          <p className="mb-4">The navigation system was also restructured beyond its visual appearance. We reorganized categories, removed low-value content, and simplified the information architecture to create a clearer and more focused experience.</p>
-          <p>Throughout the process, we worked closely with development to reuse and evolve existing components, creating a system that was more adaptable, modern, and efficient to implement.</p>
+          <ProjectTextHeading>{c.designSystemHeading}</ProjectTextHeading>
+          <p className="mb-4">{c.designSystemP1}</p>
+          <p className="mb-4">{c.designSystemP2}</p>
+          <p className="mb-4">{c.designSystemP3}</p>
+          <p>{c.designSystemP4}</p>
         </ProjectTextBlock>
 
         <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '1098/525' }}>
           <img alt="" className="absolute inset-0 size-full object-cover" src={imgSection04} />
         </ProjectSectionImage>
 
-        <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
+        <ProjectContact />
 
         <div className="mt-[68px]">
           <ProjectPageNav prev={prevProject} next={nextProject} />

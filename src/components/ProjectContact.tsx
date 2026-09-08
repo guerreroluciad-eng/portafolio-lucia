@@ -1,8 +1,12 @@
+import { useLanguage } from '@/i18n/LanguageContext'
+
 // ─── Project Contact CTA ────────────────────────────────────────────────────
-// Closing "let's talk" block. Shared across project pages.
+// Closing "let's talk" block. Shared across project pages. `message` is
+// optional — omit it to fall back to the shared translated copy; pages that
+// need custom wording (none currently do) can still override it.
 
 interface ProjectContactProps {
-  message: string
+  message?: string
   textColor?: string
   buttonColor?: string
   buttonHoverBg?: string
@@ -16,6 +20,7 @@ export default function ProjectContact({
   buttonHoverBg = '#302f2a',
   buttonHoverText = 'white',
 }: ProjectContactProps) {
+  const { t } = useLanguage()
   const buttonClassName = "h-[50px] rounded-[36px] px-[27px] font-['Abhaya_Libre',serif] text-[24px] bg-transparent cursor-pointer inline-flex items-center justify-center no-underline"
   const buttonStyle = { color: buttonColor, borderWidth: '1px', borderStyle: 'solid', borderColor: buttonColor, transition: 'background 0.2s, color 0.2s' }
   const onButtonMouseEnter = (e: React.MouseEvent<HTMLElement>) => { (e.currentTarget as HTMLElement).style.background = buttonHoverBg; (e.currentTarget as HTMLElement).style.color = buttonHoverText }
@@ -24,7 +29,7 @@ export default function ProjectContact({
   return (
     <div className="flex flex-col gap-[24px] items-center text-center w-full max-w-[934px] px-[25px] lg:px-0">
       <p className="font-['Abhaya_Libre',serif] text-[32px] leading-[34px] md:leading-normal" style={{ color: textColor }}>
-        {message}
+        {message ?? t.common.projectContact.message}
       </p>
       <a
         href="mailto:guerreroluciad@gmail.com"
@@ -33,7 +38,7 @@ export default function ProjectContact({
         onMouseEnter={onButtonMouseEnter}
         onMouseLeave={onButtonMouseLeave}
       >
-        Contact me
+        {t.common.projectContact.button}
       </a>
     </div>
   )

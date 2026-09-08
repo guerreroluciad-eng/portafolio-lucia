@@ -1,3 +1,5 @@
+import { useLanguage } from '@/i18n/LanguageContext'
+
 // ─── Project Page Nav ───────────────────────────────────────────────────────
 // "Back page" / "Next page" preview cards shown at the bottom of every
 // project case page — each card is a title + pill button (same style as the
@@ -39,10 +41,11 @@ function ProjectNavCard({ name, thumbnail, onClick, label }: ProjectNavCardData 
 }
 
 export default function ProjectPageNav({ prev, next }: ProjectPageNavProps) {
+  const { t } = useLanguage()
   return (
     <div className="flex flex-col gap-[40px] md:flex-row md:justify-between md:items-start w-full max-w-[1098px] px-[16px] md:px-[25px] lg:px-0">
-      <ProjectNavCard {...prev} label="Back Page" />
-      <ProjectNavCard {...next} label="Next Page" />
+      <ProjectNavCard {...prev} label={t.common.projectNav.backPage} />
+      <ProjectNavCard {...next} label={t.common.projectNav.nextPage} />
     </div>
   )
 }

@@ -10,6 +10,8 @@ import imgLinkedin from '@/imports/DesktopAboutme/1ffea485ff3654e8e559fa09d1da86
 import { useMinWidth } from '@/hooks/useMinWidth'
 import { useInView, revealStyle } from '@/hooks/useInView'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
+import { useLanguage } from '@/i18n/LanguageContext'
+import LanguageSwitch from '@/components/LanguageSwitch'
 
 // ─── Home Logo ───────────────────────────────────────────────────────────────
 
@@ -50,24 +52,8 @@ export function HomeLogo({ className, fill = '#302f2a' }: { className?: string; 
 }
 
 // ─── Testimonials data ───────────────────────────────────────────────────────
-
-const TESTIMONIALS = [
-  {
-    quote: "Lucia is an exceptionally talented Visual Designer with a great eye for detail, strong creative thinking, and the ability to turn ideas into polished, high-quality designs. Beyond her design skills, ",
-    author: 'Andrea Sanz',
-    role: 'Senior Product Designer',
-  },
-  {
-    quote: 'She possesses an excellent visual style, strong conceptualization skills, and a wide range of creative and design abilities applied to digital products and projects of all kinds.',
-    author: 'Jonatan Martinez',
-    role: 'Senior Visual Designer',
-  },
-  {
-    quote: 'An excellent Digital Art Director and UX/UI Designer with exceptional skills, a strong eye for visual design, and a deep understanding of user experience. A talented and collaborative.',
-    author: 'Lourdes Valencia',
-    role: 'Directora Creativa',
-  },
-]
+// Content itself now lives in translations.ts (t.home.testimonials) so it
+// switches with the language; this file just wires up the carousel mechanics.
 
 const SOCIAL_LINKS = [
   { src: imgBehance, alt: 'Behance', href: 'https://www.behance.net/lur' },
@@ -195,6 +181,8 @@ interface HomeProps {
 }
 
 export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, onGoogleClick, onElTiempoClick, onYoutubeClick }: HomeProps) {
+  const { t } = useLanguage()
+  const testimonials = t.home.testimonials
   const [headerHovered, setHeaderHovered] = useState(false)
   const [titleHovered, setTitleHovered] = useState(false)
   const isDesktop = useMinWidth(1024)
@@ -202,9 +190,9 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
 
   const [activeTestimonial, setActiveTestimonial] = useState(0)
   useEffect(() => {
-    const t = setInterval(() => setActiveTestimonial(i => (i + 1) % TESTIMONIALS.length), 5000)
-    return () => clearInterval(t)
-  }, [])
+    const interval = setInterval(() => setActiveTestimonial(i => (i + 1) % testimonials.length), 5000)
+    return () => clearInterval(interval)
+  }, [testimonials.length])
 
   // Scroll-triggered reveals for the below-the-fold desktop sections (the
   // hero above keeps its existing load-triggered slideStyle animation).
@@ -240,9 +228,9 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
       : { opacity: 0 }
 
   const PROJECTS = [
-    { shortLabel: 'Onboarding', fullTitle: 'Reimagining Onboarding for Google Cloud', sideLabel: 'Google Cloud', onClick: onGoogleClick },
-    { shortLabel: 'Redesigning', fullTitle: 'Redesigning the El Tiempo Digital Experience', sideLabel: 'El Tiempo', onClick: onElTiempoClick },
-    { shortLabel: 'AI + Creators', fullTitle: 'AI-Powered Search for YouTube Blog Creators', sideLabel: 'YouTube Blog', onClick: onYoutubeClick },
+    { shortLabel: t.home.projects.google.short, fullTitle: t.home.projects.google.full, sideLabel: t.home.projects.google.side, onClick: onGoogleClick },
+    { shortLabel: t.home.projects.eltiempo.short, fullTitle: t.home.projects.eltiempo.full, sideLabel: t.home.projects.eltiempo.side, onClick: onElTiempoClick },
+    { shortLabel: t.home.projects.youtube.short, fullTitle: t.home.projects.youtube.full, sideLabel: t.home.projects.youtube.side, onClick: onYoutubeClick },
   ]
 
   return (
@@ -267,22 +255,23 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
             className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] whitespace-pre-wrap bg-transparent border-none cursor-pointer text-left p-0 text-[#302f2a]"
           >
             <p className="leading-[normal] mb-0">01.</p>
-            <p className="leading-[normal]">Work</p>
+            <p className="leading-[normal]">{t.nav.work}</p>
           </button>
           <button
             onClick={onAboutClick}
             className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] whitespace-pre-wrap bg-transparent border-none cursor-pointer text-left p-0 text-[#302f2a]"
           >
             <p className="leading-[normal] mb-0">02.</p>
-            <p className="leading-[normal]">About me</p>
+            <p className="leading-[normal]">{t.nav.aboutMe}</p>
           </button>
           <button
             onClick={onCvClick}
             className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] whitespace-pre-wrap bg-transparent border-none cursor-pointer text-left p-0 text-[#302f2a]"
           >
             <p className="leading-[normal] mb-0">03.</p>
-            <p className="leading-[normal]">CV / HV</p>
+            <p className="leading-[normal]">{t.nav.cv}</p>
           </button>
+          <LanguageSwitch />
         </div>
       </div>
 
@@ -331,7 +320,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
             >
               <p className="leading-[normal] mb-0">01.</p>
-              <p className="leading-[normal]">Work</p>
+              <p className="leading-[normal]">{t.nav.work}</p>
             </button>
             <button
               onClick={onAboutClick}
@@ -339,7 +328,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.3s' }}
             >
               <p className="leading-[normal] mb-0">02.</p>
-              <p className="leading-[normal]">About me</p>
+              <p className="leading-[normal]">{t.nav.aboutMe}</p>
             </button>
             <button
               onClick={onCvClick}
@@ -347,8 +336,9 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.3s' }}
             >
               <p className="leading-[normal] mb-0">03.</p>
-              <p className="leading-[normal]">CV / HV</p>
+              <p className="leading-[normal]">{t.nav.cv}</p>
             </button>
+            <LanguageSwitch active={headerActive} className="self-start" />
           </div>
         </div>
 
@@ -370,11 +360,11 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
             onMouseEnter={() => setTitleHovered(true)}
             onMouseLeave={() => setTitleHovered(false)}
           >
-            I'm
+            {t.home.imPrefix}
           </p>
           <HomeLogo className="h-[129px] w-[372px] origin-bottom-left scale-[0.806] mb-[24px]" fill={titleHovered ? '#2f2e29' : '#ffffff'} />
           <p className="[word-break:break-word] font-['Abhaya_Libre',serif] not-italic text-[#302f2a] text-[24px] leading-[28px] mb-[70px]">
-            Senior Product Designer specializing in the creation of intuitive digital experiences, interaction design, and user-centered interfaces.
+            {t.home.heroSubtitle}
           </p>
         </div>
 
@@ -390,15 +380,15 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               onMouseLeave={() => setTitleHovered(false)}
             >
               <p
-                className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[normal] not-italic relative shrink-0 text-[110px] lg:text-[190px] lg:h-[119px] lg:w-[269px]"
+                className="whitespace-nowrap font-['Abhaya_Libre',serif] leading-[normal] not-italic relative shrink-0 text-[110px] lg:text-[190px] lg:h-[140px] lg:w-[320px]"
                 style={{ color: titleHovered ? '#2f2e29' : '#ffffff', transition: 'color 0.25s ease' }}
               >
-                I'm
+                {t.home.imPrefix}
               </p>
               <HomeLogo className="relative shrink-0 md:h-[135px] md:w-[380px] lg:h-[201px] lg:w-[1334px]" fill={titleHovered ? '#2f2e29' : '#ffffff'} />
             </div>
             <p className="[word-break:break-word] font-['Abhaya_Libre',serif] leading-[normal] not-italic relative shrink-0 text-[#302f2a] text-[36px] px-[16px] lg:px-0 lg:h-[90px] lg:w-[1323px] home-paragraph-wrap">
-              Senior Product Designer specializing in the creation of intuitive digital experiences, interaction design, and user-centered interfaces.
+              {t.home.heroSubtitle}
             </p>
           </div>
         </div>
@@ -414,7 +404,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               onClick={onWorkClick}
               className="font-['Abhaya_Libre',serif] text-[30px] text-[#2f2e29] bg-transparent border-none cursor-pointer p-0"
             >
-              See work
+              {t.home.seeWork}
             </button>
           </div>
           <div className="h-px bg-[#C7BEB0] mx-[60px] mt-[16px]" style={revealStyle(seeWorkInView, 100)} />
@@ -439,14 +429,14 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
                   className="font-['Abhaya_Libre',serif] text-[64px] leading-[68px] text-left mb-[24px]"
                   style={{ ...revealStyle(testimonialInView, 0), animation: 'colorFadeToActive 1s ease both' }}
                 >
-                  &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
+                  &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
                 </p>
               </div>
               <p
                 className="font-['Abhaya_Libre',serif] text-[30px] text-right"
                 style={{ ...revealStyle(testimonialInView, 100), animation: 'colorFadeToActive 1s ease both' }}
               >
-                {TESTIMONIALS[activeTestimonial].author} - {TESTIMONIALS[activeTestimonial].role}
+                {testimonials[activeTestimonial].author} - {testimonials[activeTestimonial].role}
               </p>
             </div>
           </div>
@@ -463,14 +453,14 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               onMouseEnter={e => { e.currentTarget.style.color = '#2f2e29' }}
               onMouseLeave={e => { e.currentTarget.style.color = '#ffffff' }}
             >
-              Contact me
+              {t.home.contactMe}
               <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style={{ flexShrink: 0 }}>
                 <path d="M22 12 L44 32 L22 52" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
           </div>
           <p className="px-[60px] mt-[20px] font-['Abhaya_Libre',serif] text-[36px] text-[#2f2e29]" style={revealStyle(contactInView, 100)}>
-            Let&rsquo;s start by talking about what you&rsquo;re looking for.
+            {t.home.contactSubtitle}
           </p>
           <div className="px-[60px] mt-[24px] pb-[144px] flex gap-[34px] items-center" style={revealStyle(contactInView, 200)}>
             {SOCIAL_LINKS.map(({ src, alt, href }) => (
@@ -496,7 +486,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               onClick={onWorkClick}
               className="font-['Abhaya_Libre',serif] text-[16px] text-[#2f2e29] bg-transparent border-none cursor-pointer p-0"
             >
-              See work
+              {t.home.seeWork}
             </button>
           </div>
           <div className="h-px bg-[#C7BEB0] mx-[30px] mt-[16px]" style={revealStyle(seeWorkInViewTablet, 100)} />
@@ -519,13 +509,13 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
                 className="font-['Abhaya_Libre',serif] text-[40px] leading-[43px] text-left mb-[24px]"
                 style={{ ...revealStyle(testimonialInViewTablet, 0), animation: 'colorFadeToActive 1s ease both' }}
               >
-                &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
+                &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
               </p>
               <p
                 className="font-['Abhaya_Libre',serif] text-[24px] text-right"
                 style={{ ...revealStyle(testimonialInViewTablet, 100), animation: 'colorFadeToActive 1s ease both' }}
               >
-                {TESTIMONIALS[activeTestimonial].author} - {TESTIMONIALS[activeTestimonial].role}
+                {testimonials[activeTestimonial].author} - {testimonials[activeTestimonial].role}
               </p>
             </div>
           </div>
@@ -542,14 +532,14 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               onMouseEnter={e => { e.currentTarget.style.color = '#2f2e29' }}
               onMouseLeave={e => { e.currentTarget.style.color = '#ffffff' }}
             >
-              Contact me
+              {t.home.contactMe}
               <svg width="44" height="44" viewBox="0 0 64 64" fill="none" style={{ flexShrink: 0 }}>
                 <path d="M22 12 L44 32 L22 52" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
           </div>
           <p className="px-[30px] mt-[20px] font-['Abhaya_Libre',serif] text-[24px] text-[#2f2e29]" style={revealStyle(contactInViewTablet, 100)}>
-            Let&rsquo;s start by talking about what you&rsquo;re looking for.
+            {t.home.contactSubtitle}
           </p>
           <div className="px-[30px] mt-[24px] pb-[144px] flex gap-[34px] items-center" style={revealStyle(contactInViewTablet, 200)}>
             {SOCIAL_LINKS.map(({ src, alt, href }) => (
@@ -575,7 +565,7 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               onClick={onWorkClick}
               className="font-['Abhaya_Libre',serif] text-[16px] text-[#2f2e29] bg-transparent border-none cursor-pointer p-0"
             >
-              See work
+              {t.home.seeWork}
             </button>
           </div>
           <div className="h-px bg-[#C7BEB0] mx-[16px] mt-[16px]" style={revealStyle(seeWorkInViewMobile, 100)} />
@@ -603,13 +593,13 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
                 className="font-['Abhaya_Libre',serif] text-[32px] leading-[35px] text-left mb-[24px]"
                 style={{ ...revealStyle(testimonialInViewMobile, 0), animation: 'colorFadeToActive 1s ease both' }}
               >
-                &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
+                &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
               </p>
               <p
                 className="font-['Abhaya_Libre',serif] text-[18px] text-right"
                 style={{ ...revealStyle(testimonialInViewMobile, 100), animation: 'colorFadeToActive 1s ease both' }}
               >
-                {TESTIMONIALS[activeTestimonial].author} - {TESTIMONIALS[activeTestimonial].role}
+                {testimonials[activeTestimonial].author} - {testimonials[activeTestimonial].role}
               </p>
             </div>
           </div>
@@ -626,14 +616,14 @@ export default function Home({ homeReady, onWorkClick, onAboutClick, onCvClick, 
               onMouseEnter={e => { e.currentTarget.style.color = '#2f2e29' }}
               onMouseLeave={e => { e.currentTarget.style.color = '#ffffff' }}
             >
-              Contact me
+              {t.home.contactMe}
               <svg width="22" height="22" viewBox="0 0 64 64" fill="none" style={{ flexShrink: 0 }}>
                 <path d="M22 12 L44 32 L22 52" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
           </div>
           <p className="px-[16px] mt-[20px] font-['Abhaya_Libre',serif] text-[24px] text-[#2f2e29]" style={revealStyle(contactInViewMobile, 100)}>
-            Let&rsquo;s start by talking about what you&rsquo;re looking for.
+            {t.home.contactSubtitle}
           </p>
           <div className="px-[16px] mt-[24px] pb-[144px] flex gap-[34px] items-center" style={revealStyle(contactInViewMobile, 200)}>
             {SOCIAL_LINKS.map(({ src, alt, href }) => (

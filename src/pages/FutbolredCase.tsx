@@ -7,6 +7,7 @@ import ProjectTextBlock, { ProjectTextHeading } from '@/components/ProjectTextBl
 import ProjectSectionImage from '@/components/ProjectSectionImage'
 import ProjectContact from '@/components/ProjectContact'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
+import { useLanguage } from '@/i18n/LanguageContext'
 import imgHero1 from '@/imports/Futbolred/Hero-1.png'
 import imgHero2 from '@/imports/Futbolred/Hero-2.png'
 import imgHero3 from '@/imports/Futbolred/Hero-3.png'
@@ -33,6 +34,8 @@ export default function FutbolredCase({
   onLuciaClick,
 }: FutbolredCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
+  const { t } = useLanguage()
+  const c = t.cases.futbolred
 
   return (
     <div
@@ -69,12 +72,12 @@ export default function FutbolredCase({
         />
 
         <ProjectMeta
-          subtitle="Refreshing a Legacy Football Brand"
+          subtitle={c.subtitle}
           textColor="#ffffff"
           metaLines={[
-            { label: 'My role', value: 'Art Director, Visual Designer' },
-            { label: 'Collaboration', value: 'Creative Design, Branding' },
-            { label: 'Focus', value: 'Brand Design & System Design' },
+            { label: t.common.metaLabels.role, value: c.meta.role },
+            { label: t.common.metaLabels.collaboration, value: c.meta.collaboration },
+            { label: t.common.metaLabels.focus, value: c.meta.focus },
           ]}
         />
 
@@ -91,9 +94,9 @@ export default function FutbolredCase({
         </ProjectImageRow>
 
         <ProjectTextBlock textColor="#ffffff">
-          <ProjectTextHeading>Overview:</ProjectTextHeading>
-          <p className="mb-4">Futbolred is a football news brand that has been part of Colombian sports culture for years. The challenge was to evolve its visual identity to feel more contemporary, dynamic, and relevant to younger audiences, while preserving the recognition and credibility built over time.</p>
-          <p>The redesign refreshed the brand's visual language, creating a more flexible identity that could adapt to today's digital-first football culture and connect with a new generation of fans.</p>
+          <ProjectTextHeading>{c.overviewHeading}</ProjectTextHeading>
+          <p className="mb-4">{c.overviewP1}</p>
+          <p>{c.overviewP2}</p>
         </ProjectTextBlock>
 
         <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/754' }}>
@@ -101,11 +104,11 @@ export default function FutbolredCase({
         </ProjectSectionImage>
 
         <ProjectTextBlock textColor="#ffffff">
-          <ProjectTextHeading>Beyond the Identity:</ProjectTextHeading>
-          <p className="mb-4">At the heart of the new identity is a simple idea: Futbolred is a network that connects people through football. Just as football brings fans, players, teams, and communities together, Futbolred connects them through the stories, conversations, and experiences surrounding the sport.</p>
-          <p className="mb-4">This concept became the foundation for a visual language designed around connection, movement, and interaction. The refreshed identity goes beyond the logo, introducing a flexible system of typography, graphic elements, patterns, imagery, and color.</p>
-          <p className="mb-4">We introduced a bold combination of deep teal, vibrant green, and monochromatic imagery, creating a more energetic and contemporary presence. The F and R elements, along with football-inspired patterns, numbers, scores, and modular compositions, can be combined and adapted across different touchpoints.</p>
-          <p>The result is a brand that feels more dynamic, digital, and connected to a new generation of football fans, while maintaining the recognition and heritage of Futbolred.</p>
+          <ProjectTextHeading>{c.beyondHeading}</ProjectTextHeading>
+          <p className="mb-4">{c.beyondP1}</p>
+          <p className="mb-4">{c.beyondP2}</p>
+          <p className="mb-4">{c.beyondP3}</p>
+          <p>{c.beyondP4}</p>
         </ProjectTextBlock>
 
         <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/1596' }}>
@@ -113,7 +116,6 @@ export default function FutbolredCase({
         </ProjectSectionImage>
 
         <ProjectContact
-          message="We can start the conversation about what you want for your brand or leave me a message."
           textColor="#ffffff"
           buttonColor="#ffffff"
           buttonHoverBg="#ffffff"

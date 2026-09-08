@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useMinWidth } from '@/hooks/useMinWidth'
+import { useLanguage } from '@/i18n/LanguageContext'
+import LanguageSwitch from '@/components/LanguageSwitch'
 import imgFrame241Work from '@/imports/DesktopHover-4/c06761a7de8a442cd6a45db796d69e4fa8bd0961.png'
 import imgFrame241Hover from '@/imports/DesktopHover-3/aab7bd2528fca558339289f043abd5043daa8e13.png'
 
@@ -29,6 +31,7 @@ export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAb
   const [hovered, setHovered] = useState(false)
   const isDesktop = useMinWidth(1024)
   const active = isDesktop && hovered
+  const { t } = useLanguage()
 
   return (
     <div
@@ -66,7 +69,7 @@ export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAb
           style={{ color: dark ? 'white' : (active ? 'white' : '#302f2a'), transition: 'color 0.35s ease' }}
         >
           <p className="leading-[normal] mb-0">01.</p>
-          <p className="leading-[normal]">Work</p>
+          <p className="leading-[normal]">{t.nav.work}</p>
         </button>
         {onAboutClick ? (
           <button
@@ -75,7 +78,7 @@ export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAb
             style={{ color: dark ? 'white' : (active ? 'white' : '#302f2a'), transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">02.</p>
-            <p className="leading-[normal]">About me</p>
+            <p className="leading-[normal]">{t.nav.aboutMe}</p>
           </button>
         ) : (
           <div
@@ -83,7 +86,7 @@ export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAb
             style={{ color: dark ? 'white' : (active ? 'white' : '#302f2a'), transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">02.</p>
-            <p className="leading-[normal]">About me</p>
+            <p className="leading-[normal]">{t.nav.aboutMe}</p>
           </div>
         )}
         {onCvClick ? (
@@ -93,7 +96,7 @@ export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAb
             style={{ color: dark ? 'white' : (active ? 'white' : '#302f2a'), transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">03.</p>
-            <p className="leading-[normal]">CV / HV</p>
+            <p className="leading-[normal]">{t.nav.cv}</p>
           </button>
         ) : (
           <div
@@ -101,9 +104,10 @@ export default function ScrollHeader({ scrolled, onLuciaClick, onWorkClick, onAb
             style={{ color: dark ? 'white' : (active ? 'white' : '#302f2a'), transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">03.</p>
-            <p className="leading-[normal]">CV / HV</p>
+            <p className="leading-[normal]">{t.nav.cv}</p>
           </div>
         )}
+        <LanguageSwitch dark={dark} active={active} />
       </div>
     </div>
   )

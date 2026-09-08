@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import ScrollHeader from '@/components/ScrollHeader'
 import ProjectContact from '@/components/ProjectContact'
+import LanguageSwitch from '@/components/LanguageSwitch'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
 import { useMinWidth } from '@/hooks/useMinWidth'
+import { useLanguage } from '@/i18n/LanguageContext'
 import { HomeLogo } from '@/pages/Home'
 import imgFrame241Work from '@/imports/DesktopHover-4/c06761a7de8a442cd6a45db796d69e4fa8bd0961.png'
 import imgFrame241Hover from '@/imports/DesktopHover-3/aab7bd2528fca558339289f043abd5043daa8e13.png'
@@ -71,13 +73,15 @@ export default function CVCase({ cvReady, onWorkClick, onAboutClick, onLuciaClic
   const isDesktop = useMinWidth(1024)
   const headerActive = isDesktop && cvHeaderHovered
 
+  const { t } = useLanguage()
+
   // Once the entrance animation finishes, drop it so it stops pinning
   // opacity:1 and the scroll-based fade can actually take effect.
   const [headerAnimDone, setHeaderAnimDone] = useState(false)
   useEffect(() => {
     if (!cvReady) return
-    const t = setTimeout(() => setHeaderAnimDone(true), 850)
-    return () => clearTimeout(t)
+    const timer = setTimeout(() => setHeaderAnimDone(true), 850)
+    return () => clearTimeout(timer)
   }, [cvReady])
 
   const fadeIn = (delay: number) => ({
@@ -133,7 +137,7 @@ export default function CVCase({ cvReady, onWorkClick, onAboutClick, onLuciaClic
             style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">01.</p>
-            <p className="leading-[normal]">Work</p>
+            <p className="leading-[normal]">{t.nav.work}</p>
           </button>
           <button
             onClick={onAboutClick}
@@ -141,15 +145,16 @@ export default function CVCase({ cvReady, onWorkClick, onAboutClick, onLuciaClic
             style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">02.</p>
-            <p className="leading-[normal]">About me</p>
+            <p className="leading-[normal]">{t.nav.aboutMe}</p>
           </button>
           <div
             className="[word-break:break-word] font-['Abhaya_Libre',serif] font-bold leading-[0] not-italic relative shrink-0 text-[16px] lg:text-[24px] lg:h-[72px] lg:w-[152px] whitespace-pre-wrap self-start"
             style={{ color: headerActive ? 'white' : '#302f2a', transition: 'color 0.35s ease' }}
           >
             <p className="leading-[normal] mb-0">03.</p>
-            <p className="leading-[normal]">CV / HV</p>
+            <p className="leading-[normal]">{t.nav.cv}</p>
           </div>
+          <LanguageSwitch active={headerActive} className="self-start" />
         </div>
       </div>
 
@@ -172,112 +177,74 @@ export default function CVCase({ cvReady, onWorkClick, onAboutClick, onLuciaClic
           >
             <HomeLogo className="h-[129px] w-[372px] origin-top-left scale-[0.4] md:scale-[0.45] lg:scale-[0.55]" fill={logoHovered ? '#2f2e29' : '#ffffff'} />
           </div>
-          <p className="font-['Abhaya_Libre',serif] text-[18px] md:text-[20px] text-[#302f2a] text-center">Bogotá - Colombia</p>
-          <p className="font-['Abhaya_Libre',serif] text-[18px] md:text-[20px] text-[#302f2a] text-center">Senior Product Design</p>
+          <p className="font-['Abhaya_Libre',serif] text-[18px] md:text-[20px] text-[#302f2a] text-center">{t.cv.location}</p>
+          <p className="font-['Abhaya_Libre',serif] text-[18px] md:text-[20px] text-[#302f2a] text-center">{t.cv.title}</p>
         </div>
 
         {/* Overview bullets */}
         <div className="w-full max-w-[560px] lg:max-w-[700px] mb-[64px] md:mb-[80px]" style={fadeIn(80)}>
-          <CvBulletList
-            items={[
-              'Senior Product Designer with over 9+ years of end-to-end product design experience across banking, media, and tech',
-              'Deep design systems knowledge, including AI-led workflows for building and scaling components across teams',
-              'Deep accessibility knowledge, shaped by strict client standards and consistent hands-on application',
-              'Regular experience presenting and running workshops directly with clients and stakeholders',
-              'Strong visual craft, illustration, branding, motion, and photography, paired with core product design competency',
-              'Expanding AI use in prototyping and research to keep pace with an evolving discipline',
-            ]}
-          />
+          <CvBulletList items={t.cv.overview} />
         </div>
 
         {/* Work experience */}
         <div className="w-full max-w-[560px] lg:max-w-[700px] mb-[64px] md:mb-[80px]" style={fadeIn(140)}>
-          <CvSectionHeading>Work experience</CvSectionHeading>
+          <CvSectionHeading>{t.cv.workExperienceHeading}</CvSectionHeading>
 
           <CvExperienceEntry
-            period="2021–2026"
-            title="Senior Product Designer | Huge (Google)"
-            bullets={[
-              'Designed scalable user experiences for Google products (Youtube, Google Cloud, Google Enterprise and others).',
-              'Contributed to the evolution and maintenance of enterprise-level design systems.',
-              'Collaborated closely with product managers and engineers to deliver user-centered solutions.',
-              'Created wireframes, high-fidelity prototypes, and design specifications in Figma, Figma Make and Claude.',
-              'Improved design consistency through reusable components and design system governance.',
-              'Collaborate within a strong design team through reviews, critiques, shared patterns, and design system contributions.',
-              'Over the past five years, collaborated remotely with product managers, engineers, designers, and stakeholders working exclusively in English within fast-paced, cross-functional product teams.',
-              'Translate business goals, technical constraints, and user needs into coherent user journeys, information architecture, and interaction models.',
-            ]}
+            period={t.cv.experience1.period}
+            title={t.cv.experience1.title}
+            bullets={t.cv.experience1.bullets}
           />
 
           <CvExperienceEntry
-            period="2017–2021"
-            title="Senior Product Designer | El Tiempo"
-            bullets={[
-              "End-to-End Product Redesign: Leading the complete UX/UI transformation of the firm's web platform, modernizing the visual interface while re-architecting site navigation to optimize user journeys.",
-              'Scalable Design Systems: Developing high-fidelity interactive prototypes and scalable UI kits/components in Figma, ensuring a seamless, developer-ready handoff and design consistency.',
-              'User-Centered Research: Applied UX research methodologies and heuristics to streamline complex user flows, translating dense architectural portfolios and project data into intuitive digital experiences.',
-              'Responsive Design: Ensuring cross-platform adaptability and responsive layouts to maximize engagement across desktop and mobile devices.',
-            ]}
+            period={t.cv.experience2.period}
+            title={t.cv.experience2.title}
+            bullets={t.cv.experience2.bullets}
           />
         </div>
 
         {/* More experience */}
         <div className="w-full max-w-[560px] lg:max-w-[700px] mb-[64px] md:mb-[80px]" style={fadeIn(180)}>
-          <CvSectionHeading>More experience ...</CvSectionHeading>
+          <CvSectionHeading>{t.cv.moreExperienceHeading}</CvSectionHeading>
           <p className="font-['Abhaya_Libre',serif] text-[16px] md:text-[18px] leading-normal text-[#302f2a] mb-[16px]">
-            I have worked for brands such as Fedco, Claro, PYG, BBVA, El Tiempo, Mundo Aventura, Cine Colombia, Fontour, McDonald's, among others.
+            {t.cv.moreExperienceP1}
           </p>
           <p className="font-['Abhaya_Libre',serif] text-[16px] md:text-[18px] leading-normal text-[#302f2a]">
-            Inhouse BBVA Colombia: 2013-2014, Agencia DDB Colombia: 2014-2016, Agencia Ogilvy Matter Colombia: 2017, Agencia Jwt - Do babel y Otras: 2017
+            {t.cv.moreExperienceP2}
           </p>
         </div>
 
         {/* Tools */}
         <div className="w-full max-w-[560px] lg:max-w-[700px] mb-[64px] md:mb-[80px]" style={fadeIn(220)}>
-          <CvSectionHeading>Tools</CvSectionHeading>
-          <CvToolsCategory
-            label="Product Design"
-            value="Interaction Design, Accessibility, Visual Design, Strategy, UX, Data Visualization, Artificial Intelligence, Usability Testing, Motion Design, Journey Mapping, User Research, Design Systems, Wireframing, Prototyping"
-          />
-          <CvToolsCategory label="Tools & Platforms" value="Figma, Protopie, Webflow, Framer and Github" />
-          <CvToolsCategory label="AI-Assisted Workflows" value="Cursor, Claude, Lovable, Figma Make, NotebookLM, Generative AI" />
-          <CvToolsCategory label="Leadership & Methods" value="Mentoring, Team Leadership, Agile, Scrum, Kanban" />
+          <CvSectionHeading>{t.cv.toolsHeading}</CvSectionHeading>
+          <CvToolsCategory label={t.cv.toolsProductDesignLabel} value={t.cv.toolsProductDesignValue} />
+          <CvToolsCategory label={t.cv.toolsPlatformsLabel} value={t.cv.toolsPlatformsValue} />
+          <CvToolsCategory label={t.cv.toolsAiLabel} value={t.cv.toolsAiValue} />
+          <CvToolsCategory label={t.cv.toolsLeadershipLabel} value={t.cv.toolsLeadershipValue} />
         </div>
 
         {/* Education */}
         <div className="w-full max-w-[560px] lg:max-w-[700px] mb-[64px] md:mb-[80px]" style={fadeIn(260)}>
-          <CvSectionHeading>Education</CvSectionHeading>
-          <CvBulletList
-            items={[
-              "Bachelor's Degree in Visual Design - Universidad Los Libertadores | Bogotá, Colombia",
-              'Universidad Central, postgraduate in Illustration',
-            ]}
-          />
+          <CvSectionHeading>{t.cv.educationHeading}</CvSectionHeading>
+          <CvBulletList items={t.cv.education} />
         </div>
 
         {/* Certifications */}
         <div className="w-full max-w-[560px] lg:max-w-[700px] mb-[64px] md:mb-[80px]" style={fadeIn(300)}>
-          <CvSectionHeading>Certifications</CvSectionHeading>
-          <CvBulletList
-            items={[
-              'Globant Design Center - Globant - 2020',
-              'Design VR/AR - IxDF - The Interaction Design Foundation',
-              'Artificial Intelligence Course for UX/UI Designers - 2026',
-              'Claude - Lab 10 - 2026',
-            ]}
-          />
+          <CvSectionHeading>{t.cv.certificationsHeading}</CvSectionHeading>
+          <CvBulletList items={t.cv.certifications} />
         </div>
 
         {/* Languages */}
         <div className="w-full max-w-[560px] lg:max-w-[700px] mb-[64px] md:mb-[80px]" style={fadeIn(340)}>
-          <CvSectionHeading>Languages</CvSectionHeading>
+          <CvSectionHeading>{t.cv.languagesHeading}</CvSectionHeading>
           <p className="font-['Abhaya_Libre',serif] text-[16px] md:text-[18px] leading-normal text-[#302f2a]">
-            Native Spanish speaker and advanced English proficiency.
+            {t.cv.languagesValue}
           </p>
         </div>
 
         <div style={fadeIn(380)}>
-          <ProjectContact message="We can start the conversation about what you want for your brand or leave me a message." />
+          <ProjectContact />
         </div>
       </div>
     </div>

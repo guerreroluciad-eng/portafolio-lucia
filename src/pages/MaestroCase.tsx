@@ -7,6 +7,7 @@ import ProjectTextBlock, { ProjectTextHeading } from '@/components/ProjectTextBl
 import ProjectSectionImage from '@/components/ProjectSectionImage'
 import ProjectContact from '@/components/ProjectContact'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
+import { useLanguage } from '@/i18n/LanguageContext'
 import imgHero1 from '@/imports/Maestro/Hero-1.png'
 import imgHero2 from '@/imports/Maestro/Hero-2.png'
 import imgHero3 from '@/imports/Maestro/Hero-3.png'
@@ -34,6 +35,8 @@ export default function MaestroCase({
   onLuciaClick,
 }: MaestroCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
+  const { t } = useLanguage()
+  const c = t.cases.maestro
 
   return (
     <div
@@ -70,12 +73,12 @@ export default function MaestroCase({
         />
 
         <ProjectMeta
-          subtitle="A New Identity for Creative Exploration"
+          subtitle={c.subtitle}
           textColor="#ffffff"
           metaLines={[
-            { label: 'My role', value: 'Art Director, Visual Designer' },
-            { label: 'Collaboration', value: 'Creative Design, Motion' },
-            { label: 'Focus', value: 'Brand Design & System Design' },
+            { label: t.common.metaLabels.role, value: c.meta.role },
+            { label: t.common.metaLabels.collaboration, value: c.meta.collaboration },
+            { label: t.common.metaLabels.focus, value: c.meta.focus },
           ]}
         />
 
@@ -92,27 +95,27 @@ export default function MaestroCase({
         </ProjectImageRow>
 
         <ProjectTextBlock textColor="#ffffff">
-          <ProjectTextHeading>Overview:</ProjectTextHeading>
-          <p className="mb-4">This project focused on creating a new internal brand identity for Huge—one that could reflect the way creativity moves between structure and experimentation.</p>
-          <p className="mb-4">Inspired by the paradoxical work of M.C. Escher, the identity explores the space between order and chaos, where unexpected ideas can emerge from a structured system. The concept was built around a simple idea: creativity needs structure, but it also needs room for the unexpected.</p>
-          <p className="mb-4 italic">"Only those who attempt the absurd can achieve the impossible."</p>
-          <p className="mb-8">The resulting identity combines a defined visual framework with a generative image-making system, allowing the brand to evolve through experimentation, variation, and unexpected visual outcomes.</p>
+          <ProjectTextHeading>{c.overviewHeading}</ProjectTextHeading>
+          <p className="mb-4">{c.overviewP1}</p>
+          <p className="mb-4">{c.overviewP2}</p>
+          <p className="mb-4 italic">{c.overviewQuote}</p>
+          <p className="mb-8">{c.overviewP3}</p>
 
-          <ProjectTextHeading>The Challenge:</ProjectTextHeading>
-          <p className="mb-4"><strong>Designing a System That Could Embrace the Unexpected</strong></p>
-          <p className="mb-4">The challenge was not simply to create a visual identity, but to build a flexible system that could balance consistency with creative freedom.</p>
-          <p className="mb-4">A traditional identity system defines strict rules to ensure that every application looks consistent. For this project, we wanted to challenge that approach by creating a system where variation and unexpected outcomes were part of the identity itself.</p>
-          <p className="mb-4">This raised an important design question:</p>
-          <p className="mb-4"><strong>How can a visual system remain recognizable while allowing creativity to break the rules?</strong></p>
-          <p className="mb-4">Through an iterative process of trial and error, we explored different compositions, proportions, and relationships between elements. Some experiments resulted in unexpected "happy accidents"—including square compositions, Huge-inspired panels, and three-panel structures that naturally formed an "M."</p>
-          <p className="mb-4">Rather than treating these outcomes as mistakes, we used them as opportunities to expand the system.</p>
-          <p className="mb-8">The challenge became an exercise in finding the right balance between rules and randomness, structure and chaos, consistency and experimentation.</p>
+          <ProjectTextHeading>{c.challengeHeading}</ProjectTextHeading>
+          <p className="mb-4"><strong>{c.challengeP1Bold}</strong></p>
+          <p className="mb-4">{c.challengeP2}</p>
+          <p className="mb-4">{c.challengeP3}</p>
+          <p className="mb-4">{c.challengeP4}</p>
+          <p className="mb-4"><strong>{c.challengeP5Bold}</strong></p>
+          <p className="mb-4">{c.challengeP6}</p>
+          <p className="mb-4">{c.challengeP7}</p>
+          <p className="mb-8">{c.challengeP8}</p>
 
-          <ProjectTextHeading>Beyond the Identity:</ProjectTextHeading>
-          <p className="mb-4">The final identity transformed the initial concept of structure and chaos into a flexible visual language that could adapt across different formats, environments, and applications.</p>
-          <p className="mb-4">Bold typography, geometric forms, contrasting compositions, and a distinctive color palette came together to create a visual system that feels both structured and unpredictable. The recurring shapes act as recognizable visual anchors, while their scale, position, and interaction can change from one composition to another.</p>
-          <p className="mb-4">The identity was designed to live beyond a single format. We applied the system across presentations, digital applications, internal communications, and environmental graphics, extending the brand into different physical and digital spaces.</p>
-          <p>Rather than creating a collection of isolated brand assets, the goal was to build a system with enough flexibility to continuously generate new compositions while maintaining a strong and recognizable identity.</p>
+          <ProjectTextHeading>{c.beyondHeading}</ProjectTextHeading>
+          <p className="mb-4">{c.beyondP1}</p>
+          <p className="mb-4">{c.beyondP2}</p>
+          <p className="mb-4">{c.beyondP3}</p>
+          <p>{c.beyondP4}</p>
         </ProjectTextBlock>
 
         <ProjectSectionImage desktopStyle={{ width: '1098px', aspectRatio: '2196/754' }}>
@@ -128,7 +131,6 @@ export default function MaestroCase({
         </ProjectSectionImage>
 
         <ProjectContact
-          message="We can start the conversation about what you want for your brand or leave me a message."
           textColor="#ffffff"
           buttonColor="#ffffff"
           buttonHoverBg="#ffffff"
