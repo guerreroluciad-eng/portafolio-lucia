@@ -27,6 +27,7 @@ const en = {
       backPage: 'Back Page',
       nextPage: 'Next Page',
     },
+    downloadCv: 'Download CV',
   },
   home: {
     imPrefix: "I'm",
@@ -415,6 +416,7 @@ const es = {
       backPage: 'Página anterior',
       nextPage: 'Página siguiente',
     },
+    downloadCv: 'Descargar CV',
   },
   home: {
     imPrefix: 'Soy',

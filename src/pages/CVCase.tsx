@@ -73,7 +73,8 @@ export default function CVCase({ cvReady, onWorkClick, onAboutClick, onLuciaClic
   const isDesktop = useMinWidth(1024)
   const headerActive = isDesktop && cvHeaderHovered
 
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
+  const cvPdfHref = lang === 'es' ? '/Cv-LuciaGuerrero-ES.pdf' : '/Cv-LuciaGuerrero-EN.pdf'
 
   // Once the entrance animation finishes, drop it so it stops pinning
   // opacity:1 and the scroll-based fade can actually take effect.
@@ -244,7 +245,20 @@ export default function CVCase({ cvReady, onWorkClick, onAboutClick, onLuciaClic
         </div>
 
         <div style={fadeIn(380)}>
-          <ProjectContact />
+          <ProjectContact
+            extra={
+              <a
+                href={cvPdfHref}
+                download
+                className="h-[50px] rounded-[36px] px-[27px] font-['Abhaya_Libre',serif] text-[24px] bg-transparent cursor-pointer inline-flex items-center justify-center no-underline"
+                style={{ color: '#302f2a', borderWidth: '1px', borderStyle: 'solid', borderColor: '#302f2a', transition: 'background 0.2s, color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#302f2a'; e.currentTarget.style.color = 'white' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#302f2a' }}
+              >
+                {t.common.downloadCv}
+              </a>
+            }
+          />
         </div>
       </div>
     </div>

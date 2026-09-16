@@ -4,6 +4,10 @@ import { useLanguage } from '@/i18n/LanguageContext'
 // Closing "let's talk" block. Shared across project pages. `message` is
 // optional — omit it to fall back to the shared translated copy; pages that
 // need custom wording (none currently do) can still override it.
+//
+// `extra` renders an additional pill button beside "Contact me" (same row,
+// wraps on narrow widths) — used by the CV page for its "Download CV"
+// button. Omitted everywhere else, so those pages render exactly as before.
 
 interface ProjectContactProps {
   message?: string
@@ -11,6 +15,7 @@ interface ProjectContactProps {
   buttonColor?: string
   buttonHoverBg?: string
   buttonHoverText?: string
+  extra?: React.ReactNode
 }
 
 export default function ProjectContact({
@@ -19,6 +24,7 @@ export default function ProjectContact({
   buttonColor = '#302f2a',
   buttonHoverBg = '#302f2a',
   buttonHoverText = 'white',
+  extra,
 }: ProjectContactProps) {
   const { t } = useLanguage()
   const buttonClassName = "h-[50px] rounded-[36px] px-[27px] font-['Abhaya_Libre',serif] text-[24px] bg-transparent cursor-pointer inline-flex items-center justify-center no-underline"
@@ -31,15 +37,18 @@ export default function ProjectContact({
       <p className="font-['Abhaya_Libre',serif] text-[32px] leading-[34px] md:leading-normal" style={{ color: textColor }}>
         {message ?? t.common.projectContact.message}
       </p>
-      <a
-        href="mailto:guerreroluciad@gmail.com"
-        className={buttonClassName}
-        style={buttonStyle}
-        onMouseEnter={onButtonMouseEnter}
-        onMouseLeave={onButtonMouseLeave}
-      >
-        {t.common.projectContact.button}
-      </a>
+      <div className="flex flex-wrap gap-[16px] items-center justify-center">
+        <a
+          href="mailto:guerreroluciad@gmail.com"
+          className={buttonClassName}
+          style={buttonStyle}
+          onMouseEnter={onButtonMouseEnter}
+          onMouseLeave={onButtonMouseLeave}
+        >
+          {t.common.projectContact.button}
+        </a>
+        {extra}
+      </div>
     </div>
   )
 }
