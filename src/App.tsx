@@ -10,6 +10,7 @@ import AndroidCase from '@/pages/AndroidCase'
 import GoogleCase from '@/pages/GoogleCase'
 import YoutubeCase from '@/pages/YoutubeCase'
 import ElTiempoCase from '@/pages/ElTiempoCase'
+import SubscriptionCase from '@/pages/SubscriptionCase'
 import AppTiempoCase from '@/pages/AppTiempoCase'
 import MaestroCase from '@/pages/MaestroCase'
 import FutbolredCase from '@/pages/FutbolredCase'
@@ -18,6 +19,9 @@ import imgNavYoutube from '@/imports/ProjectNav/Youtube.png'
 import imgNavElTiempo from '@/imports/ProjectNav/ElTiempo.png'
 import imgNavAndroid from '@/imports/ProjectNav/Android.png'
 import imgNavAppTiempo from '@/imports/ProjectNav/AppTiempo.png'
+import imgNavSubscription from '@/imports/ProjectNav/Subscription.png'
+import imgNavMaestro from '@/imports/ProjectNav/Maestro.png'
+import imgNavFutbolred from '@/imports/ProjectNav/Futbolred.png'
 
 type Screen =
   | 'home'
@@ -36,6 +40,8 @@ type Screen =
   | 'youtube'
   | 'eltiempo-in' | 'eltiempo-wipe' | 'eltiempo-out'
   | 'eltiempo'
+  | 'subscription-in' | 'subscription-wipe' | 'subscription-out'
+  | 'subscription'
   | 'apptiempo-in' | 'apptiempo-wipe' | 'apptiempo-out'
   | 'apptiempo'
   | 'maestro-in' | 'maestro-wipe' | 'maestro-out'
@@ -50,7 +56,7 @@ function isBasePage(s: Screen): s is BasePage {
 
 // Prefix of the "-in" / "-wipe" / "-out" screens for each transition: the
 // Work/About/CV/Home ones have their own, project pages use their own key.
-type TransitionPrefix = 'transition' | 'about' | 'cv' | 'lucia' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
+type TransitionPrefix = 'transition' | 'about' | 'cv' | 'lucia' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'subscription' | 'apptiempo' | 'maestro' | 'futbolred'
 
 export default function App() {
   const { t } = useLanguage()
@@ -81,6 +87,8 @@ export default function App() {
   const [youtubeScrolled, setYoutubeScrolled] = useState(false)
   const [elTiempoPageReady, setElTiempoPageReady] = useState(false)
   const [elTiempoScrolled, setElTiempoScrolled] = useState(false)
+  const [subscriptionPageReady, setSubscriptionPageReady] = useState(false)
+  const [subscriptionScrolled, setSubscriptionScrolled] = useState(false)
   const [appTiempoPageReady, setAppTiempoPageReady] = useState(false)
   const [appTiempoScrolled, setAppTiempoScrolled] = useState(false)
   const [maestroPageReady, setMaestroPageReady] = useState(false)
@@ -116,6 +124,7 @@ export default function App() {
       case 'google': return pulse(setGooglePageReady, setGoogleScrolled)
       case 'youtube': return pulse(setYoutubePageReady, setYoutubeScrolled)
       case 'eltiempo': return pulse(setElTiempoPageReady, setElTiempoScrolled)
+      case 'subscription': return pulse(setSubscriptionPageReady, setSubscriptionScrolled)
       case 'apptiempo': return pulse(setAppTiempoPageReady, setAppTiempoScrolled)
       case 'maestro': return pulse(setMaestroPageReady, setMaestroScrolled)
       case 'futbolred': return pulse(setFutbolredPageReady, setFutbolredScrolled)
@@ -193,6 +202,7 @@ export default function App() {
   const handleGoogleClick = () => go('google')
   const handleYoutubeClick = () => go('youtube')
   const handleElTiempoClick = () => go('eltiempo')
+  const handleSubscriptionClick = () => go('subscription')
   const handleAppTiempoClick = () => go('apptiempo')
   const handleMaestroClick = () => go('maestro')
   const handleFutbolredClick = () => go('futbolred')
@@ -211,6 +221,7 @@ export default function App() {
     screen === 'google-in' || screen === 'google-wipe' ||
     screen === 'youtube-in' || screen === 'youtube-wipe' ||
     screen === 'eltiempo-in' || screen === 'eltiempo-wipe' ||
+    screen === 'subscription-in' || screen === 'subscription-wipe' ||
     screen === 'apptiempo-in' || screen === 'apptiempo-wipe' ||
     screen === 'maestro-in' || screen === 'maestro-wipe' ||
     screen === 'futbolred-in' || screen === 'futbolred-wipe'
@@ -219,18 +230,24 @@ export default function App() {
   // as the Work carousel: Google → El Tiempo → Youtube → Android → App Tiempo
   // → back to Google. Each entry pairs a project's display name + thumbnail
   // with the handler that already drives its transition.
-  const projectCycle: { key: 'google' | 'eltiempo' | 'youtube' | 'android' | 'apptiempo'; name: React.ReactNode; thumbnail: string; onClick: () => void }[] = [
+  const projectCycle: { key: BasePage; name: React.ReactNode; thumbnail: string; onClick: () => void }[] = [
     { key: 'google', name: t.navNames.google, thumbnail: imgNavGoogle, onClick: handleGoogleClick },
     { key: 'eltiempo', name: t.navNames.eltiempo, thumbnail: imgNavElTiempo, onClick: handleElTiempoClick },
     { key: 'youtube', name: t.navNames.youtube, thumbnail: imgNavYoutube, onClick: handleYoutubeClick },
     { key: 'android', name: t.navNames.android, thumbnail: imgNavAndroid, onClick: handleAndroidClick },
+    { key: 'subscription', name: t.navNames.subscription, thumbnail: imgNavSubscription, onClick: handleSubscriptionClick },
     { key: 'apptiempo', name: t.navNames.apptiempo, thumbnail: imgNavAppTiempo, onClick: handleAppTiempoClick },
+    { key: 'maestro', name: t.navNames.maestro, thumbnail: imgNavMaestro, onClick: handleMaestroClick },
+    { key: 'futbolred', name: t.navNames.futbolred, thumbnail: imgNavFutbolred, onClick: handleFutbolredClick },
   ]
-  function getProjectNav(key: 'google' | 'eltiempo' | 'youtube' | 'android' | 'apptiempo') {
+  function getProjectNav(key: BasePage) {
     const i = projectCycle.findIndex(p => p.key === key)
-    const prev = projectCycle[(i - 1 + projectCycle.length) % projectCycle.length]
-    const next = projectCycle[(i + 1) % projectCycle.length]
-    return { prevProject: prev, nextProject: next }
+    // `key` is only for lookup — drop it so it isn't spread into JSX as a React key.
+    const strip = ({ name, thumbnail, onClick }: (typeof projectCycle)[number]) => ({ name, thumbnail, onClick })
+    return {
+      prevProject: strip(projectCycle[(i - 1 + projectCycle.length) % projectCycle.length]),
+      nextProject: strip(projectCycle[(i + 1) % projectCycle.length]),
+    }
   }
 
   return (
@@ -519,6 +536,37 @@ export default function App() {
         </div>
       )}
 
+      {/* ── SUBSCRIPTION TRANSITION OVERLAY (work → subscription) ─────────── */}
+      {(screen === 'subscription-in' || screen === 'subscription-wipe' || screen === 'subscription-out') && (
+        <div
+          className="fixed inset-0 bg-[#2f2e29] z-50 flex items-center justify-center overflow-hidden"
+          style={
+            screen === 'subscription-out'
+              ? { animation: 'slideOutUp 0.9s cubic-bezier(0.76,0,0.24,1) both' }
+              : { animation: 'fadeIn 0.35s ease both' }
+          }
+        >
+          <p
+            className="font-['Abhaya_Libre',serif] text-[90px] md:text-[200px] text-white leading-none relative px-4 md:px-0 text-center"
+            style={
+              screen === 'subscription-wipe' || screen === 'subscription-out'
+                ? { animation: 'workTextExit 1.4s cubic-bezier(0.4,0,0.2,1) forwards' }
+                : { animation: 'slideUpFade 0.6s cubic-bezier(0.16,1,0.3,1) 0.15s both' }
+            }
+          >
+            Subscription
+          </p>
+          {(screen === 'subscription-wipe' || screen === 'subscription-out') && (
+            <div style={{
+              position: 'absolute', top: 0, left: 0, bottom: 0, width: '200%',
+              background: 'linear-gradient(to right, #2f2e29 0%, #2f2e29 45%, transparent 65%)',
+              animation: 'wipeRight 1.4s cubic-bezier(0.4,0,0.2,1) forwards',
+              pointerEvents: 'none',
+            }} />
+          )}
+        </div>
+      )}
+
       {/* ── APP TIEMPO TRANSITION OVERLAY (work → apptiempo) ─────────── */}
       {(screen === 'apptiempo-in' || screen === 'apptiempo-wipe' || screen === 'apptiempo-out') && (
         <div
@@ -635,6 +683,7 @@ export default function App() {
           onYoutubeClick={handleYoutubeClick}
           onElTiempoClick={handleElTiempoClick}
           onAppTiempoClick={handleAppTiempoClick}
+          onSubscriptionClick={handleSubscriptionClick}
           onMaestroClick={handleMaestroClick}
           onFutbolredClick={handleFutbolredClick}
         />
@@ -748,6 +797,25 @@ export default function App() {
         />
       )}
 
+      {/* ── SUBSCRIPTION DETAIL PAGE ─────────────────────────────────── */}
+      {(screen === 'subscription' || screen === 'subscription-out' ||
+        ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'subscription') ||
+        ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'subscription') ||
+        ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'subscription') ||
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'subscription') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'subscription')) && (
+        <SubscriptionCase
+          subscriptionPageReady={subscriptionPageReady}
+          subscriptionScrolled={subscriptionScrolled}
+          onScrolledChange={setSubscriptionScrolled}
+          onWorkClick={handleWorkClick}
+          onAboutClick={handleAboutClick}
+          onCvClick={handleCvClick}
+          onLuciaClick={handleLuciaClick}
+          {...getProjectNav('subscription')}
+        />
+      )}
+
       {/* ── APP TIEMPO DETAIL PAGE ───────────────────────────────────── */}
       {(screen === 'apptiempo' || screen === 'apptiempo-out' ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'apptiempo') ||
@@ -782,6 +850,7 @@ export default function App() {
           onAboutClick={handleAboutClick}
           onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
+          {...getProjectNav('maestro')}
         />
       )}
 
@@ -800,6 +869,7 @@ export default function App() {
           onAboutClick={handleAboutClick}
           onCvClick={handleCvClick}
           onLuciaClick={handleLuciaClick}
+          {...getProjectNav('futbolred')}
         />
       )}
 

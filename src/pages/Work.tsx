@@ -9,6 +9,7 @@ import imgCoverElTiempo from '@/imports/WorkCoversNew/CoverElTiempo.png'
 import imgCoverYoutube from '@/imports/WorkCoversNew/CoverYoutube.png'
 import imgCoverAndroid from '@/imports/WorkCoversNew/CoverAndroid.png'
 import imgCoverAppTiempo from '@/imports/WorkCoversNew/CoverAppTiempo.png'
+import imgCoverSubscription from '@/imports/WorkCoversNew/CoverSubscription.png'
 import imgCoverMaestro from '@/imports/WorkCoversNew/CoverMaestro.png'
 import imgCoverFutbolred from '@/imports/WorkCoversNew/CoverFutbolred.png'
 import imgCoverGoogleEs from '@/imports/WorkCoversEs/CoverGoogle.png'
@@ -79,11 +80,12 @@ interface WorkProps {
   onYoutubeClick: () => void
   onElTiempoClick: () => void
   onAppTiempoClick: () => void
+  onSubscriptionClick: () => void
   onMaestroClick: () => void
   onFutbolredClick: () => void
 }
 
-export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick, onAndroidClick, onGoogleClick, onYoutubeClick, onElTiempoClick, onAppTiempoClick, onMaestroClick, onFutbolredClick }: WorkProps) {
+export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick, onAndroidClick, onGoogleClick, onYoutubeClick, onElTiempoClick, onAppTiempoClick, onSubscriptionClick, onMaestroClick, onFutbolredClick }: WorkProps) {
   const [workHeaderHovered, setWorkHeaderHovered] = useState(false)
   const [workHeadingHovered, setWorkHeadingHovered] = useState(false)
   const isDesktop = useMinWidth(1024)
@@ -93,6 +95,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
   const [googleHovered, setGoogleHovered] = useState(false)
   const [elTiempoHovered, setElTiempoHovered] = useState(false)
   const [appTiempoHovered, setAppTiempoHovered] = useState(false)
+  const [subscriptionHovered, setSubscriptionHovered] = useState(false)
   const [youtubeHovered, setYoutubeHovered] = useState(false)
   const [maestroHovered, setMaestroHovered] = useState(false)
   const [futbolredHovered, setFutbolredHovered] = useState(false)
@@ -176,6 +179,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
     { key: 'eltiempo', src: isEs ? imgCoverElTiempoEs : imgCoverElTiempo, alt: 'El Tiempo', onClick: onElTiempoClick, hovered: elTiempoHovered, onEnter: () => setElTiempoHovered(true), onLeave: () => setElTiempoHovered(false) },
     { key: 'youtube', src: isEs ? imgCoverYoutubeEs : imgCoverYoutube, alt: 'Youtube', onClick: onYoutubeClick, hovered: youtubeHovered, onEnter: () => setYoutubeHovered(true), onLeave: () => setYoutubeHovered(false) },
     { key: 'android', src: isEs ? imgCoverAndroidEs : imgCoverAndroid, alt: 'Android', onClick: onAndroidClick, hovered: androidHovered, onEnter: () => setAndroidHovered(true), onLeave: () => setAndroidHovered(false) },
+    { key: 'subscription', src: imgCoverSubscription, alt: 'Subscription', onClick: onSubscriptionClick, hovered: subscriptionHovered, onEnter: () => setSubscriptionHovered(true), onLeave: () => setSubscriptionHovered(false) },
     { key: 'apptiempo', src: isEs ? imgCoverAppTiempoEs : imgCoverAppTiempo, alt: 'App Tiempo', onClick: onAppTiempoClick, hovered: appTiempoHovered, onEnter: () => setAppTiempoHovered(true), onLeave: () => setAppTiempoHovered(false) },
     { key: 'maestro', src: isEs ? imgCoverMaestroEs : imgCoverMaestro, alt: 'Maestro', onClick: onMaestroClick, hovered: maestroHovered, onEnter: () => setMaestroHovered(true), onLeave: () => setMaestroHovered(false) },
     { key: 'futbolred', src: isEs ? imgCoverFutbolredEs : imgCoverFutbolred, alt: 'Futbolred', onClick: onFutbolredClick, hovered: futbolredHovered, onEnter: () => setFutbolredHovered(true), onLeave: () => setFutbolredHovered(false) },
@@ -268,7 +272,7 @@ export default function Work({ workReady, onAboutClick, onCvClick, onLuciaClick,
               cursor: 'default',
             }}
           >
-            {androidHovered ? 'Android' : googleHovered ? 'Google' : youtubeHovered ? 'Youtube' : elTiempoHovered ? 'El Tiempo' : appTiempoHovered ? 'App Tiempo' : maestroHovered ? 'Maestro' : futbolredHovered ? 'Futbolred' : t.work.heading}
+            {androidHovered ? 'Android' : googleHovered ? 'Google' : youtubeHovered ? 'Youtube' : elTiempoHovered ? 'El Tiempo' : subscriptionHovered ? t.work.subscriptionName : appTiempoHovered ? 'App Tiempo' : maestroHovered ? 'Maestro' : futbolredHovered ? 'Futbolred' : t.work.heading}
           </p>
         </div>
 

@@ -13,6 +13,7 @@ export type BasePage =
   | 'eltiempo'
   | 'youtube'
   | 'android'
+  | 'subscription'
   | 'apptiempo'
   | 'maestro'
   | 'futbolred'
@@ -26,6 +27,7 @@ export const PAGE_PATHS: Record<BasePage, string> = {
   eltiempo: '/work/el-tiempo',
   youtube: '/work/youtube',
   android: '/work/android',
+  subscription: '/work/subscription',
   apptiempo: '/work/app-tiempo',
   maestro: '/work/maestro',
   futbolred: '/work/futbolred',

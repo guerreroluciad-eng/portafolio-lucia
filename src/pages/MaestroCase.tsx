@@ -6,6 +6,7 @@ import { ProjectImageRow, ProjectImageBox } from '@/components/ProjectImageRow'
 import ProjectTextBlock, { ProjectTextHeading } from '@/components/ProjectTextBlock'
 import ProjectSectionImage from '@/components/ProjectSectionImage'
 import ProjectContact from '@/components/ProjectContact'
+import ProjectPageNav, { type ProjectNavCardData } from '@/components/ProjectPageNav'
 import { useScrollThreshold } from '@/hooks/useScrollThreshold'
 import { useLanguage } from '@/i18n/LanguageContext'
 import imgHero1 from '@/imports/Maestro/Hero-1.png'
@@ -23,6 +24,8 @@ interface MaestroCaseProps {
   onAboutClick: () => void
   onCvClick: () => void
   onLuciaClick: () => void
+  prevProject: ProjectNavCardData
+  nextProject: ProjectNavCardData
 }
 
 export default function MaestroCase({
@@ -33,6 +36,8 @@ export default function MaestroCase({
   onAboutClick,
   onCvClick,
   onLuciaClick,
+  prevProject,
+  nextProject,
 }: MaestroCaseProps) {
   const scrollRef = useScrollThreshold(40, onScrolledChange)
   const { t } = useLanguage()
@@ -136,6 +141,10 @@ export default function MaestroCase({
           buttonHoverBg="#ffffff"
           buttonHoverText="#302f2a"
         />
+
+        <div className="mt-[68px]">
+          <ProjectPageNav prev={prevProject} next={nextProject} dark />
+        </div>
       </div>
     </div>
   )
