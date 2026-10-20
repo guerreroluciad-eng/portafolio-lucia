@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLanguage } from '@/i18n/LanguageContext'
+import { PAGE_PATHS, isKnownPath, pageFromPath, type BasePage } from '@/routes'
 import imgFrame241Hover from '@/imports/DesktopHover-3/aab7bd2528fca558339289f043abd5043daa8e13.png'
 import Home from '@/pages/Home'
 import Work from '@/pages/Work'
@@ -42,17 +43,36 @@ type Screen =
   | 'futbolred-in' | 'futbolred-wipe' | 'futbolred-out'
   | 'futbolred'
 
+const BASE_PAGES = Object.keys(PAGE_PATHS) as BasePage[]
+function isBasePage(s: Screen): s is BasePage {
+  return (BASE_PAGES as string[]).includes(s)
+}
+
+// Prefix of the "-in" / "-wipe" / "-out" screens for each transition: the
+// Work/About/CV/Home ones have their own, project pages use their own key.
+type TransitionPrefix = 'transition' | 'about' | 'cv' | 'lucia' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
+
 export default function App() {
   const { t } = useLanguage()
-  const [screen, setScreen] = useState<Screen>('home')
-  const luciaOrigin = useRef<'work' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('work')
-  const aboutOrigin = useRef<'home' | 'work' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
-  const workOrigin = useRef<'home' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
-  const cvOrigin = useRef<'home' | 'work' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'>('home')
-  // Which page a project-to-project ("Next page") or work-to-project transition
-  // started from, so the transition overlay's "-in"/"-wipe" phases render the
-  // correct page underneath instead of always assuming it came from Work.
-  const projectNavOrigin = useRef<'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'>('work')
+
+  // The page the URL points at on first load (direct link / refresh). Anything
+  // that isn't a known route falls back to Home.
+  const initialPage = useRef<BasePage>(pageFromPath(window.location.pathname))
+  const [screen, setScreen] = useState<Screen>(initialPage.current)
+  // Page the address bar currently points at. Kept in state so the browser's
+  // back/forward buttons (popstate) can be reconciled with `screen` below.
+  const [urlPage, setUrlPage] = useState<BasePage>(initialPage.current)
+  // Set while a navigation is being replayed from browser history, so it
+  // doesn't push a second history entry for a URL that's already current.
+  const navFromHistory = useRef(false)
+
+  // Which page each kind of transition started from, so the transition
+  // overlay's "-in"/"-wipe" phases render the correct page underneath.
+  const luciaOrigin = useRef<BasePage>('work')
+  const aboutOrigin = useRef<BasePage>('home')
+  const workOrigin = useRef<BasePage>('home')
+  const cvOrigin = useRef<BasePage>('home')
+  const projectNavOrigin = useRef<BasePage>('work')
   const [androidPageReady, setAndroidPageReady] = useState(false)
   const [androidScrolled, setAndroidScrolled] = useState(false)
   const [googlePageReady, setGooglePageReady] = useState(false)
@@ -74,216 +94,114 @@ export default function App() {
 
   // Home intro: trigger animations after mount
   useEffect(() => {
-    const t = setTimeout(() => setHomeReady(true), 50)
-    return () => clearTimeout(t)
+    const timer = setTimeout(() => setHomeReady(true), 50)
+    return () => clearTimeout(timer)
   }, [])
 
-  function handleAndroidClick() {
-    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
-    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
-    setScreen('android-in')
+  // Re-arms a page's entrance animation (ready false → true after a beat), and
+  // resets its scrolled flag where it has one. Same sequence the page
+  // transitions have always used when they land on a page.
+  function markPageShown(page: BasePage) {
+    const pulse = (setReady: (v: boolean) => void, setScrolled?: (v: boolean) => void) => {
+      setReady(false)
+      setScrolled?.(false)
+      setTimeout(() => setReady(true), 60)
+    }
+    switch (page) {
+      case 'home': return pulse(setHomeReady)
+      case 'work': return pulse(setWorkReady)
+      case 'aboutme': return pulse(setAboutReady)
+      case 'cv': return pulse(setCvReady)
+      case 'android': return pulse(setAndroidPageReady, setAndroidScrolled)
+      case 'google': return pulse(setGooglePageReady, setGoogleScrolled)
+      case 'youtube': return pulse(setYoutubePageReady, setYoutubeScrolled)
+      case 'eltiempo': return pulse(setElTiempoPageReady, setElTiempoScrolled)
+      case 'apptiempo': return pulse(setAppTiempoPageReady, setAppTiempoScrolled)
+      case 'maestro': return pulse(setMaestroPageReady, setMaestroScrolled)
+      case 'futbolred': return pulse(setFutbolredPageReady, setFutbolredScrolled)
+    }
+  }
+
+  // Direct load / refresh on a non-home URL: the page is mounted straight away
+  // (no overlay), so run its entrance animation. Also: let the app own scroll
+  // restoration, and tidy unknown URLs back to "/".
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
+    if (!isKnownPath(window.location.pathname)) window.history.replaceState(null, '', PAGE_PATHS.home)
+    if (initialPage.current !== 'home') markPageShown(initialPage.current)
+    const onPopState = () => setUrlPage(pageFromPath(window.location.pathname))
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Updates the address bar for a navigation the user just started. Skipped
+  // when the navigation is replaying browser history (URL is already right).
+  function commitUrl(page: BasePage) {
+    if (navFromHistory.current) {
+      navFromHistory.current = false
+      return
+    }
+    const path = PAGE_PATHS[page]
+    if (window.location.pathname !== path) window.history.pushState(null, '', path)
+    setUrlPage(page)
+  }
+
+  // Runs the overlay transition from the current page to `target`:
+  // "-in" (overlay fades in, title slides up) → 900ms → "-wipe" → 1400ms →
+  // "-out" (overlay slides away revealing the page) → 900ms → page settled.
+  // Timings and phases are unchanged from the original per-page handlers.
+  function go(target: BasePage) {
+    if (!isBasePage(screen) || screen === target) return
+    let prefix: TransitionPrefix
+    switch (target) {
+      case 'work': workOrigin.current = screen; prefix = 'transition'; break
+      case 'aboutme': aboutOrigin.current = screen; prefix = 'about'; break
+      case 'cv': cvOrigin.current = screen; prefix = 'cv'; break
+      case 'home': luciaOrigin.current = screen; prefix = 'lucia'; break
+      default: projectNavOrigin.current = screen; prefix = target
+    }
+    commitUrl(target)
+    setScreen(`${prefix}-in`)
     setTimeout(() => {
-      setScreen('android-wipe')
+      setScreen(`${prefix}-wipe`)
       setTimeout(() => {
-        setScreen('android-out')
+        setScreen(`${prefix}-out`)
+        window.scrollTo(0, 0)
         setTimeout(() => {
-          setScreen('android')
+          setScreen(target)
           window.scrollTo(0, 0)
-          setAndroidPageReady(false)
-          setAndroidScrolled(false)
-          setTimeout(() => setAndroidPageReady(true), 60)
+          markPageShown(target)
         }, 900)
       }, 1400)
     }, 900)
   }
 
-  function handleGoogleClick() {
-    if (screen !== 'home' && screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
-    projectNavOrigin.current = screen as 'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
-    setScreen('google-in')
-    setTimeout(() => {
-      setScreen('google-wipe')
-      setTimeout(() => {
-        setScreen('google-out')
-        setTimeout(() => {
-          setScreen('google')
-          window.scrollTo(0, 0)
-          setGooglePageReady(false)
-          setGoogleScrolled(false)
-          setTimeout(() => setGooglePageReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
+  // Browser back/forward: `urlPage` follows the address bar. Whenever the app
+  // is sitting on a settled page that doesn't match it, play the transition to
+  // the right one. If a transition is mid-flight this simply waits until it
+  // lands, then reconciles.
+  useEffect(() => {
+    if (!isBasePage(screen) || screen === urlPage) return
+    navFromHistory.current = true
+    go(urlPage)
+    navFromHistory.current = false
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screen, urlPage])
 
-  function handleYoutubeClick() {
-    if (screen !== 'home' && screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
-    projectNavOrigin.current = screen as 'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
-    setScreen('youtube-in')
-    setTimeout(() => {
-      setScreen('youtube-wipe')
-      setTimeout(() => {
-        setScreen('youtube-out')
-        setTimeout(() => {
-          setScreen('youtube')
-          window.scrollTo(0, 0)
-          setYoutubePageReady(false)
-          setYoutubeScrolled(false)
-          setTimeout(() => setYoutubePageReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
+  const handleAndroidClick = () => go('android')
+  const handleGoogleClick = () => go('google')
+  const handleYoutubeClick = () => go('youtube')
+  const handleElTiempoClick = () => go('eltiempo')
+  const handleAppTiempoClick = () => go('apptiempo')
+  const handleMaestroClick = () => go('maestro')
+  const handleFutbolredClick = () => go('futbolred')
+  const handleWorkClick = () => go('work')
+  const handleAboutClick = () => go('aboutme')
+  const handleCvClick = () => go('cv')
+  const handleLuciaClick = () => go('home')
 
-  function handleElTiempoClick() {
-    if (screen !== 'home' && screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
-    projectNavOrigin.current = screen as 'home' | 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
-    setScreen('eltiempo-in')
-    setTimeout(() => {
-      setScreen('eltiempo-wipe')
-      setTimeout(() => {
-        setScreen('eltiempo-out')
-        setTimeout(() => {
-          setScreen('eltiempo')
-          window.scrollTo(0, 0)
-          setElTiempoPageReady(false)
-          setElTiempoScrolled(false)
-          setTimeout(() => setElTiempoPageReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
-
-  function handleAppTiempoClick() {
-    if (screen !== 'work' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo') return
-    projectNavOrigin.current = screen as 'work' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo'
-    setScreen('apptiempo-in')
-    setTimeout(() => {
-      setScreen('apptiempo-wipe')
-      setTimeout(() => {
-        setScreen('apptiempo-out')
-        setTimeout(() => {
-          setScreen('apptiempo')
-          window.scrollTo(0, 0)
-          setAppTiempoPageReady(false)
-          setAppTiempoScrolled(false)
-          setTimeout(() => setAppTiempoPageReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
-
-  function handleMaestroClick() {
-    if (screen !== 'work') return
-    setScreen('maestro-in')
-    setTimeout(() => {
-      setScreen('maestro-wipe')
-      setTimeout(() => {
-        setScreen('maestro-out')
-        setTimeout(() => {
-          setScreen('maestro')
-          window.scrollTo(0, 0)
-          setMaestroPageReady(false)
-          setMaestroScrolled(false)
-          setTimeout(() => setMaestroPageReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
-
-  function handleFutbolredClick() {
-    if (screen !== 'work') return
-    setScreen('futbolred-in')
-    setTimeout(() => {
-      setScreen('futbolred-wipe')
-      setTimeout(() => {
-        setScreen('futbolred-out')
-        setTimeout(() => {
-          setScreen('futbolred')
-          window.scrollTo(0, 0)
-          setFutbolredPageReady(false)
-          setFutbolredScrolled(false)
-          setTimeout(() => setFutbolredPageReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
-
-  function handleWorkClick() {
-    if (screen !== 'home' && screen !== 'aboutme' && screen !== 'cv' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
-    workOrigin.current = screen as 'home' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
-    setScreen('transition-in')
-
-    // "Work" slides up and is visible for ~900ms, then gradient wipe starts
-    setTimeout(() => {
-      setScreen('transition-wipe')
-
-      // Wipe lasts 1400ms, then overlay slides up
-      setTimeout(() => {
-        setScreen('transition-out')
-
-        // Slide-out takes 900ms, then show work page
-        setTimeout(() => {
-          setScreen('work')
-          setWorkReady(false)
-          setTimeout(() => setWorkReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
-
-  function handleAboutClick() {
-    if (screen !== 'home' && screen !== 'work' && screen !== 'cv' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
-    aboutOrigin.current = screen as 'home' | 'work' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
-    setScreen('about-in')
-    setTimeout(() => {
-      setScreen('about-wipe')
-      setTimeout(() => {
-        setScreen('about-out')
-        setTimeout(() => {
-          setScreen('aboutme')
-          setAboutReady(false)
-          setTimeout(() => setAboutReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
-
-  function handleCvClick() {
-    if (screen !== 'home' && screen !== 'work' && screen !== 'aboutme' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
-    cvOrigin.current = screen as 'home' | 'work' | 'aboutme' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
-    setScreen('cv-in')
-    setTimeout(() => {
-      setScreen('cv-wipe')
-      setTimeout(() => {
-        setScreen('cv-out')
-        setTimeout(() => {
-          setScreen('cv')
-          setCvReady(false)
-          setTimeout(() => setCvReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
-
-  function handleLuciaClick() {
-    if (screen !== 'work' && screen !== 'aboutme' && screen !== 'cv' && screen !== 'android' && screen !== 'google' && screen !== 'youtube' && screen !== 'eltiempo' && screen !== 'apptiempo' && screen !== 'maestro' && screen !== 'futbolred') return
-    luciaOrigin.current = screen as 'work' | 'aboutme' | 'cv' | 'android' | 'google' | 'youtube' | 'eltiempo' | 'apptiempo' | 'maestro' | 'futbolred'
-    setScreen('lucia-in')
-    setTimeout(() => {
-      setScreen('lucia-wipe')
-      setTimeout(() => {
-        setScreen('lucia-out')
-        setTimeout(() => {
-          setScreen('home')
-          setHomeReady(false)
-          setTimeout(() => setHomeReady(true), 60)
-        }, 900)
-      }, 1400)
-    }, 900)
-  }
-
-  // True while any of the 5 cyclable project screens is mid-transition
+  // True while any project screen is mid-transition
   // ("-in" or "-wipe"), regardless of which one. Combined with
   // projectNavOrigin, this decides which page renders behind the transition
   // overlay: Work (the old, only path) or another project page (new, for
@@ -293,7 +211,9 @@ export default function App() {
     screen === 'google-in' || screen === 'google-wipe' ||
     screen === 'youtube-in' || screen === 'youtube-wipe' ||
     screen === 'eltiempo-in' || screen === 'eltiempo-wipe' ||
-    screen === 'apptiempo-in' || screen === 'apptiempo-wipe'
+    screen === 'apptiempo-in' || screen === 'apptiempo-wipe' ||
+    screen === 'maestro-in' || screen === 'maestro-wipe' ||
+    screen === 'futbolred-in' || screen === 'futbolred-wipe'
 
   // "Back page" / "Next page" nav cards (ProjectPageNav) — same cyclic order
   // as the Work carousel: Google → El Tiempo → Youtube → Android → App Tiempo
@@ -695,7 +615,6 @@ export default function App() {
       {/* ── WORK PAGE ────────────────────────────────────────────────── */}
       {(screen === 'work' || screen === 'transition-out' ||
         (anyProjectTransitioning && projectNavOrigin.current === 'work') ||
-        screen === 'maestro-in' || screen === 'maestro-wipe' || screen === 'futbolred-in' || screen === 'futbolred-wipe' ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'work') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'work') ||
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'android') ||
@@ -732,7 +651,8 @@ export default function App() {
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'apptiempo') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'maestro') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'futbolred') ||
-        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'aboutme')) && (
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'aboutme') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'aboutme')) && (
         <AboutMe aboutReady={aboutReady} onWorkClick={handleWorkClick} onCvClick={handleCvClick} onLuciaClick={handleLuciaClick} />
       )}
 
@@ -747,7 +667,8 @@ export default function App() {
         ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'eltiempo') ||
         ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'apptiempo') ||
         ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'maestro') ||
-        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'futbolred')) && (
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'futbolred') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'cv')) && (
         <CVCase cvReady={cvReady} onWorkClick={handleWorkClick} onAboutClick={handleAboutClick} onLuciaClick={handleLuciaClick} />
       )}
 
@@ -851,7 +772,8 @@ export default function App() {
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'maestro') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'maestro') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'maestro') ||
-        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'maestro')) && (
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'maestro') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'maestro')) && (
         <MaestroCase
           maestroPageReady={maestroPageReady}
           maestroScrolled={maestroScrolled}
@@ -868,7 +790,8 @@ export default function App() {
         ((screen === 'transition-in' || screen === 'transition-wipe') && workOrigin.current === 'futbolred') ||
         ((screen === 'about-in' || screen === 'about-wipe') && aboutOrigin.current === 'futbolred') ||
         ((screen === 'lucia-in' || screen === 'lucia-wipe') && luciaOrigin.current === 'futbolred') ||
-        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'futbolred')) && (
+        ((screen === 'cv-in' || screen === 'cv-wipe') && cvOrigin.current === 'futbolred') ||
+        (anyProjectTransitioning && projectNavOrigin.current === 'futbolred')) && (
         <FutbolredCase
           futbolredPageReady={futbolredPageReady}
           futbolredScrolled={futbolredScrolled}
